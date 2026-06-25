@@ -12,8 +12,8 @@
     "astro": "astro",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "oxlint src/",
-    "lint:fix": "oxlint src/ --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@astrojs/preact": "^6.0.0",
@@ -22,11 +22,15 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@unocss/astro": "^66.7.2",
+    "@unocss/eslint-plugin": "^66.7.2",
     "@unocss/reset": "^66.7.2",
-    "oxlint": "^0.16.3",
+    "eslint": "^10.5.0",
+    "eslint-plugin-astro": "^2.1.1",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
+    "typescript-eslint": "^8.62.0",
     "unocss": "^66.7.2"
   }
 }
