@@ -1,5 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import eslintConfig from '../../eslint.config?raw'
+import prettierConfig from '../../.prettierrc?raw'
+import tsconfig from '../../tsconfig.json?raw'
+import type { CodeLanguage } from 'astro'
+import { Code } from 'astro:components'
+
+interface StackItem {
+  type: string
+  name: string
+  href: string
+}
 
 const stack = [
   { type: 'Framework', name: 'Astro', href: 'https://astro.build/' },
@@ -16,7 +27,31 @@ const stack = [
     name: 'Opencode (MiMo V2.5 Free)',
     href: 'https://opencode.ai/',
   },
-]
+] as const satisfies StackItem[]
+
+interface ConfigItem {
+  name: string
+  code: string
+  type: CodeLanguage
+}
+
+const configs = [
+  {
+    name: 'eslint.config.js',
+    code: eslintConfig,
+    type: 'ts',
+  },
+  {
+    name: '.prettierrc',
+    code: prettierConfig,
+    type: 'json',
+  },
+  {
+    name: 'tsconfig.json',
+    code: tsconfig,
+    type: 'jsonc',
+  },
+] as const satisfies ConfigItem[]
 ---
 
 <Layout>
@@ -52,6 +87,25 @@ const stack = [
           ))
         }
       </table>
+    </article>
+    <article mt-4>
+      <header text-2xl mb-4>
+        <h2>Konfiguracje</h2>
+      </header>
+      <div flex flex-col gap-2>
+        {
+          configs.map((item) => (
+            <div>
+              <Code
+                data-name={item.name}
+                class="py-4 px-2 rounded-2xl before:content-[attr(data-name)] before:block before before:mb-2 before:text-sm before:font-semibold before:border-b-1"
+                code={item.code}
+                lang={item.type}
+              />
+            </div>
+          ))
+        }
+      </div>
     </article>
   </section>
 </Layout>
