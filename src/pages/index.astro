@@ -1,7 +1,45 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import logoKot from '../assets/logo-kot.png'
+import { Picture } from 'astro:assets'
 ---
 
 <Layout>
-  <p>Witaj!</p>
+  <section container mx-auto mt-12>
+    <header text-center text-4xl font-semibold mb-6>
+      <h1>Witaj!</h1>
+    </header>
+    <div flex flex-col md:flex-row items-center gap-8>
+      <div>
+        <Picture
+          src={logoKot}
+          alt="Przyjazny, szary kotek z białymi skarpetkami i białą klatą"
+        />
+      </div>
+
+      <article flex flex-col gap-4 text="4.5">
+        <h2>
+          Nazywam się Szymon Wrzos, znany również jako Herob i specjalizuję się
+          w programowaniu frontendu, jednak nie straszne mi tworzenie aplikacji
+          mobilnej czy backendu do obu.
+        </h2>
+        <div class="flex flex-col">
+          <span
+            >Po godzinach, poza rozwojem, to jadę tu i tam rowerem, robię
+            zdjęcia kotom czy trenuję karate obecnie.
+          </span>
+          <span>
+            Okazjonalnie podrózuję do innego miasta, by pozwiedzać czy odwiedzić
+            lokalne kocie kawiarnie jeżeli takowe są.
+          </span>Też odwiedzam co 3-4 miesiące dentystę, gdyż choroby zębów mogą
+          powodować problemy zdrowotne a lepiej zapobiegać niż leczyć w
+          kontekście zdrowotnym czy finansowym.
+        </div>
+        <p>
+          Zachęcam do przejrzenia bloga, gdzie znajdziecie parę treści o ComfyUI
+          i inne.
+        </p>
+      </article>
+    </div>
+  </section>
 </Layout>
