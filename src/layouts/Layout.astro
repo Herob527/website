@@ -1,0 +1,63 @@
+---
+import Logo from '../assets/logo.svg'
+interface Link {
+  href: string
+  label: string
+}
+
+const links = [
+  {
+    href: '#',
+    label: 'Doświadczenie',
+  },
+  {
+    href: '#',
+    label: 'Blog',
+  },
+  {
+    href: '/o-witrynie',
+    label: 'O witrynie',
+  },
+  {
+    href: '#',
+    label: 'Kontakt',
+  },
+] as const satisfies Link[]
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <nav px="16" py="4" border-b="1px solid #ccc">
+      <div flex flex-row gap="2" items-center justify-between>
+        <a href="/">
+          <Logo width={48} />
+        </a>
+
+        <div flex flex-row gap="16">
+          {
+            links.map((el) => (
+              <a
+                hover:border-b="2px solid #000"
+                border-b="2px solid transparent"
+                href={el.href}
+              >
+                {el.label}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </nav>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
