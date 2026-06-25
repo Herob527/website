@@ -7,6 +7,7 @@ import packageJson from '../../package.json?raw'
 import astroConfig from '../../astro.config.mjs?raw'
 import type { CodeLanguage } from 'astro'
 import { Code } from 'astro:components'
+import thisPage from './o-witrynie.astro?raw'
 
 interface StackItem {
   type: string
@@ -47,6 +48,12 @@ const configs = [
     name: 'eslint.config.js',
     code: eslintConfig,
     type: 'ts',
+  },
+
+  {
+    name: 'o-witrynie.astro',
+    code: thisPage,
+    type: 'astro',
   },
   {
     name: '.prettierrc',
@@ -110,7 +117,15 @@ const configs = [
             <div>
               <Code
                 data-name={item.name}
-                class="py-4 px-2 rounded-2xl before:content-[attr(data-name)] before:block before before:mb-2 before:text-sm before:font-semibold before:border-b-1"
+                before:block
+                before:mb-2
+                before:text-sm
+                before:font-semibold
+                before:border-b-1
+                py-4
+                px-2
+                rounded-2xl
+                class="before:content-[attr(data-name)]"
                 code={item.code}
                 lang={item.type}
               />
