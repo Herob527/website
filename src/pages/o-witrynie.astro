@@ -1,5 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro'
+
+const stack = [
+  { type: 'Framework', name: 'Astro', href: 'https://astro.build/' },
+  { type: 'Silnik styli', name: 'UnoCSS', href: 'https://unocss.dev/' },
+  {
+    type: 'Skrypty',
+    name: 'TypeScript',
+    href: 'https://www.typescriptlang.org/',
+  },
+  { type: 'Linter', name: 'ESLint', href: 'https://eslint.org/' },
+  { type: 'Formatter', name: 'Prettier', href: 'https://prettier.io/' },
+  {
+    type: 'Edytor AI',
+    name: 'opencode (MiMo V2.5 Free)',
+    href: 'https://opencode.ai/',
+  },
+]
 ---
 
 <Layout>
@@ -8,87 +25,29 @@ import Layout from '../layouts/Layout.astro'
       <h1>O witrynie</h1>
     </header>
     <article>
-      <header text-2xl mb-6>
+      <header text-3xl mb-6>
         <h2>Stack technologiczny</h2>
       </header>
       <table>
-        <tr>
-          <td px-4 py-1>Framework:</td>
-          <td>
-            <a
-              hover:border-b="2px solid #000"
-              border-b="2px solid transparent"
-              href="https://astro.build/"
-              target="_blank">Astro</a
-            >
-          </td>
-        </tr>
-        <tr>
-          <td px-4 py-1>Silnik styli:</td>
-          <td>
-            <a
-              hover:border-b="2px solid #000"
-              border-b="2px solid transparent"
-              href="https://unocss.dev/"
-              target="_blank">UnoCSS</a
-            >
-          </td>
-        </tr>
-        <tr>
-          <td px-4 py-1>Skrypty:</td>
-          <td>
-            <a
-              hover:border-b="2px solid #000"
-              border-b="2px solid transparent"
-              href="https://www.typescriptlang.org/"
-              target="_blank">TypeScript</a
-            >
-          </td>
-        </tr>
-        <tr>
-          <td px-4 py-1>Linter:</td>
-          <td>
-            <a
-              hover:border-b="2px solid #000"
-              border-b="2px solid transparent"
-              href="https://eslint.org/"
-              target="_blank">ESLint</a
-            >
-          </td>
-        </tr>
-        <tr>
-          <td px-4 py-1>Formatter:</td>
-          <td>
-            <a
-              hover:border-b="2px solid #000"
-              border-b="2px solid transparent"
-              href="https://prettier.io/"
-              target="_blank">Prettier</a
-            >
-          </td>
-        </tr>
-        <tr>
-          <td px-4 py-1>Edytor:</td>
-          <td>
-            <a
-              hover:border-b="2px solid #000"
-              border-b="2px solid transparent"
-              href="https://neovim.dev/"
-              target="_blank">Neovim (konfiguracja własna)</a
-            >
-          </td>
-        </tr>
-        <tr>
-          <td px-4 py-1>Edytor AI:</td>
-          <td>
-            <a
-              hover:border-b="2px solid #000"
-              border-b="2px solid transparent"
-              href="https://opencode.ai/"
-              target="_blank">Opencode (MiMo V2.5 Free)</a
-            >
-          </td>
-        </tr>
+        {
+          stack.map((item) => (
+            <tr>
+              <td px-4 py-1>
+                {item.type}:
+              </td>
+              <td>
+                <a
+                  hover:border-b="2px solid #000"
+                  border-b="2px solid transparent"
+                  href={item.href}
+                  target="_blank"
+                >
+                  {item.name}
+                </a>
+              </td>
+            </tr>
+          ))
+        }
       </table>
     </article>
   </section>
