@@ -1,0 +1,11 @@
+{
+  "plugins": ["typescript", "import", "jsx"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "warn",
+    "eqeqeq": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "import/no-duplicates": "error"
+  }
+}

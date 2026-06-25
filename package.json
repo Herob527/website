@@ -9,7 +9,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "oxlint src/",
+    "lint:fix": "oxlint src/ --fix"
   },
   "dependencies": {
     "@astrojs/preact": "^6.0.0",
@@ -20,6 +24,9 @@
   "devDependencies": {
     "@unocss/astro": "^66.7.2",
     "@unocss/reset": "^66.7.2",
+    "oxlint": "^0.16.3",
+    "prettier": "^3.5.3",
+    "prettier-plugin-astro": "^0.14.1",
     "unocss": "^66.7.2"
   }
 }
