@@ -1,5 +1,36 @@
 ---
 import Layout from '../layouts/Layout.astro'
+
+interface ContactItem {
+  icon: string
+  label: string
+  href: string
+  name: string
+  external?: boolean
+}
+
+const contacts = [
+  {
+    icon: 'i-mdi-email',
+    label: 'E-mail',
+    href: 'mailto:szymon.wrzos@onet.pl',
+    name: 'szymon.wrzos@onet.pl',
+  },
+  {
+    icon: 'i-mdi-github',
+    label: 'GitHub',
+    href: 'https://github.com/Herob527',
+    name: 'szymon.wrzos@onet.pl',
+    external: true,
+  },
+  {
+    icon: 'i-mdi-linkedin',
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/szymon-wrzos-0646651b1/',
+    name: 'Szymon Wrzos',
+    external: true,
+  },
+] satisfies ContactItem[]
 ---
 
 <Layout>
@@ -7,28 +38,30 @@ import Layout from '../layouts/Layout.astro'
     <header text-center text-4xl font-semibold mb-6>
       <h1>Kontakt</h1>
     </header>
-    <ul>
-      <li class="flex gap-2 items-center">
-        <div class="inline-block i-mdi-email"></div>
-        E-mail: <a
-          href="mailto:szymon.wrzos@onet.pl"
-          class="text-blue-500 hover:text-blue-700">szymon.wrzos@onet.pl</a
-        >
-      </li>
-      <li class="flex gap-2 items-center">
-        <div class="inline-block i-mdi-github"></div>
-        GitHub: <a
-          href="https://github.com/Herob527"
-          class="text-blue-500 hover:text-blue-700">szymon.wrzos@onet.pl</a
-        >
-      </li>
-      <li class="flex gap-2 items-center">
-        <div class="inline-block i-mdi-linkedin"></div>
-        LinkedIn: <a
-          href="https://www.linkedin.com/in/szymon-wrzos-0646651b1/"
-          class="text-blue-500 hover:text-blue-700">Szymon Wrzos</a
-        >
-      </li>
-    </ul>
+    <table>
+      {
+        contacts.map((item) => (
+          <tr>
+            <td pr-4 py-1>
+              <div class={`inline-block ${item.icon}`} />
+              {item.label}:
+            </td>
+            <td>
+              <a
+                href={item.href}
+                link:text-blue-500
+                visited:text-purple-500
+                hover-visited:border-b="2px solid purple-500"
+                hover:border-b="2px solid blue-500"
+                border-b="2px solid transparent"
+                target={item.external ? '_blank' : undefined}
+              >
+                {item.name}
+              </a>
+            </td>
+          </tr>
+        ))
+      }
+    </table>
   </section>
 </Layout>
