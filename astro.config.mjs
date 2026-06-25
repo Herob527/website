@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config'
 import UnoCSS from 'unocss/astro'
 
 import preact from '@astrojs/preact'
+import presetAttributify from '@unocss/preset-attributify'
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,6 +11,7 @@ export default defineConfig({
     preact(),
     UnoCSS({
       injectReset: true,
+      presets: [presetAttributify()],
     }),
   ],
 })

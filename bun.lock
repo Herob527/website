@@ -14,6 +14,7 @@
         "@eslint/js": "^10.0.1",
         "@unocss/astro": "^66.7.2",
         "@unocss/eslint-plugin": "^66.7.2",
+        "@unocss/preset-attributify": "^66.7.2",
         "@unocss/reset": "^66.7.2",
         "eslint": "^10.5.0",
         "eslint-plugin-astro": "^2.1.1",
