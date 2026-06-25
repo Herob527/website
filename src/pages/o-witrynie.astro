@@ -5,6 +5,7 @@ import prettierConfig from '../../.prettierrc?raw'
 import tsconfig from '../../tsconfig.json?raw'
 import packageJson from '../../package.json?raw'
 import astroConfig from '../../astro.config.mjs?raw'
+import mise from '../../mise.toml?raw'
 import type { CodeLanguage } from 'astro'
 import { Code } from 'astro:components'
 
@@ -22,6 +23,7 @@ const stack = [
     name: 'TypeScript',
     href: 'https://www.typescriptlang.org/',
   },
+  { type: 'Menadżer pakietów', name: 'Bun', href: 'https://bun.com/' },
   { type: 'Linter', name: 'ESLint', href: 'https://eslint.org/' },
   { type: 'Formatter', name: 'Prettier', href: 'https://prettier.io/' },
   {
@@ -62,6 +64,11 @@ const configs = [
     name: 'package.json',
     code: packageJson,
     type: 'json',
+  },
+  {
+    name: 'mise.toml',
+    code: mise,
+    type: 'toml',
   },
 ] as const satisfies ConfigItem[]
 ---
