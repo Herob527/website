@@ -3,7 +3,7 @@ import tseslint from 'typescript-eslint'
 import pluginAstro from 'eslint-plugin-astro'
 import unocss from '@unocss/eslint-plugin'
 
-export default tseslint.config(
+export default [
   eslint.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
@@ -44,4 +44,4 @@ export default tseslint.config(
   {
     ignores: ['dist/', '.astro/', 'node_modules/'],
   },
-)
+]
