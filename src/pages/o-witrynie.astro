@@ -126,7 +126,7 @@ const configs = [
                 <p p-2 flex-1 border-r-2 border-black>
                   {item.name}
                 </p>
-                <span p-2 px-4 rotate-90 class="peer-checked:-rotate-90">
+                <span p-2 px-4 rotate-90 transition-transform>
                   &rangle;
                 </span>
               </label>
@@ -148,3 +148,9 @@ const configs = [
     </article>
   </section>
 </Layout>
+
+<style>
+  input.peer:checked + label > span {
+    scale: -1 -1;
+  }
+</style>
