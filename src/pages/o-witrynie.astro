@@ -25,19 +25,22 @@ const stack = [
       <h1>O witrynie</h1>
     </header>
     <article>
-      <header text-3xl mb-6>
+      <header text-2xl mb-4>
         <h2>Stack technologiczny</h2>
       </header>
       <table>
         {
           stack.map((item) => (
             <tr>
-              <td px-4 py-1>
+              <td pr-4 py-1>
                 {item.type}:
               </td>
               <td>
                 <a
-                  hover:border-b="2px solid #000"
+                  link:text-blue-500
+                  visited:text-purple-500
+                  hover-visited:border-b="2px solid purple-500"
+                  hover:border-b="2px solid blue-500"
                   border-b="2px solid transparent"
                   href={item.href}
                   target="_blank"
