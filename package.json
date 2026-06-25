@@ -14,8 +14,7 @@
   "dependencies": {
     "@astrojs/preact": "^6.0.0",
     "astro": "^7.0.2",
-    "preact": "^10.29.2",
-    "react": "^19.2.7"
+    "preact": "^10.29.2"
   },
   "devDependencies": {
     "@unocss/astro": "^66.7.2",
