@@ -3,5 +3,56 @@ import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout>
-  <p>Ta witryna jest w budowie!</p>
+  <section container mx-auto mt-12>
+    <header text-center text-4xl font-semibold mb-6>
+      <h1>O witrynie</h1>
+    </header>
+    <article>
+      <header text-3xl mb-6>
+        <h2>Stack technologiczny</h2>
+      </header>
+      <ul>
+        <li>
+          Framework: <a
+            hover:border-b="2px solid #000"
+            border-b="2px solid transparent"
+            href="https://astro.build/"
+            target="_blank">Astro</a
+          >
+        </li>
+        <li>
+          Silnik styli: <a
+            hover:border-b="2px solid #000"
+            border-b="2px solid transparent"
+            href="https://unocss.dev/"
+            target="_blank">UnoCSS</a
+          >
+        </li>
+        <li>
+          Skrypty: <a
+            hover:border-b="2px solid #000"
+            border-b="2px solid transparent"
+            href="https://www.typescriptlang.org/"
+            target="_blank">TypeScript</a
+          >
+        </li>
+        <li>
+          Linter: <a
+            hover:border-b="2px solid #000"
+            border-b="2px solid transparent"
+            href="https://eslint.org/"
+            target="_blank">ESLint</a
+          >
+        </li>
+        <li>
+          Formatter: <a
+            hover:border-b="2px solid #000"
+            border-b="2px solid transparent"
+            href="https://prettier.io/"
+            target="_blank">Prettier</a
+          >
+        </li>
+      </ul>
+    </article>
+  </section>
 </Layout>
