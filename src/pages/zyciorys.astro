@@ -95,7 +95,13 @@ const sorted = stagesWithContent
                 <span font-semibold text-sm text-gray-800>
                   {stage.entry.data.label}
                 </span>
-                <div text-xs text-gray-600 leading-relaxed mt-1>
+                <div
+                  text-xs
+                  text-gray-600
+                  leading-relaxed
+                  mt-1
+                  class="timeline-content"
+                >
                   <stage.Content />
                 </div>
                 {stage.included.map((inc: IncludedStage) => (
@@ -110,7 +116,13 @@ const sorted = stagesWithContent
                     <span text-xs text-gray-500 tabular-nums block>
                       {inc.entry.data.startDate} — {inc.entry.data.endDate}
                     </span>
-                    <div text-xs text-gray-600 leading-relaxed mt-1>
+                    <div
+                      text-xs
+                      text-gray-600
+                      leading-relaxed
+                      mt-1
+                      class="timeline-content"
+                    >
                       <inc.Content />
                     </div>
                   </div>
@@ -123,3 +135,10 @@ const sorted = stagesWithContent
     </div>
   </section>
 </Layout>
+
+<style is:global>
+  a {
+    color: #3b82f6 !important;
+    text-decoration: underline !important;
+  }
+</style>
