@@ -10,13 +10,14 @@ import { Picture } from 'astro:assets'
       <h1>Witaj!</h1>
     </header>
     <div flex flex-col md:flex-row items-center gap-8>
-      <div>
+      <div flex flex-col>
         <Picture
           src={logoKot}
           alt="Biały kotek z czarnymi plamkami"
           formats={['webp']}
           height={500}
         />
+        <i>Mruczek</i>
       </div>
 
       <article flex flex-col gap-4 text="4.5">
