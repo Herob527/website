@@ -7,7 +7,7 @@ order: 4
 parent: 'politechnika-poznanska'
 ---
 
-Praktyki studenckie w software house. Zajmowałem się stronami e-sklepów klientów (CSS + Liquid) oraz stronami firmowymi opartymi na WordPressie.
+Praktyki studenckie w firmie zajmującą się wdrażaniem i utrzymywaniem rozwiązań Comarchu . Zajmowałem się stronami e-sklepów klientów (CSS + Liquid) oraz stronami firmowymi opartymi na WordPressie.
 
 <br />
 
