@@ -5,6 +5,7 @@ interface LifeStageRange {
   startDate: Temporal.PlainDate
   endDate: Temporal.PlainDate
   label: string
+  color: string
   included?: readonly LifeStageRange[]
 }
 
@@ -13,11 +14,13 @@ const lastingEvents = [
     startDate: Temporal.PlainDate.from({ day: 1, month: 9, year: 2016 }),
     endDate: Temporal.PlainDate.from({ day: 30, month: 6, year: 2020 }),
     label: 'ZSL-T / Technikum nr 19 w Poznaniu',
+    color: '#6366f1',
     included: [
       {
         startDate: Temporal.PlainDate.from({ day: 1, month: 3, year: 2018 }),
         endDate: Temporal.PlainDate.from({ day: 30, month: 3, year: 2018 }),
         label: 'Praktyki w Transgourmet',
+        color: '#6366f1',
       },
     ],
   },
@@ -25,11 +28,13 @@ const lastingEvents = [
     startDate: Temporal.PlainDate.from({ day: 1, month: 10, year: 2020 }),
     endDate: Temporal.PlainDate.from({ day: 30, month: 10, year: 2022 }),
     label: 'Politechnika Poznańska',
+    color: '#f59e0b',
     included: [
       {
         startDate: Temporal.PlainDate.from({ day: 1, month: 9, year: 2022 }),
         endDate: Temporal.PlainDate.from({ day: 30, month: 9, year: 2022 }),
         label: 'Praktyki w ERPSystems',
+        color: '#f59e0b',
       },
     ],
   },
@@ -37,11 +42,13 @@ const lastingEvents = [
     startDate: Temporal.PlainDate.from({ day: 1, month: 11, year: 2022 }),
     endDate: Temporal.PlainDate.from({ day: 1, month: 4, year: 2025 }),
     label: 'Praca BitApps sp. z o.o.',
+    color: '#10b981',
   },
   {
     startDate: Temporal.PlainDate.from({ day: 1, month: 6, year: 2025 }),
     endDate: Temporal.PlainDate.from({ day: 1, month: 6, year: 2026 }),
     label: 'Praca Hermsoft sp. z o.o.',
+    color: '#ef4444',
   },
 ] satisfies LifeStageRange[]
 
@@ -97,15 +104,6 @@ const totalDays = timelineStart.until(timelineEnd, { smallestUnit: 'day' }).days
 const heightPerDay = Math.max(MIN_HEIGHT_PER_YEAR / 365.25, 0.75)
 const timelineHeight = totalDays * heightPerDay
 
-const colors = [
-  '#6366f1',
-  '#f59e0b',
-  '#10b981',
-  '#ef4444',
-  '#8b5cf6',
-  '#06b6d4',
-]
-
 function dateToOffset(date: Temporal.PlainDate): number {
   return timelineStart.until(date, { smallestUnit: 'day' }).days * heightPerDay
 }
@@ -115,8 +113,7 @@ function dateToPercent(date: Temporal.PlainDate): number {
 }
 
 const eventsWithStyles = lastingEvents.map(
-  (event: LifeStageRange, i: number) => {
-    const color = colors[i % colors.length]
+  (event: LifeStageRange) => {
     const eventTop = dateToPercent(event.startDate)
     const eventHeight = dateToPercent(event.endDate) - eventTop
     const eventDurationDays = event.startDate.until(event.endDate, {
@@ -138,7 +135,6 @@ const eventsWithStyles = lastingEvents.map(
     })
     return {
       ...event,
-      color,
       top: `${eventTop.toString()}%`,
       height: `${eventHeight.toString()}%`,
       included,
