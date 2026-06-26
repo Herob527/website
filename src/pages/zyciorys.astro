@@ -80,16 +80,8 @@ const formatDate = (date: Temporal.PlainDate) => {
   return `${months[date.month - 1]} ${date.year.toString()}`
 }
 
-const timelineStart = Temporal.PlainDate.from({
-  day: 1,
-  month: 1,
-  year: globalStart.year,
-})
-const timelineEnd = Temporal.PlainDate.from({
-  day: 1,
-  month: 1,
-  year: globalEnd.year + 1,
-})
+const timelineStart = globalStart.add({ months: -4 }).with({ day: 1 })
+const timelineEnd = globalEnd.add({ months: 3 }).with({ day: 1 })
 
 const totalDays = timelineStart.until(timelineEnd, { smallestUnit: 'day' }).days
 
@@ -151,16 +143,14 @@ const stagesWithStyles = stagesWithContent.map((stage) => {
   }
 })
 
-const totalYears = timelineStart.until(timelineEnd, {
-  smallestUnit: 'year',
-  largestUnit: 'year',
-}).years
-
-const yearTicks = Array.from({ length: totalYears + 1 }, (_, i) => {
-  const year = timelineStart.add({ years: i }).year
-  const date = Temporal.PlainDate.from({ day: 1, month: 1, year })
-  return { year, topPx: dateToPx(date) }
-})
+const yearTicks = Array.from(
+  { length: timelineEnd.year - timelineStart.year + 1 },
+  (_, i) => {
+    const year = timelineStart.year + i
+    const date = Temporal.PlainDate.from({ day: 1, month: 1, year })
+    return { year, topPx: dateToPx(date) }
+  },
+).filter((tick) => tick.topPx >= 0)
 ---
 
 <Layout>
