@@ -23,12 +23,12 @@ const lastingEvents = [
   },
   {
     startDate: Temporal.PlainDate.from({ day: 1, month: 10, year: 2020 }),
-    endDate: Temporal.PlainDate.from({ day: 30, month: 6, year: 2022 }),
+    endDate: Temporal.PlainDate.from({ day: 30, month: 9, year: 2022 }),
     label: 'Politechnika Poznańska',
     included: [
       {
-        startDate: Temporal.PlainDate.from({ day: 1, month: 6, year: 2022 }),
-        endDate: Temporal.PlainDate.from({ day: 30, month: 6, year: 2022 }),
+        startDate: Temporal.PlainDate.from({ day: 1, month: 9, year: 2022 }),
+        endDate: Temporal.PlainDate.from({ day: 30, month: 9, year: 2022 }),
         label: 'Praktyki w ERPSystems',
       },
     ],
@@ -59,16 +59,43 @@ const globalEnd = allDates.reduce((max, d) =>
   Temporal.PlainDate.compare(max, d) > 0 ? max : d,
 )
 
-const totalDays = globalStart.until(globalEnd, { smallestUnit: 'day' }).days
-const totalYears = globalStart.until(globalEnd, {
+const months = [
+  'Sty',
+  'Lut',
+  'Mar',
+  'Kwi',
+  'Maj',
+  'Cze',
+  'Lip',
+  'Sie',
+  'Wrz',
+  'Paź',
+  'Lis',
+  'Gru',
+]
+
+function formatDate(date: Temporal.PlainDate): string {
+  return `${months[date.month - 1]} ${date.year.toString()}`
+}
+
+const timelineStart = Temporal.PlainDate.from({
+  day: 1,
+  month: 1,
+  year: globalStart.year,
+})
+const timelineEnd = Temporal.PlainDate.from({
+  day: 1,
+  month: 1,
+  year: globalEnd.year + 1,
+})
+
+const totalYears = timelineStart.until(timelineEnd, {
   smallestUnit: 'year',
   largestUnit: 'year',
 }).years
+const totalDays = timelineStart.until(timelineEnd, { smallestUnit: 'day' }).days
 const heightPerDay = Math.max(MIN_HEIGHT_PER_YEAR / 365.25, 1)
-const timelineHeight = Math.max(
-  totalDays * heightPerDay,
-  (totalYears + 1) * MIN_HEIGHT_PER_YEAR,
-)
+const timelineHeight = totalDays * heightPerDay
 
 const colors = [
   '#6366f1',
@@ -80,7 +107,7 @@ const colors = [
 ]
 
 function dateToOffset(date: Temporal.PlainDate): number {
-  return globalStart.until(date, { smallestUnit: 'day' }).days * heightPerDay
+  return timelineStart.until(date, { smallestUnit: 'day' }).days * heightPerDay
 }
 
 function dateToPercent(date: Temporal.PlainDate): number {
@@ -92,28 +119,38 @@ const eventsWithStyles = lastingEvents.map(
     const color = colors[i % colors.length]
     const eventTop = dateToPercent(event.startDate)
     const eventHeight = dateToPercent(event.endDate) - eventTop
-    const eventDurationDays = event.startDate.until(event.endDate, { smallestUnit: 'day' }).days
+    const eventDurationDays = event.startDate.until(event.endDate, {
+      smallestUnit: 'day',
+    }).days
 
     const included = event.included?.map((inc: LifeStageRange) => {
-      const incTopDays = event.startDate.until(inc.startDate, { smallestUnit: 'day' }).days
-      const incDurationDays = inc.startDate.until(inc.endDate, { smallestUnit: 'day' }).days
+      const incTopDays = event.startDate.until(inc.startDate, {
+        smallestUnit: 'day',
+      }).days
+      const incDurationDays = inc.startDate.until(inc.endDate, {
+        smallestUnit: 'day',
+      }).days
       return {
         ...inc,
-        top: `${(incTopDays / eventDurationDays) * 100}%`,
-        height: `${(incDurationDays / eventDurationDays) * 100}%`,
+        top: `${((incTopDays / eventDurationDays) * 100).toString()}%`,
+        height: `${((incDurationDays / eventDurationDays) * 100).toString()}%`,
       }
     })
-    return { ...event, color, top: `${eventTop}%`, height: `${eventHeight}%`, included }
+    return {
+      ...event,
+      color,
+      top: `${eventTop.toString()}%`,
+      height: `${eventHeight.toString()}%`,
+      included,
+    }
   },
 )
 
-const yearTicks = Array.from({ length: totalYears + 2 }, (_, i) => {
-  const year = globalStart.add({ years: i }).year
+const yearTicks = Array.from({ length: totalYears + 1 }, (_, i) => {
+  const year = timelineStart.add({ years: i }).year
   const date = Temporal.PlainDate.from({ day: 1, month: 1, year })
-  if (Temporal.PlainDate.compare(date, globalStart) < 0) return null
-  if (Temporal.PlainDate.compare(date, globalEnd) > 0) return null
-  return { year, top: `${dateToPercent(date)}%` }
-}).filter(Boolean)
+  return { year, top: `${dateToPercent(date).toString()}%` }
+})
 ---
 
 <Layout>
@@ -122,33 +159,37 @@ const yearTicks = Array.from({ length: totalYears + 2 }, (_, i) => {
       <h1>Życiorys</h1>
     </header>
 
-    <div max-w-900px mx-auto px-4>
-      <div
-        relative
-        border-l="3px solid #e5e7eb"
-        ml-120px
-        style={`height: ${timelineHeight}px`}
-      >
+    <div max-w-900px px-4>
+      <div relative ml-160px style={`height: ${timelineHeight.toString()}px`}>
+        <span
+          id="divider"
+          absolute
+          border-l="3px solid #e5e7eb"
+          left-0
+          h-full
+          class="-translate-x-1/2"
+        >
+        </span>
+
         {
           yearTicks.map((tick) => (
             <div
               absolute
               flex
               items-center
-              w-full
               h-0
-              style={`top: ${tick!.top}; left: -120px`}
+              style={`top: ${tick.top}; left: -160px; width: 150px`}
             >
               <span
-                w-100px
                 text-right
                 text-sm
                 text-gray-400
                 tabular-nums
                 select-none
                 flex-none
+                style="width: 140px"
               >
-                {tick!.year}
+                {tick.year}
               </span>
               <div flex-1 border-t="1px dashed #e5e7eb" ml-12px />
             </div>
@@ -173,6 +214,25 @@ const yearTicks = Array.from({ length: totalYears + 2 }, (_, i) => {
                 border="3px solid white"
                 style={`left: -10px; bottom: 0; width: 18px; height: 18px; background-color: ${event.color}; box-shadow: 0 0 0 2px ${event.color}`}
               />
+
+              <span
+                absolute
+                text-xs
+                font-semibold
+                whitespace-nowrap
+                style={`left: -75px; top: 0; color: ${event.color}`}
+              >
+                {formatDate(event.startDate)}
+              </span>
+              <span
+                absolute
+                text-xs
+                font-semibold
+                whitespace-nowrap
+                style={`left: -75px; bottom: 0; color: ${event.color}`}
+              >
+                {formatDate(event.endDate)}
+              </span>
 
               <div
                 ml-20px
