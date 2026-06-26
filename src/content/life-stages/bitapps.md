@@ -51,8 +51,12 @@ Sama mapa była oparta na OpenLayers i Preact, więc łatwiej było wdrożyć re
 
 <br />
 
-Potem doszło neituri.fi (obecnie zastąpione neituri.com)
+Potem doszło neituri.fi, które obecnie funkcjonuje pod nazwą [neituri.com](https://www.neituri.com/), jednak to już zupełnie inny design i kod, którego nie pisałem
 
 Tutaj miałem większą decyzyjność, bo to projekt od zera robiony, więc zdecydowałem się na Astro dzięki łatwiejszej integracji preacta i ogólnie JSa czy przetwarzaniu obrazów, by były lepiej dopasowane to realnych potrzeb.
 
 Też pomagał fakt, że Astro nie wymagało długiego wdrażania dla kogoś, kto znał Reacta zwłaszcza jak widział kod.
+
+<br />
+
+Ostatecznie wbiła restrukturyzacja, więc trzeba było szukać dalej pracy
