@@ -12,7 +12,7 @@ Firma produkowała platformę **WoodsApp** dla właścicieli lasów w Niemczech 
 
 <br />
 
-**Pierwszy sukces:** Naprawa buga w formularzu (opóźnienia przy wpisywaniu wartości → `useMemo`), co otworzyło mi drogę do zadań sprintowych.
+**Pierwszy sukces:** Naprawa buga w formularzu (naprawa opóźnienia przy wpisywaniu wartości poprzez `useMemo`), co otworzyło mi drogę do zadań sprintowych.
 
 **Android/Kotlin:** Gdy brakowało zadań na froncie, zaoferowano mi naukę Kotlina. Po 2 miesiącach samodzielnej nauki brałem udział w sprintach. Kotlin okazał się intuicyjny i przyjemny w pisaniu.
 
