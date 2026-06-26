@@ -34,8 +34,6 @@ export default defineConfig({
   },
   integrations: [
     preact(),
-    UnoCSS({
-      mode: 'dist-chunk',
-    }),
+    UnoCSS(),
   ],
 })
