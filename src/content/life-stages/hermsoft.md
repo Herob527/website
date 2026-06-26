@@ -12,7 +12,7 @@ Stanowisko: Programista
 
 Krótko o firmie:
 
-To był mały software house, gdzie na zlecenie klientów tworzyliśmy aplikacje webowe czy mobilne.
+**Hermsoft** to był mały software house, gdzie na zlecenie klientów tworzyliśmy aplikacje webowe czy mobilne.
 
 <br />
 

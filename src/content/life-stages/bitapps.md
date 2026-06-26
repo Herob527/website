@@ -11,7 +11,7 @@ Stanowisko: Programista
 <br />
 Krótko o firmie:
 
-BitApps to była firma, która wydawała produkt dla właścicieli lasów w Niemczech czy w Austrii (w Polsce jest ich dosyć mało).
+**BitApps** to była firma, która wydawała produkt dla właścicieli lasów w Niemczech czy w Austrii (w Polsce jest ich dosyć mało).
 
 Ten produkt, platforma WoodsApp, miał wersję na przeglądarkę oraz na Androida i iOS.
 
