@@ -26,7 +26,7 @@ const children = allStages
   .filter((s) => s.data.parent)
   .sort((a, b) => a.data.order - b.data.order)
 
-const stagesWithContent: StageWithContent[] = await Promise.all(
+const stagesWithContent = await Promise.all(
   parents.map(async (parent) => {
     const { Content } = await render(parent)
     const included = await Promise.all(
@@ -39,26 +39,6 @@ const stagesWithContent: StageWithContent[] = await Promise.all(
     )
     return { entry: parent, Content, included }
   }),
-)
-
-const MIN_HEIGHT_PER_YEAR = 30
-const MIN_EVENT_HEIGHT_PX = 27
-
-const allDates = stagesWithContent.flatMap((s) => [
-  Temporal.PlainDate.from(s.entry.data.startDate),
-  Temporal.PlainDate.from(s.entry.data.endDate),
-  ...s.included
-    .map((inc: IncludedStage) => [
-      Temporal.PlainDate.from(inc.entry.data.startDate),
-      Temporal.PlainDate.from(inc.entry.data.endDate),
-    ])
-    .flat(),
-])
-const globalStart = allDates.reduce((min, d) =>
-  Temporal.PlainDate.compare(min, d) < 0 ? min : d,
-)
-const globalEnd = allDates.reduce((max, d) =>
-  Temporal.PlainDate.compare(max, d) > 0 ? max : d,
 )
 
 const months = [
@@ -80,77 +60,14 @@ const formatDate = (date: Temporal.PlainDate) => {
   return `${months[date.month - 1]} ${date.year.toString()}`
 }
 
-const timelineStart = globalStart.add({ months: -4 }).with({ day: 1 })
-const timelineEnd = globalEnd.add({ months: 3 }).with({ day: 1 })
-
-const totalDays = timelineStart.until(timelineEnd, { smallestUnit: 'day' }).days
-
-const allEventDurations = stagesWithContent.flatMap((stage) => {
-  const stageDays = Temporal.PlainDate.from(stage.entry.data.startDate).until(
-    Temporal.PlainDate.from(stage.entry.data.endDate),
-    { smallestUnit: 'day' },
-  ).days
-  const childDays = stage.included.map(
-    (inc) =>
-      Temporal.PlainDate.from(inc.entry.data.startDate).until(
-        Temporal.PlainDate.from(inc.entry.data.endDate),
-        { smallestUnit: 'day' },
-      ).days,
-  )
-  return [stageDays, ...childDays]
-})
-const shortestEventDays = Math.min(...allEventDurations)
-
-const heightPerDay = Math.max(
-  MIN_HEIGHT_PER_YEAR / 365.25,
-  MIN_EVENT_HEIGHT_PX / shortestEventDays,
-)
-const timelineHeight = totalDays * heightPerDay
-
-function dateToPx(date: Temporal.PlainDate): number {
-  return timelineStart.until(date, { smallestUnit: 'day' }).days * heightPerDay
-}
-
-const stagesWithStyles = stagesWithContent.map((stage) => {
-  const startDate = Temporal.PlainDate.from(stage.entry.data.startDate)
-  const endDate = Temporal.PlainDate.from(stage.entry.data.endDate)
-  const eventTopPx = dateToPx(startDate)
-  const eventHeightPx = dateToPx(endDate) - eventTopPx
-  const eventDurationDays = startDate.until(endDate, {
-    smallestUnit: 'day',
-  }).days
-
-  const included = stage.included.map((inc) => {
-    const incStart = Temporal.PlainDate.from(inc.entry.data.startDate)
-    const incEnd = Temporal.PlainDate.from(inc.entry.data.endDate)
-    const incTopDays = startDate.until(incStart, { smallestUnit: 'day' }).days
-    const incDurationDays = incStart.until(incEnd, { smallestUnit: 'day' }).days
-    return {
-      ...inc,
-      topPx: (incTopDays / eventDurationDays) * eventHeightPx,
-      heightPx: (incDurationDays / eventDurationDays) * eventHeightPx,
-    }
-  })
-
-  return {
-    ...stage,
-    color: stage.entry.data.color,
-    topPx: eventTopPx,
-    heightPx: eventHeightPx,
-    startDate,
-    endDate,
-    included,
-  }
-})
-
-const yearTicks = Array.from(
-  { length: timelineEnd.year - timelineStart.year + 1 },
-  (_, i) => {
-    const year = timelineStart.year + i
-    const date = Temporal.PlainDate.from({ day: 1, month: 1, year })
-    return { year, topPx: dateToPx(date) }
-  },
-).filter((tick) => tick.topPx >= 0)
+const sorted = stagesWithContent
+  .map((s: StageWithContent) => ({
+    ...s,
+    startDate: Temporal.PlainDate.from(s.entry.data.startDate),
+    endDate: Temporal.PlainDate.from(s.entry.data.endDate),
+    color: s.entry.data.color,
+  }))
+  .sort((a, b) => Temporal.PlainDate.compare(a.startDate, b.startDate))
 ---
 
 <Layout>
@@ -159,108 +76,32 @@ const yearTicks = Array.from(
       <h1>Życiorys</h1>
     </header>
 
-    <div max-w-900px px-4>
-      <div relative ml-160px style={`height: ${timelineHeight.toString()}px`}>
-        <span
-          id="divider"
-          absolute
-          border-l="3px solid #e5e7eb"
-          left-0
-          h-full
-          class="-translate-x-1/2"
-        >
-        </span>
-
+    <div max-w-900px mx-auto px-4>
+      <div relative border-l="2px solid #e5e7eb" ml-6>
         {
-          yearTicks.map((tick) => (
-            <div
-              absolute
-              flex
-              items-center
-              h-0
-              style={`top: ${tick.topPx.toString()}px; left: -160px; width: 150px`}
-            >
-              <span
-                text-right
-                text-xs
-                text-gray-400
-                tabular-nums
-                select-none
-                flex-none
-                style="width: 140px"
-              >
-                {tick.year}
-              </span>
-              <div flex-1 border-t="1px dashed #e5e7eb" ml-12px />
-            </div>
-          ))
-        }
-
-        {
-          stagesWithStyles.map((stage) => (
-            <div
-              absolute
-              style={`top: ${stage.topPx.toString()}px; height: ${stage.heightPx.toString()}px; left: -1.75px; right: 0; border-left: 4px solid ${stage.color}; border-radius: 6px`}
-            >
-              <div
-                absolute
-                rounded-full
-                border="3px solid white"
-                class="size-[12px] -translate-x-[calc(50%+1.75px)]"
-                style={`left: 0; top: 0; background-color: ${stage.color}; box-shadow: 0 0 0 2px ${stage.color}`}
-              />
-              <div
-                absolute
-                rounded-full
-                border="3px solid white"
-                class="size-[12px] -translate-x-[calc(50%+1.75px)]"
-                style={`left: 0; bottom: 0; background-color: ${stage.color}; box-shadow: 0 0 0 2px ${stage.color}`}
-              />
-
-              <span
-                absolute
-                text-xs
-                font-semibold
-                whitespace-nowrap
-                style={`left: -75px; top: 0; color: ${stage.color}`}
-              >
-                {formatDate(stage.startDate)}
-              </span>
-              <span
-                absolute
-                text-xs
-                font-semibold
-                whitespace-nowrap
-                style={`left: -75px; bottom: 0; color: ${stage.color}`}
-              >
-                {formatDate(stage.endDate)}
+          sorted.map((stage) => (
+            <div mb-12 pl-8>
+              <span text-xs font-semibold text-gray-400 tabular-nums>
+                {formatDate(stage.startDate)} — {formatDate(stage.endDate)}
               </span>
 
               <div
-                ml-20px
+                mt-2
                 bg-white
-                rounded-md
                 shadow-sm
-                p-2
-                flex
-                flex-col
-                gap-1
+                p-3
                 style={`border-left: 3px solid ${stage.color}`}
               >
                 <span font-semibold text-sm text-gray-800>
                   {stage.entry.data.label}
                 </span>
-                <div text-xs text-gray-600 leading-relaxed>
+                <div text-xs text-gray-600 leading-relaxed mt-1>
                   <stage.Content />
                 </div>
-                <span text-xs text-gray-500 tabular-nums>
-                  {stage.entry.data.startDate} — {stage.entry.data.endDate}
-                </span>
-                {stage.included.map((inc) => (
+                {stage.included.map((inc: IncludedStage) => (
                   <div
-                    p-1
-                    rounded
-                    mt-1
+                    p-2
+                    mt-2
                     style={`background: rgba(245,245,245,0.9); border-left: 2px solid ${stage.color}`}
                   >
                     <span font-medium text-xs text-gray-700>
@@ -269,7 +110,7 @@ const yearTicks = Array.from(
                     <span text-xs text-gray-500 tabular-nums block>
                       {inc.entry.data.startDate} — {inc.entry.data.endDate}
                     </span>
-                    <div text-xs text-gray-600 leading-relaxed>
+                    <div text-xs text-gray-600 leading-relaxed mt-1>
                       <inc.Content />
                     </div>
                   </div>
