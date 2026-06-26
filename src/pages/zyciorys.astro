@@ -76,11 +76,11 @@ const sorted = stagesWithContent
       <h1>Życiorys</h1>
     </header>
 
-    <div max-w-900px mx-auto px-4>
-      <div relative border-l="2px solid #e5e7eb" ml-6>
+    <div max-w-900px mx-auto w-full md:px-4>
+      <div relative border-l="2px solid #e5e7eb" md:ml-6>
         {
           sorted.map((stage) => (
-            <div mb-12 pl-8>
+            <div mb-12 pl-4 md:pl-8>
               <span text-sm font-semibold text-gray-400 tabular-nums>
                 {formatDate(stage.startDate)} — {formatDate(stage.endDate)}
               </span>
