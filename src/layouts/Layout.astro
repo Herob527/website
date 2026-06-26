@@ -37,7 +37,7 @@ const links = [
     <ClientRouter transition:animate={slide({ duration: '0.4s' })} />
   </head>
   <body>
-    <nav px="16" py="4" border-b="1px solid #ccc" bg-white>
+    <nav p="x-4 y-4" md:p="x-16 y-4" border-b="1px solid #ccc" bg-white>
       <div flex flex-row gap="2" items-center justify-between>
         <a href="/">
           <Logo width={48} />
@@ -93,7 +93,8 @@ const links = [
               border-b="2px solid transparent"
               href={el.href}
               text-lg
-              class="text-lg mobile-link"
+              text="black!"
+              class="decoration-none! mobile-link"
             >
               {el.label}
             </a>
