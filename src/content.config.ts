@@ -1,0 +1,16 @@
+import { defineCollection, z } from 'astro:content'
+import { glob } from 'astro/loaders'
+
+const lifeStages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/life-stages' }),
+  schema: z.object({
+    startDate: z.string(),
+    endDate: z.string(),
+    label: z.string(),
+    color: z.string(),
+    order: z.number(),
+    parent: z.string().optional(),
+  }),
+})
+
+export const collections = { lifeStages }
