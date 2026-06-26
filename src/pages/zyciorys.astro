@@ -1,5 +1,72 @@
 ---
 import Layout from '../layouts/Layout.astro'
+
+interface LifeStageRange {
+  startDate: Temporal.PlainDate
+  endDate: Temporal.PlainDate
+  label: string
+  included?: LifeStageRange[]
+}
+
+// const startDate = Temporal.PlainDate.from({
+//   day: 1,
+//   month: 9,
+//   year: 2016,
+// })
+// const endDate = Temporal.PlainDate.from({
+//   day: 1,
+//   month: 6,
+//   year: 2026,
+// })
+//
+// const dur = startDate.until(endDate, {
+//   smallestUnit: 'year',
+//   largestUnit: 'year',
+//   roundingMode: 'ceil',
+//   roundingIncrement: 1,
+// })
+//
+// const years = Array.from({ length: dur.years + 1 }, (_, i) => {
+//   const start = startDate.add({ years: i })
+//   return start.year
+// })
+
+const lastingEvents = [
+  {
+    startDate: Temporal.PlainDate.from({ day: 1, month: 9, year: 2016 }),
+    endDate: Temporal.PlainDate.from({ day: 30, month: 6, year: 2020 }),
+    label: 'ZSL-T / Technikum nr 19 w Poznaniu',
+    included: [
+      {
+        startDate: Temporal.PlainDate.from({ day: 1, month: 3, year: 2018 }),
+        endDate: Temporal.PlainDate.from({ day: 30, month: 3, year: 2018 }),
+        label: 'Praktyki w Transgourmet',
+      },
+    ],
+  },
+  {
+    startDate: Temporal.PlainDate.from({ day: 1, month: 10, year: 2020 }),
+    endDate: Temporal.PlainDate.from({ day: 30, month: 6, year: 2022 }),
+    label: 'Politechnika Poznańska',
+    included: [
+      {
+        startDate: Temporal.PlainDate.from({ day: 1, month: 6, year: 2022 }),
+        endDate: Temporal.PlainDate.from({ day: 30, month: 6, year: 2022 }),
+        label: 'Praktyki w ERPSystems',
+      },
+    ],
+  },
+  {
+    startDate: Temporal.PlainDate.from({ day: 1, month: 11, year: 2022 }),
+    endDate: Temporal.PlainDate.from({ day: 1, month: 4, year: 2025 }),
+    label: 'Praca BitApps sp. z o.o.',
+  },
+  {
+    startDate: Temporal.PlainDate.from({ day: 1, month: 6, year: 2025 }),
+    endDate: Temporal.PlainDate.from({ day: 1, month: 6, year: 2026 }),
+    label: 'Praca Hermsoft sp. z o.o.',
+  },
+] as const satisfies LifeStageRange[]
 ---
 
 <Layout>
