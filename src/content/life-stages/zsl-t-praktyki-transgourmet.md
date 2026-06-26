@@ -7,14 +7,8 @@ order: 2
 parent: 'zsl-t'
 ---
 
-Tutaj odbyłem praktyki zawodowe.
+Pierwsze zetknięcie z komercyjnym IT. Helpdesk ręcznie tworzył konta i dopraszał o brakujące dane i moim zadaniem było to zmienić
 
 <br />
 
-Przydatne się okazały moje umiejętności w JavaScript, gdyż był problem taki, że helpdesk musiał ręcznie tworzyć konta i dopraszać o brakujące dane.
-
-Dlatego we współpracy z opiekunem stworzyłem frontend z odpowiednimi polami i walidacją, dzięki czemu było jasne co i jak.
-
-<br />
-
-Nawet zdarzyło mi się kątem oka zauważyć moje UI, że było realnie w użyciu.
+**Rozwiązanie:** We współpracy z opiekunem stworzyłem formularz frontendowy z walidacją pól, który wyeliminował problemy z niekompletnymi danymi. UI trafił do realnego użytku — widziałem go w akcji.

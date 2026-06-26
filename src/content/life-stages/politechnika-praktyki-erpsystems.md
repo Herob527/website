@@ -7,16 +7,10 @@ order: 4
 parent: 'politechnika-poznanska'
 ---
 
-Tutaj odbyłem praktyki studenckie.
+Praktyki studenckie w software house. Zajmowałem się stronami e-sklepów klientów (CSS + Liquid) oraz stronami firmowymi opartymi na WordPressie.
 
 <br />
 
-Przydzielono mi tutaj zajmowanie się witrynami e-sklepu klientów oraz samymi stronami firmy opartymi na wordpressie oraz dodawanie potrzebnych firmie elementów.
+**Realizacja:** Zaprojektowałem i wdrożyłem responsywną tabelkę danych, która przeszła weryfikację. Niestety, praktyki zakończyły się przed wdrożeniem produkcyjnym — ale projekt został ukończony technicznie.
 
-W gruncie rzeczy tu CSS, tam Liquid.
-
-Samo erpsystem miało dwie strony: [erps.pl](https://erps.pl/) oraz [erpsystem.pl](https://erpsystem.pl/)
-
-<br />
-
-Też miałem do zrobienia projekt responsywnej tabelki co mi się udało, ale zanim była opcja wdrożenia, praktyki się zakończyły.
+Strony firmowe: [erps.pl](https://erps.pl/), [erpsystem.pl](https://erpsystem.pl/)

@@ -6,22 +6,19 @@ color: '#ef4444'
 order: 6
 ---
 
-Stanowisko: Programista
+**Stanowisko:** Programista (Full Stack)
+
+Mały software house — tworzenie aplikacji webowych i mobilnych na zlecenie klientów.
 
 <br />
 
-Krótko o firmie:
-
-**Hermsoft** to był mały software house, gdzie na zlecenie klientów tworzyliśmy aplikacje webowe czy mobilne.
-
-<br />
-
-Wstępnie zajmowałem się frontendem czy to w Vite + React, czy to w NextJS a potem w Astro.
-
-Też wdrażałem się w .NET, który był dla mnie dosyć intuicyjny w obejściu w kontekście backendu i podobał mi się mechanizm DI wbudowany w ten framework.
-
-Nauczyłem się też Darta i Fluttera do pisania aplikacji mobilnej i powiem, ma pewne podobieństwa do Typescripta a nazwy przywołują CSS nawet, ale ma tyle swojego (np. Stream czy dot shortand oraz statyczne typowanie), że jest to własna rzecz jednak.
+**Tech stack:**
+- **Frontend:** Vite + React, Next.js, Astro
+- **Backend:** .NET (intuicyjny mechanizm DI)
+- **Mobile:** Dart + Flutter — statyczne typowanie,_Stream_, dot shorthand; podobieństwa do TypeScript, ale własny ekosystem
 
 <br />
 
-Ostatecznie jednak współpraca się zakończyła przez zbyt dużą skalę jak na możliwości firmy.
+**Rozwój:** Szybkie wdrożenie w wiele technologii w krótkim czasie. Lubię mechanizm DI w .NET i sposób, w jaki Flutter łączy frontend z mobilką.
+
+Odejście: zbyt duża skala projektów w stosunku do możliwości małej firmy
