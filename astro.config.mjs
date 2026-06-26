@@ -11,9 +11,11 @@ const processLinks = (tree) => {
       node.data = node.data || {}
       // @ts-expect-error — hProperties is set by remark-rehype
       node.data.hProperties = node.data.hProperties || {}
-      // @ts-expect-error
+
+      // @ts-expect-error — hProperties is set by remark-rehype
       node.data.hProperties.target = '_blank'
-      // @ts-expect-error
+
+      // @ts-expect-error — hProperties is set by remark-rehype
       node.data.hProperties.rel = 'noopener noreferrer'
     }
   }
@@ -34,7 +36,6 @@ export default defineConfig({
     preact(),
     UnoCSS({
       mode: 'dist-chunk',
-      injectReset: true,
     }),
   ],
 })
