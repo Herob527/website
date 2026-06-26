@@ -11,4 +11,4 @@ Pierwsze zetknięcie z komercyjnym IT. Helpdesk ręcznie tworzył konta i dopras
 
 <br />
 
-**Rozwiązanie:** We współpracy z opiekunem stworzyłem formularz frontendowy z walidacją pól, który wyeliminował problemy z niekompletnymi danymi. UI trafił do realnego użytku — widziałem go w akcji.
+**Rozwiązanie:** We współpracy z opiekunem stworzyłem formularz frontendowy z walidacją pól, który wyeliminował problemy z niekompletnymi danymi. UI trafiło do realnego użytku — widziałem go w akcji.
