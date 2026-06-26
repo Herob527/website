@@ -1,50 +1,38 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { getCollection, render, type CollectionEntry } from 'astro:content'
+import type { AstroComponentFactory } from 'astro/runtime/server/render/astro/factory.js'
 
 type LifeStageEntry = CollectionEntry<'lifeStages'>
 
 interface IncludedStage {
   entry: LifeStageEntry
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Content: any
-  top?: string
-  height?: string
+  Content: AstroComponentFactory
 }
 
 interface StageWithContent {
   entry: LifeStageEntry
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Content: any
+  Content: AstroComponentFactory
   included: IncludedStage[]
-  color: string
-  top: string
-  height: string
-  startDate: Temporal.PlainDate
-  endDate: Temporal.PlainDate
 }
 
 const allStages = await getCollection('lifeStages')
 
 const parents = allStages
-  .filter((s: LifeStageEntry) => !s.data.parent)
-  .sort((a: LifeStageEntry, b: LifeStageEntry) => a.data.order - b.data.order)
+  .filter((s) => !s.data.parent)
+  .sort((a, b) => a.data.order - b.data.order)
 
 const children = allStages
-  .filter((s: LifeStageEntry) => s.data.parent)
-  .sort((a: LifeStageEntry, b: LifeStageEntry) => a.data.order - b.data.order)
+  .filter((s) => s.data.parent)
+  .sort((a, b) => a.data.order - b.data.order)
 
-const stagesWithContent: Array<{
-  entry: LifeStageEntry
-  Content: any // eslint-disable-line @typescript-eslint/no-explicit-any
-  included: IncludedStage[]
-}> = await Promise.all(
-  parents.map(async (parent: LifeStageEntry) => {
+const stagesWithContent: StageWithContent[] = await Promise.all(
+  parents.map(async (parent) => {
     const { Content } = await render(parent)
     const included = await Promise.all(
       children
-        .filter((c: LifeStageEntry) => c.data.parent === parent.id)
-        .map(async (c: LifeStageEntry) => {
+        .filter((c) => c.data.parent === parent.id)
+        .map(async (c) => {
           const { Content: IncContent } = await render(c)
           return { entry: c, Content: IncContent }
         }),
@@ -53,8 +41,8 @@ const stagesWithContent: Array<{
   }),
 )
 
-const MIN_HEIGHT_PER_YEAR = 40
-const MIN_EVENT_HEIGHT_PX = 30
+const MIN_HEIGHT_PER_YEAR = 30
+const MIN_EVENT_HEIGHT_PX = 27
 
 const allDates = stagesWithContent.flatMap((s) => [
   Temporal.PlainDate.from(s.entry.data.startDate),
@@ -88,7 +76,7 @@ const months = [
   'Gru',
 ]
 
-function formatDate(date: Temporal.PlainDate): string {
+const formatDate = (date: Temporal.PlainDate) => {
   return `${months[date.month - 1]} ${date.year.toString()}`
 }
 
@@ -140,7 +128,7 @@ const stagesWithStyles = stagesWithContent.map((stage) => {
     smallestUnit: 'day',
   }).days
 
-  const included = stage.included.map((inc: IncludedStage) => {
+  const included = stage.included.map((inc) => {
     const incStart = Temporal.PlainDate.from(inc.entry.data.startDate)
     const incEnd = Temporal.PlainDate.from(inc.entry.data.endDate)
     const incTopDays = startDate.until(incStart, { smallestUnit: 'day' }).days
@@ -200,7 +188,7 @@ const yearTicks = Array.from({ length: totalYears + 1 }, (_, i) => {
               flex
               items-center
               h-0
-              style={`top: ${tick.topPx}px; left: -160px; width: 150px`}
+              style={`top: ${tick.topPx.toString()}px; left: -160px; width: 150px`}
             >
               <span
                 text-right
@@ -222,20 +210,20 @@ const yearTicks = Array.from({ length: totalYears + 1 }, (_, i) => {
           stagesWithStyles.map((stage) => (
             <div
               absolute
-              style={`top: ${stage.topPx}px; height: ${stage.heightPx}px; left: -1.75px; right: 0; border-left: 4px solid ${stage.color}; border-radius: 6px`}
+              style={`top: ${stage.topPx.toString()}px; height: ${stage.heightPx.toString()}px; left: -1.75px; right: 0; border-left: 4px solid ${stage.color}; border-radius: 6px`}
             >
               <div
                 absolute
                 rounded-full
                 border="3px solid white"
-                class="-translate-x-[calc(50%+1.75px)] size-[12px]"
+                class="size-[12px] -translate-x-[calc(50%+1.75px)]"
                 style={`left: 0; top: 0; background-color: ${stage.color}; box-shadow: 0 0 0 2px ${stage.color}`}
               />
               <div
                 absolute
                 rounded-full
                 border="3px solid white"
-                class="-translate-x-[calc(50%+1.75px)] size-[12px]"
+                class="size-[12px] -translate-x-[calc(50%+1.75px)]"
                 style={`left: 0; bottom: 0; background-color: ${stage.color}; box-shadow: 0 0 0 2px ${stage.color}`}
               />
 
