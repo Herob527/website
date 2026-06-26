@@ -7,8 +7,6 @@ order: 2
 parent: 'zsl-t'
 ---
 
-Pierwsze zetknięcie z komercyjnym IT. Helpdesk ręcznie tworzył konta i dopraszał o brakujące dane — przydzielono mi zadanie, aby to zmienić
+Pierwsze zetknięcie z komercyjnym IT. Helpdesk ręcznie tworzył konta i dopraszał o brakujące dane — przydzielono mi zadanie, aby to zmienić.
 
-<br />
-
-**Rozwiązanie:** We współpracy z opiekunem stworzyłem formularz frontendowy z walidacją pól, który wyeliminował problemy z niekompletnymi danymi. UI trafiło do realnego użytku — widziałem go w akcji.
+Skrypty oparte na Powershellu opracowywał jeden z opiekunów, a moim zadaniem było stworzyć formularz, żeby się z tym komunikował.
