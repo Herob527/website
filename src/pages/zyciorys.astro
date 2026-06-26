@@ -23,7 +23,7 @@ const lastingEvents = [
   },
   {
     startDate: Temporal.PlainDate.from({ day: 1, month: 10, year: 2020 }),
-    endDate: Temporal.PlainDate.from({ day: 30, month: 9, year: 2022 }),
+    endDate: Temporal.PlainDate.from({ day: 30, month: 10, year: 2022 }),
     label: 'Politechnika Poznańska',
     included: [
       {
@@ -256,16 +256,8 @@ const yearTicks = Array.from({ length: totalYears + 1 }, (_, i) => {
               {event.included?.map((inc) => (
                 <div
                   absolute
-                  rounded
-                  border-l="3px solid"
-                  style={`top: ${inc.top}; height: ${inc.height}; left: 12px; right: 8px; background: ${event.color}40; border-color: ${event.color}`}
+                  style={`top: ${inc.top}; height: ${inc.height}; left: 3px; right: 8px; `}
                 >
-                  <div
-                    absolute
-                    rounded-full
-                    border="2px solid white"
-                    style={`left: -8px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background-color: ${event.color}`}
-                  />
                   <div
                     ml-12px
                     p-1
