@@ -15,7 +15,7 @@ Mały software house — tworzenie aplikacji webowych i mobilnych na zlecenie kl
 **Tech stack:**
 - **Frontend:** Vite + React, Next.js, Astro
 - **Backend:** .NET (intuicyjny mechanizm DI)
-- **Mobile:** Dart + Flutter — statyczne typowanie,_Stream_, dot shorthand; podobieństwa do TypeScript, ale własny ekosystem
+- **Mobile:** Dart + Flutter — statyczne typowanie, `Stream`, operator `..`; podobieństwa do TypeScript, ale własny ekosystem
 
 <br />
 

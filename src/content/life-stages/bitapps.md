@@ -28,7 +28,7 @@ Firma produkowała platformę **WoodsApp** dla właścicieli lasów w Niemczech 
 **Strona firmowa [bitapps.fi](https://bitapps.fi/):**
 
 - Odpowiedzialność za responsywność, blog i wielojęzyczność
-- Implementacja map (OpenLayers + Preact) — kompilacja JS przez webpack (później zastąpiony **esbuild**)
+- Implementacja map (OpenLayers + Preact) — kompilacja JS przez webpack (później zastąpiony **esbuildem**)
 - Technologia: **Jekyll** + JS, Preact
 
 **Projekt [neituri.com](https://www.neituri.com/):**

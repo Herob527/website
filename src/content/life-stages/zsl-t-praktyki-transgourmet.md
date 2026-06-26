@@ -7,7 +7,7 @@ order: 2
 parent: 'zsl-t'
 ---
 
-Pierwsze zetknięcie z komercyjnym IT. Helpdesk ręcznie tworzył konta i dopraszał o brakujące dane i moim zadaniem było to zmienić
+Pierwsze zetknięcie z komercyjnym IT. Helpdesk ręcznie tworzył konta i dopraszał o brakujące dane — przydzielono mi zadanie, aby to zmienić
 
 <br />
 
