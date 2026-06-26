@@ -35,7 +35,6 @@ const links = [
     <meta name="generator" content={Astro.generator} />
     <title>Astro</title>
     <ClientRouter transition:animate={slide({ duration: '0.4s' })} />
-
   </head>
   <body>
     <nav px="16" py="4" border-b="1px solid #ccc" bg-white>
@@ -50,6 +49,8 @@ const links = [
               <a
                 hover:border-b="2px solid #000"
                 border-b="2px solid transparent"
+                text="black!"
+                class="decoration-none!"
                 href={el.href}
               >
                 {el.label}
@@ -70,11 +71,14 @@ const links = [
       </div>
     </nav>
 
-    <div id="menu-overlay" class="fixed inset-0 z-40 bg-black/50 op-0 pointer-events-none data-[open]:op-100 data-[open]:pointer-events-auto transition-opacity duration-300 ease">
+    <div
+      id="menu-overlay"
+      class="fixed inset-0 z-40 transition-opacity duration-300 pointer-events-none bg-black/50 op-0 data-[open]:op-100 data-[open]:pointer-events-auto ease"
+    >
     </div>
     <div
       id="mobile-menu"
-      class="fixed top-0 right-0 z-50 p-6 w-64 h-full bg-white shadow-lg translate-x-full data-[open]:translate-x-0 transition-transform duration-300 ease"
+      class="fixed top-0 right-0 z-50 p-6 w-64 h-full bg-white shadow-lg transition-transform duration-300 translate-x-full data-[open]:translate-x-0 ease"
     >
       <button
         id="menu-close"
@@ -88,6 +92,7 @@ const links = [
               hover:border-b="2px solid #000"
               border-b="2px solid transparent"
               href={el.href}
+              text-lg
               class="text-lg mobile-link"
             >
               {el.label}
