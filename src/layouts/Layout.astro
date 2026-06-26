@@ -35,6 +35,7 @@ const links = [
     <meta name="generator" content={Astro.generator} />
     <title>Astro</title>
     <ClientRouter transition:animate={slide({ duration: '0.4s' })} />
+
   </head>
   <body>
     <nav px="16" py="4" border-b="1px solid #ccc" bg-white>
@@ -43,7 +44,7 @@ const links = [
           <Logo width={48} />
         </a>
 
-        <div flex flex-row gap="16">
+        <div flex flex-row gap="16" class="hidden md:flex">
           {
             links.map((el) => (
               <a
@@ -56,8 +57,78 @@ const links = [
             ))
           }
         </div>
+
+        <button
+          id="menu-toggle"
+          class="flex flex-col gap-1.5 p-2 md:hidden"
+          aria-label="Menu"
+        >
+          <span class="block w-6 h-0.5 bg-black"></span>
+          <span class="block w-6 h-0.5 bg-black"></span>
+          <span class="block w-6 h-0.5 bg-black"></span>
+        </button>
       </div>
     </nav>
+
+    <div id="menu-overlay" class="fixed inset-0 z-40 bg-black/50 op-0 pointer-events-none data-[open]:op-100 data-[open]:pointer-events-auto transition-opacity duration-300 ease">
+    </div>
+    <div
+      id="mobile-menu"
+      class="fixed top-0 right-0 z-50 p-6 w-64 h-full bg-white shadow-lg translate-x-full data-[open]:translate-x-0 transition-transform duration-300 ease"
+    >
+      <button
+        id="menu-close"
+        class="absolute top-4 right-4 text-2xl"
+        aria-label="Close menu">&times;</button
+      >
+      <nav flex flex-col gap-6 mt-8 transition:persist>
+        {
+          links.map((el) => (
+            <a
+              hover:border-b="2px solid #000"
+              border-b="2px solid transparent"
+              href={el.href}
+              class="text-lg mobile-link"
+            >
+              {el.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+
+    <script>
+      const setupMenu = () => {
+        const toggle = document.getElementById('menu-toggle')
+        const close = document.getElementById('menu-close')
+        const menu = document.getElementById('mobile-menu')
+        const overlay = document.getElementById('menu-overlay')
+        const links = document.querySelectorAll('.mobile-link')
+
+        const openMenu = () => {
+          menu?.setAttribute('data-open', '')
+          overlay?.setAttribute('data-open', '')
+        }
+
+        const closeMenu = () => {
+          menu?.removeAttribute('data-open')
+          overlay?.removeAttribute('data-open')
+        }
+
+        toggle?.addEventListener('click', openMenu)
+        close?.addEventListener('click', closeMenu)
+        overlay?.addEventListener('click', closeMenu)
+        links.forEach((link) => link.addEventListener('click', closeMenu))
+      }
+
+      setupMenu()
+
+      document.addEventListener('astro:after-swap', () => {
+        window.scrollTo({ left: 0, top: 0, behavior: 'instant' })
+        setupMenu()
+      })
+    </script>
+
     <main mb-4 px-4 container mx-auto mt-12>
       <slot />
     </main>
