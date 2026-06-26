@@ -94,7 +94,7 @@ const totalYears = timelineStart.until(timelineEnd, {
   largestUnit: 'year',
 }).years
 const totalDays = timelineStart.until(timelineEnd, { smallestUnit: 'day' }).days
-const heightPerDay = Math.max(MIN_HEIGHT_PER_YEAR / 365.25, 1)
+const heightPerDay = Math.max(MIN_HEIGHT_PER_YEAR / 365.25, 0.75)
 const timelineHeight = totalDays * heightPerDay
 
 const colors = [
@@ -200,19 +200,21 @@ const yearTicks = Array.from({ length: totalYears + 1 }, (_, i) => {
           eventsWithStyles.map((event) => (
             <div
               absolute
-              style={`top: ${event.top}; height: ${event.height}; left: -3px; right: 0; border-left: 4px solid ${event.color}; background: ${event.color}20; border-radius: 6px`}
+              style={`top: ${event.top}; height: ${event.height}; left: -1.75px; right: 0; border-left: 4px solid ${event.color}; border-radius: 6px`}
             >
               <div
                 absolute
                 rounded-full
                 border="3px solid white"
-                style={`left: -10px; top: 0; width: 18px; height: 18px; background-color: ${event.color}; box-shadow: 0 0 0 2px ${event.color}`}
+                class="-translate-x-[calc(50%+1.75px)] size-[12px]"
+                style={`left: 0; top: 0; background-color: ${event.color}; box-shadow: 0 0 0 2px ${event.color}`}
               />
               <div
                 absolute
                 rounded-full
                 border="3px solid white"
-                style={`left: -10px; bottom: 0; width: 18px; height: 18px; background-color: ${event.color}; box-shadow: 0 0 0 2px ${event.color}`}
+                class="-translate-x-[calc(50%+1.75px)] size-[12px]"
+                style={`left: 0; bottom: 0;  background-color: ${event.color}; box-shadow: 0 0 0 2px ${event.color}`}
               />
 
               <span
