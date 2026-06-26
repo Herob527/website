@@ -5,31 +5,8 @@ interface LifeStageRange {
   startDate: Temporal.PlainDate
   endDate: Temporal.PlainDate
   label: string
-  included?: LifeStageRange[]
+  included?: readonly LifeStageRange[]
 }
-
-// const startDate = Temporal.PlainDate.from({
-//   day: 1,
-//   month: 9,
-//   year: 2016,
-// })
-// const endDate = Temporal.PlainDate.from({
-//   day: 1,
-//   month: 6,
-//   year: 2026,
-// })
-//
-// const dur = startDate.until(endDate, {
-//   smallestUnit: 'year',
-//   largestUnit: 'year',
-//   roundingMode: 'ceil',
-//   roundingIncrement: 1,
-// })
-//
-// const years = Array.from({ length: dur.years + 1 }, (_, i) => {
-//   const start = startDate.add({ years: i })
-//   return start.year
-// })
 
 const lastingEvents = [
   {
@@ -47,7 +24,7 @@ const lastingEvents = [
   {
     startDate: Temporal.PlainDate.from({ day: 1, month: 10, year: 2020 }),
     endDate: Temporal.PlainDate.from({ day: 30, month: 6, year: 2022 }),
-    label: 'Politechnika Poznańska',
+    label: 'Politechnika Poznańska',
     included: [
       {
         startDate: Temporal.PlainDate.from({ day: 1, month: 6, year: 2022 }),
@@ -66,7 +43,77 @@ const lastingEvents = [
     endDate: Temporal.PlainDate.from({ day: 1, month: 6, year: 2026 }),
     label: 'Praca Hermsoft sp. z o.o.',
   },
-] as const satisfies LifeStageRange[]
+] satisfies LifeStageRange[]
+
+const MIN_HEIGHT_PER_YEAR = 100
+
+const allDates = lastingEvents.flatMap((e) => [
+  e.startDate,
+  e.endDate,
+  ...(e.included?.flatMap((i) => [i.startDate, i.endDate]) ?? []),
+])
+const globalStart = allDates.reduce((min, d) =>
+  Temporal.PlainDate.compare(min, d) < 0 ? min : d,
+)
+const globalEnd = allDates.reduce((max, d) =>
+  Temporal.PlainDate.compare(max, d) > 0 ? max : d,
+)
+
+const totalDays = globalStart.until(globalEnd, { smallestUnit: 'day' }).days
+const totalYears = globalStart.until(globalEnd, {
+  smallestUnit: 'year',
+  largestUnit: 'year',
+}).years
+const heightPerDay = Math.max(MIN_HEIGHT_PER_YEAR / 365.25, 1)
+const timelineHeight = Math.max(
+  totalDays * heightPerDay,
+  (totalYears + 1) * MIN_HEIGHT_PER_YEAR,
+)
+
+const colors = [
+  '#6366f1',
+  '#f59e0b',
+  '#10b981',
+  '#ef4444',
+  '#8b5cf6',
+  '#06b6d4',
+]
+
+function dateToOffset(date: Temporal.PlainDate): number {
+  return globalStart.until(date, { smallestUnit: 'day' }).days * heightPerDay
+}
+
+function dateToPercent(date: Temporal.PlainDate): number {
+  return (dateToOffset(date) / timelineHeight) * 100
+}
+
+const eventsWithStyles = lastingEvents.map(
+  (event: LifeStageRange, i: number) => {
+    const color = colors[i % colors.length]
+    const eventTop = dateToPercent(event.startDate)
+    const eventHeight = dateToPercent(event.endDate) - eventTop
+    const eventDurationDays = event.startDate.until(event.endDate, { smallestUnit: 'day' }).days
+
+    const included = event.included?.map((inc: LifeStageRange) => {
+      const incTopDays = event.startDate.until(inc.startDate, { smallestUnit: 'day' }).days
+      const incDurationDays = inc.startDate.until(inc.endDate, { smallestUnit: 'day' }).days
+      return {
+        ...inc,
+        top: `${(incTopDays / eventDurationDays) * 100}%`,
+        height: `${(incDurationDays / eventDurationDays) * 100}%`,
+      }
+    })
+    return { ...event, color, top: `${eventTop}%`, height: `${eventHeight}%`, included }
+  },
+)
+
+const yearTicks = Array.from({ length: totalYears + 2 }, (_, i) => {
+  const year = globalStart.add({ years: i }).year
+  const date = Temporal.PlainDate.from({ day: 1, month: 1, year })
+  if (Temporal.PlainDate.compare(date, globalStart) < 0) return null
+  if (Temporal.PlainDate.compare(date, globalEnd) > 0) return null
+  return { year, top: `${dateToPercent(date)}%` }
+}).filter(Boolean)
 ---
 
 <Layout>
@@ -74,5 +121,110 @@ const lastingEvents = [
     <header text-center text-4xl font-semibold mb-6>
       <h1>Życiorys</h1>
     </header>
+
+    <div max-w-900px mx-auto px-4>
+      <div
+        relative
+        border-l="3px solid #e5e7eb"
+        ml-120px
+        style={`height: ${timelineHeight}px`}
+      >
+        {
+          yearTicks.map((tick) => (
+            <div
+              absolute
+              flex
+              items-center
+              w-full
+              h-0
+              style={`top: ${tick!.top}; left: -120px`}
+            >
+              <span
+                w-100px
+                text-right
+                text-sm
+                text-gray-400
+                tabular-nums
+                select-none
+                flex-none
+              >
+                {tick!.year}
+              </span>
+              <div flex-1 border-t="1px dashed #e5e7eb" ml-12px />
+            </div>
+          ))
+        }
+
+        {
+          eventsWithStyles.map((event) => (
+            <div
+              absolute
+              style={`top: ${event.top}; height: ${event.height}; left: -3px; right: 0; border-left: 4px solid ${event.color}; background: ${event.color}20; border-radius: 6px`}
+            >
+              <div
+                absolute
+                rounded-full
+                border="3px solid white"
+                style={`left: -10px; top: 0; width: 18px; height: 18px; background-color: ${event.color}; box-shadow: 0 0 0 2px ${event.color}`}
+              />
+              <div
+                absolute
+                rounded-full
+                border="3px solid white"
+                style={`left: -10px; bottom: 0; width: 18px; height: 18px; background-color: ${event.color}; box-shadow: 0 0 0 2px ${event.color}`}
+              />
+
+              <div
+                ml-20px
+                bg-white
+                rounded-md
+                shadow-sm
+                p-2
+                flex
+                flex-col
+                gap-1
+                style={`border-left: 3px solid ${event.color}`}
+              >
+                <span font-semibold text-sm text-gray-800>
+                  {event.label}
+                </span>
+                <span text-xs text-gray-500 tabular-nums>
+                  {event.startDate.toString()} — {event.endDate.toString()}
+                </span>
+              </div>
+
+              {event.included?.map((inc) => (
+                <div
+                  absolute
+                  rounded
+                  border-l="3px solid"
+                  style={`top: ${inc.top}; height: ${inc.height}; left: 12px; right: 8px; background: ${event.color}40; border-color: ${event.color}`}
+                >
+                  <div
+                    absolute
+                    rounded-full
+                    border="2px solid white"
+                    style={`left: -8px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background-color: ${event.color}`}
+                  />
+                  <div
+                    ml-12px
+                    p-1
+                    rounded
+                    style={`background: rgba(255,255,255,0.9); border-left: 2px solid ${event.color}; max-width: calc(100% - 16px)`}
+                  >
+                    <span font-medium text-xs text-gray-700>
+                      {inc.label}
+                    </span>
+                    <span text-xs text-gray-500 tabular-nums block>
+                      {inc.startDate.toString()} — {inc.endDate.toString()}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </div>
   </section>
 </Layout>
