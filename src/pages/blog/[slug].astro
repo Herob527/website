@@ -1,0 +1,32 @@
+---
+import Layout from '@layouts/Layout.astro'
+import { getEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+
+const { slug } = Astro.params
+
+// So eslint of typescript won't complain
+if (slug === undefined) {
+  throw new Error('Slug is undefined')
+}
+
+const blogItem = await getEntry('blog', slug)
+if (blogItem === undefined) {
+  throw new Error(`Blog post not found: ${slug}`)
+}
+
+export async function getStaticPaths() {
+  const collections = await getCollection('blog')
+  return collections.map((entry) => ({
+    params: {
+      slug: entry.id,
+    },
+  }))
+}
+---
+
+<Layout>
+  <div class="prose">
+    <Fragment set:html={blogItem.rendered?.html} />
+  </div>
+</Layout>
