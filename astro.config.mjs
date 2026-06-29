@@ -4,18 +4,17 @@ import { unified } from '@astrojs/markdown-remark'
 import UnoCSS from 'unocss/astro'
 import preact from '@astrojs/preact'
 
+import mdx from '@astrojs/mdx'
+
 /** @param {import('mdast').Root} tree */
 const processLinks = (tree) => {
   for (const node of tree.children ?? []) {
     if (node.type === 'link' && node.url.startsWith('http')) {
       node.data = node.data || {}
-      // @ts-expect-error — hProperties is set by remark-rehype
       node.data.hProperties = node.data.hProperties || {}
 
-      // @ts-expect-error — hProperties is set by remark-rehype
       node.data.hProperties.target = '_blank'
 
-      // @ts-expect-error — hProperties is set by remark-rehype
       node.data.hProperties.rel = 'noopener noreferrer'
     }
   }
@@ -32,8 +31,5 @@ export default defineConfig({
       remarkPlugins: [() => processLinks],
     }),
   },
-  integrations: [
-    preact(),
-    UnoCSS(),
-  ],
+  integrations: [preact(), UnoCSS(), mdx()],
 })
