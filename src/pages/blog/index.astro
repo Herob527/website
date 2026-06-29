@@ -1,9 +1,26 @@
 ---
 import Layout from '@layouts/Layout.astro'
+import { getCollection } from 'astro:content'
+
+const collections = await getCollection('blog')
 ---
 
 <Layout>
-  <header mb-6>
-    <h1 text-center text-4xl font-semibold>Blog</h1>
-  </header>
+  <section>
+    <header mb-6>
+      <h1 text-center text-4xl font-semibold>Blog</h1>
+    </header>
+
+    <ul>
+      {
+        collections.map((item) => (
+          <li>
+            <div>
+              <a href={`/blog/${item.id}`}>{item.data.title}</a>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </Layout>
