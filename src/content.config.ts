@@ -14,4 +14,12 @@ const lifeStages = defineCollection({
   }),
 })
 
-export const collections = { lifeStages }
+const blog = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.string(),
+  }),
+})
+
+export const collections = { lifeStages, blog }
