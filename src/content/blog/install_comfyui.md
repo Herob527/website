@@ -10,7 +10,7 @@ date: '2026-06-29'
 
 Takie elementy (tzw. node) mogą ładować CSV, wyciągać tekst na podstawie regexa, uruchamiać trening RVC czy generować tekst z HiggsTTS i to wszystko może się łączyć w ramach jednego łańcucha elementów.
 
-Tutaj dam kroki do instalacji na Linuxie (Fedora 44), bo tego jestem najbardziej pewien.
+Tutaj dam kroki do instalacji na Linuxie (Fedora 44), bo na tym obecnie pracuję.
 
 To, co tutaj jest opisane jest możliwe do znalezienia w [docsach ComfyUI](https://docs.comfy.org/installation/system_requirements).
 
@@ -22,7 +22,6 @@ Sugeruję użyć [mise](https://mise.jdx.dev/) do instalacji [uv](https://docs.a
 - git
 - uv
 - terminal / emulator terminala (sam używam wezterm)
-- szybki internet (modele potrafią być spore)
 
 ## Instalacja
 
