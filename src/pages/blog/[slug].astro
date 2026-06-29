@@ -1,7 +1,17 @@
 ---
 import Layout from '@layouts/Layout.astro'
+import { render } from 'astro:content'
 import { getEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+  const collections = await getCollection('blog')
+  return collections.map((entry) => ({
+    params: {
+      slug: entry.id,
+    },
+  }))
+}
 
 const { slug } = Astro.params
 
@@ -15,18 +25,11 @@ if (blogItem === undefined) {
   throw new Error(`Blog post not found: ${slug}`)
 }
 
-export async function getStaticPaths() {
-  const collections = await getCollection('blog')
-  return collections.map((entry) => ({
-    params: {
-      slug: entry.id,
-    },
-  }))
-}
+const { Content } = await render(blogItem)
 ---
 
 <Layout>
   <div class="prose">
-    <Fragment set:html={blogItem.rendered?.html} />
+    <Content />
   </div>
 </Layout>
