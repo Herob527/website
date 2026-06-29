@@ -16,7 +16,7 @@ const lifeStages = defineCollection({
 
 const blog = defineCollection({
   loader: glob({
-    pattern: ['**/*.md', '**/*.mdx'],
+    pattern: '**/*.{md,mdx}',
     base: './src/content/blog',
   }),
   schema: z.object({
