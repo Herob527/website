@@ -29,7 +29,12 @@ const { Content } = await render(blogItem)
 ---
 
 <Layout>
-  <div class="prose">
-    <Content />
-  </div>
+  <section>
+    <header text-center text-4xl font-semibold mb-6>
+      <h1>{blogItem.data.title}</h1>
+    </header>
+    <div un-prose container mx-auto>
+      <Content />
+    </div>
+  </section>
 </Layout>
