@@ -35,7 +35,7 @@
     "@unocss/transformer-attributify-jsx": "^66.7.3",
     "eslint": "^10.6.0",
     "eslint-plugin-astro": "^2.1.1",
-    "prettier": "^3.8.5",
+    "prettier": "^3.9.1",
     "prettier-plugin-astro": "^0.14.1",
     "typescript-eslint": "^8.62.0",
     "unocss": "^66.7.3"
