@@ -42,7 +42,7 @@ const { parentHref } = Astro.props
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro</title>
-    <ClientRouter transition:animate={slide({ duration: '0.4s' })} />
+    <ClientRouter />
   </head>
   <body flex flex-col min-h-screen>
     <nav p="x-4 y-4" md:p="x-16 y-4" border-b="1px solid #ccc" bg-white>
@@ -157,7 +157,15 @@ const { parentHref } = Astro.props
       })
     </script>
 
-    <main flex-1 mb-4 px-4 container mx-auto mt-12>
+    <main
+      flex-1
+      mb-4
+      px-4
+      container
+      mx-auto
+      mt-12
+      transition:animate={slide({ duration: '0.5s' })}
+    >
       <slot />
     </main>
     <footer w-full border-t="1px solid black" text-sm px-4 py-2>
