@@ -11,20 +11,20 @@ interface ContactItem {
 
 const contacts = [
   {
-    icon: 'i-mdi-email',
+    icon: 'icon-[mdi--email-outline]',
     label: 'E-mail',
     href: 'mailto:szymon.wrzos@onet.pl',
     name: 'szymon.wrzos@onet.pl',
   },
   {
-    icon: 'i-mdi-github',
+    icon: 'icon-[mdi--github]',
     label: 'GitHub',
     href: 'https://github.com/Herob527',
     name: 'Herob527',
     external: true,
   },
   {
-    icon: 'i-mdi-linkedin',
+    icon: 'icon-[mdi--linkedin]',
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/in/szymon-wrzos-0646651b1/',
     name: 'Szymon Wrzos',
@@ -43,7 +43,7 @@ const contacts = [
         contacts.map((item) => (
           <tr>
             <td class="pr-2 py-1 flex items-center gap-1">
-              <div class={`inline-block ${item.icon}`} />
+              <span class={`inline-block w-5 h-5 ${item.icon}`} />
               {item.label}:
             </td>
             <td>
