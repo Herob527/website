@@ -8,34 +8,42 @@ order: 5
 
 **Stanowisko:** Programista
 
-Firma produkowała platformę **WoodsApp** dla właścicieli lasów w Niemczech i Austrii — wersje webowa (przeglądarka) oraz mobilna (Android/iOS). Ja odpowiadałem za web i Androida.
+Firma rozwijała platformę **WoodsApp** dla właścicieli lasów w Niemczech i Austrii.
+
+Udostępniała ona interfejs przeglądarkowy oraz mobilny (Android / iOS).
+
+Sam odpowiadałem za interfejs przeglądarki w React, Androida w Kotlinie, stronami firmy oraz w pewnym stopniu zagadnienia infrastrukturalne.
 
 <br />
 
-**Pierwszy sukces:** Naprawa buga w formularzu (naprawa opóźnienia przy wpisywaniu wartości poprzez `useMemo`), co otworzyło mi drogę do zadań sprintowych.
+Na wstępie miałem zajmować się frontendem, ale też było jasne, że będę zajmować się infrastrukturą w jakimś stopniu (AWS, Gitlab CI/CD).
 
-**Android/Kotlin:** Gdy brakowało zadań na froncie, zaoferowano mi naukę Kotlina. Po 2 miesiącach samodzielnej nauki brałem udział w sprintach. Kotlin okazał się intuicyjny i przyjemny w pisaniu.
+Pierwsze tygodnie to była nauka o AWS, by mniej więcej skojarzyć jak to działa i na czym firma stoi w kontekście infrastruktury.
 
-<br />
-
-**Infrastruktura i CI/CD:**
-
-- Zapoznanie się z **AWS** (kurs freecodecamp)
-- Optymalizacja **GitLab CI** — cache + konsolidacja etapów pipeline (web i mobilka)
+Dopiero jak zobaczyłem buga (input miał spore opóźnienie w formularzu) i go naprawiłem to zaczęto mi przydzielać zadania ze sprintów.
 
 <br />
 
-**Strona firmowa [bitapps.fi](https://bitapps.fi/):**
+Przydzielono mi zajmowanie się stroną firmy, [bitapps.fi](https://bitapps.fi/), i pierwszym zadaniem było dostosowanie witryny, by dało się przeglądać na mobilce oraz pasował do designu.
 
-- Odpowiedzialność za responsywność, blog i wielojęzyczność
-- Implementacja map (OpenLayers + Preact) — kompilacja JS przez webpack (później zastąpiony **esbuildem**)
-- Technologia: **Jekyll** + JS, Preact
+Potem wszedł temat interaktywnych map ([rezultat](https://bitapps.fi/solutions.html)) i przez fakt, że strona opierała się na Jekyllu (to silnik prostych stron), było trzeba wykombinować sposób, by budować JS i je władować do strony.
 
-**Projekt [neituri.com](https://www.neituri.com/):**
-
-- Od zera — wybrałem **Astro** ze względu na integrację z Preactem i optymalizację obrazów
-- Większa decyzyjność techniczna w projekcie
+Najpierw wszedł webpack a potem esbuild, gdyż to nie były skomplikowane projekty a esbuild był szybki, więc na to padł wybór.
 
 <br />
 
-Odejście: restrukturyzacja firmy
+Z czasem przyszła kolejna strona, neituri.fi i tu wybrałem Astro, które wspiera JS natywnie oraz ma wbudowanie kompresowanie obrazów.
+
+Obecnie to jest neituri.com z innym designem i wykonawcą.
+
+<br />
+
+Jednym z konkretnych osiągnięć była migracja z Create-React-App na Vite, co znacząco przyspieszyło pipeline instalacji czy budowania.
+
+Innym to naprawa zawieszania się procesu CRA w trakcie budowania w pipeline (wystarczyło zmniejszyć MAX_OLD_SPACE_SIZE z 8192 na 6144 przed komendą budowania).
+
+<br />
+
+Z czasem zaczęło brakować zadań na froncie to zaoferowano mi czas na naukę Kotlina, by wesprzeć zespół mobilny.
+
+Dzięki wsparciu zespołu, po dwóch miesiącach, zacząłem podejmować zadania też z Androida, nie tylko frontendu (miałem przydzielane, gdzie powinienem brać najpierw zadania)
