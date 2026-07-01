@@ -28,12 +28,12 @@ if (blogItem === undefined) {
 const { Content } = await render(blogItem)
 ---
 
-<Layout parentHref="/blog">
+<Layout parentHref="/blog" title={`Blog - ${blogItem.data.title}`}>
   <section>
-    <header class="text-center text-4xl font-semibold mb-6">
+    <header class="mb-6 text-4xl font-semibold text-center">
       <h1>{blogItem.data.title}</h1>
     </header>
-    <div class="prose container mx-auto">
+    <div class="container mx-auto prose">
       <Content />
     </div>
   </section>

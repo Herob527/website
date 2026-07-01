@@ -31,9 +31,10 @@ type hrefs = (typeof links)[number]['href']
 
 interface Props {
   parentHref?: hrefs
+  title?: string
 }
 
-const { parentHref } = Astro.props
+const { parentHref, title } = Astro.props
 ---
 
 <html lang="en">
@@ -47,17 +48,19 @@ const { parentHref } = Astro.props
     <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.ico`} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <title>{title ?? 'Astro'}</title>
     <ClientRouter />
   </head>
   <body class="flex flex-col min-h-screen">
-    <nav class="px-4 py-4 md:px-16 md:py-4 border-b border-solid border-[#ccc] bg-white">
-      <div class="flex flex-row gap-2 items-center justify-between">
+    <nav
+      class="py-4 px-4 bg-white border-b border-solid md:py-4 md:px-16 border-[#ccc]"
+    >
+      <div class="flex flex-row gap-2 justify-between items-center">
         <Link href="/">
           <Logo width={48} />
         </Link>
 
-        <div class="flex flex-row gap-16 hidden md:flex">
+        <div class="flex hidden flex-row gap-16 md:flex">
           {
             links.map((el) => (
               <Link
@@ -94,7 +97,7 @@ const { parentHref } = Astro.props
 
     <div
       id="menu-overlay"
-      class="fixed inset-0 z-40 transition-opacity duration-300 pointer-events-none bg-black/50 opacity-0 data-[open]:opacity-100 data-[open]:pointer-events-auto ease"
+      class="fixed inset-0 z-40 opacity-0 transition-opacity duration-300 pointer-events-none bg-black/50 data-[open]:opacity-100 data-[open]:pointer-events-auto ease"
     >
     </div>
     <div
@@ -167,12 +170,12 @@ const { parentHref } = Astro.props
     </script>
 
     <main
-      class="flex-1 mb-4 px-4 container mx-auto mt-12"
+      class="container flex-1 px-4 mx-auto mt-12 mb-4"
       transition:animate={slide({ duration: '0.5s' })}
     >
       <slot />
     </main>
-    <footer class="w-full border-t border-solid border-black text-sm px-4 py-2">
+    <footer class="py-2 px-4 w-full text-sm border-t border-black border-solid">
       © {new Date().getFullYear()} Szymon Wrzos • Zbudowano w Astro. Więcej o stronie
       {' '}
       <Link
