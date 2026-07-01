@@ -31,6 +31,10 @@ export default [
   ...pluginAstro.configs['flat/recommended'],
   {
     files: ['**/*.astro'],
+    ...tseslint.configs.disableTypeChecked,
+  },
+  {
+    files: ['**/*.astro'],
     languageOptions: {
       globals: {
         astroHTML: 'readonly',
