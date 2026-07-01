@@ -4,7 +4,11 @@ description: 'Przykładowe użycia ComfyUI z HiggsTTS'
 date: '2026-06-30'
 ---
 import { Image } from 'astro:assets';
-import blueprint from  '@assets/higgs-tts-blueprint.png';
+import blueprint from '@assets/higgs-tts-blueprint.png';
+import plusPosition from '@assets/plus-position.png'
+import engines from '@assets/engines.png'
+import ttsText from '@assets/tts-text.png'
+import audioNodes from '@assets/audio-nodes.png'
 
 ## Wstęp
 
@@ -35,10 +39,25 @@ uv run main.py
 
 1. Na początku należy kliknąć `+` na samej górze lub w `New` po kliknięciu loga ComfyUI w bocznym menu, by utworzyć nową przestrzeń roboczą (workflow).
 
-2. Potem należy kliknąć w `Nodes` i na dole powinien być `TTS Audio Suite` z którego należy przenieść `Higgs Audio v3 Engine` oraz `TTS Text` do przestrzeni roboczej
+<div flex="~ col" gap-1>
+  <Image src={plusPosition} format="webp" alt="Pozycje plusa" class="mt-0! mb-0!" />
+  <i>Tak mniej więcej powinno to wyglądać</i>
+</div>
+
+2. Potem należy kliknąć w `Nodes` i w sekcji `Extensions` powinien być `TTS Audio Suite`
+
+    1. Z `Engines` należy przeciągnąć `Higgs Audio v3 Engine` do przestrzeni roboczej
+    2. Z `Text to Speech` należy przeciągnąć `TTS Text`
+
+<div flex="~ row" gap="1" items="center" >
+    <Image src={engines} format="webp" alt="Pozycje plusa" class="mt-0! mb-0!" />
+
+    <Image src={ttsText} format="webp" alt="Pozycje plusa" class="mt-0! mb-0!" />
+</div>
 
 3. Następnie trzebe zescrollować w górę do kategorii `Comfy nodes` i kliknąć w audio i przeciągnąć `Save Audio` oraz `Load Audio`
 
+  <Image src={audioNodes} format="webp" alt="Widok ComfyUI" class="mt-0! mb-0!" />
 4. `Load Audio` należy podłączyć do `opt_narrator` a `Higgs Audio v3 Engine` - `TTS_engine` w node `TTS Text`
 
 `Load Audio` - ustala, jaka próbka audio ma być sklonowana
@@ -48,6 +67,6 @@ uv run main.py
 5. Pole `audio` z `TTS Text` należy podłączyć do `audio` w node `Save Audio`, który zapisze plik w podanym formacie do `output` w folderze ComfyUI
 
 <div flex="~ col" gap-1>
-<Image src={blueprint} format="webp" alt="Widok ComfyUI" class="mt-0! mb-0!" />
-<i>Tak powinno to wyglądać</i>
+  <Image src={blueprint} format="webp" alt="Widok ComfyUI" class="mt-0! mb-0!" />
+  <i>Tak mniej więcej powinno to wyglądać</i>
 </div>
