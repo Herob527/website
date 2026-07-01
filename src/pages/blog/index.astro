@@ -2,9 +2,16 @@
 import Layout from '@layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
-)
+const posts = (await getCollection('blog'))
+  .sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf())
+  .map((post) => ({
+    ...post,
+    formattedDate: new Intl.DateTimeFormat('pl-PL', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }).format(new Date(post.data.date)),
+  }))
 ---
 
 <Layout>
@@ -27,7 +34,7 @@ const posts = (await getCollection('blog')).sort(
               transition="border-color 0.2s"
               hover:border-gray-400
             >
-              <time text-sm text-gray-500>{post.data.date}</time>
+              <time text-sm text-gray-500>{post.formattedDate}</time>
               <h2 text-xl font-medium mt-1 mb-2>{post.data.title}</h2>
               <p text-gray-600 text-sm>{post.data.description}</p>
             </a>
