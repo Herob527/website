@@ -28,7 +28,7 @@ if (blogItem === undefined) {
 const { Content } = await render(blogItem)
 ---
 
-<Layout>
+<Layout parentHref="/blog">
   <section>
     <header text-center text-4xl font-semibold mb-6>
       <h1>{blogItem.data.title}</h1>

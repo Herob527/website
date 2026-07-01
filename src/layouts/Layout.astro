@@ -25,10 +25,10 @@ const links = [
   },
 ] as const satisfies Link[]
 
-type navKey = keyof (typeof links)[number]['href']
+type hrefs = (typeof links)[number]['href']
 
 interface Props {
-  navKey: navKey
+  parentHref?: hrefs
 }
 ---
 

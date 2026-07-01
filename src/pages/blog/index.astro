@@ -3,7 +3,9 @@ import Layout from '@layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 
 const posts = (await getCollection('blog'))
-  .sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf())
+  .sort(
+    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
+  )
   .map((post) => ({
     ...post,
     formattedDate: new Intl.DateTimeFormat('pl-PL', {
@@ -14,7 +16,7 @@ const posts = (await getCollection('blog'))
   }))
 ---
 
-<Layout>
+<Layout parentHref="/blog">
   <section max-w-2xl mx-auto>
     <header mb-10>
       <h1 text-center text-4xl font-semibold>Blog</h1>
@@ -34,9 +36,15 @@ const posts = (await getCollection('blog'))
               transition="border-color 0.2s"
               hover:border-gray-400
             >
-              <time text-sm text-gray-500>{post.formattedDate}</time>
-              <h2 text-xl font-medium mt-1 mb-2>{post.data.title}</h2>
-              <p text-gray-600 text-sm>{post.data.description}</p>
+              <time text-sm text-gray-500>
+                {post.formattedDate}
+              </time>
+              <h2 text-xl font-medium mt-1 mb-2>
+                {post.data.title}
+              </h2>
+              <p text-gray-600 text-sm>
+                {post.data.description}
+              </p>
             </a>
           </li>
         ))
