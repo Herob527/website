@@ -8,17 +8,18 @@ order: 6
 
 **Stanowisko:** Programista (Full Stack)
 
-Mały software house — tworzenie aplikacji webowych i mobilnych na zlecenie klientów.
+To był mały software house, który tworzył aplikacje webowe i mobilne na zlecenie klientów.
+
+<br />
+Na wstępie zajmowałem się frontendem w React, ale z czasem nauczyłem się Darta i Fluttera, więc doszły również zadania mobilne.
+<br/>
+
+Też podchwyciłem .NETa i dokonywałem poprawek czy dodawałem potrzebne rzeczy.
 
 <br />
 
-**Tech stack:**
-- **Frontend:** Vite + React, Next.js, Astro
-- **Backend:** .NET (intuicyjny mechanizm DI)
-- **Mobile:** Dart + Flutter — statyczne typowanie, `Stream`, operator `..`; podobieństwa do TypeScript, ale własny ekosystem
+Wprowadzałem też docker compose, by łatwiej było testować backend lokalnie oraz Astro do nowych projektów
 
 <br />
 
-**Rozwój:** Szybkie wdrożenie w wiele technologii w krótkim czasie. Lubię mechanizm DI w .NET i sposób, w jaki Flutter łączy frontend z mobilką.
-
-Odejście: zbyt duża skala projektów w stosunku do możliwości małej firmy
+Ostatecznie przyszło się rozstać przez to, że przyszło zbyt dużo projektów jak na możliwości firmy.
