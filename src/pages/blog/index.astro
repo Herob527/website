@@ -18,12 +18,12 @@ const posts = (await getCollection('blog'))
 ---
 
 <Layout parentHref="/blog">
-  <section max-w-2xl mx-auto>
-    <header mb-10>
-      <h1 text-center text-4xl font-semibold>Blog</h1>
+  <section class="max-w-2xl mx-auto">
+    <header class="mb-10">
+      <h1 class="text-center text-4xl font-semibold">Blog</h1>
     </header>
 
-    <ul flex flex-col gap-6>
+    <ul class="flex flex-col gap-6">
       {
         posts.map((post) => (
           <li>
@@ -31,13 +31,13 @@ const posts = (await getCollection('blog'))
               href={`/blog/${post.id}`}
               class="block p-6 bg-gray-100 rounded-lg duration-300 hover:bg-gray-200 transition-[background-color]"
             >
-              <time text-sm text-gray-500>
+              <time class="text-sm text-gray-500">
                 {post.formattedDate}
               </time>
-              <h2 text-xl font-medium mt-1 mb-2>
+              <h2 class="text-xl font-medium mt-1 mb-2">
                 {post.data.title}
               </h2>
-              <p text-gray-600 text-sm>
+              <p class="text-gray-600 text-sm">
                 {post.data.description}
               </p>
             </Link>

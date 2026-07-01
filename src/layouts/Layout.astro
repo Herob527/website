@@ -2,6 +2,7 @@
 import { ClientRouter, slide } from 'astro:transitions'
 import Logo from '@assets/logo.svg'
 import Link from '@components/Link.astro'
+import '../styles/global.css'
 interface LinkItem {
   href: string
   label: string
@@ -49,19 +50,20 @@ const { parentHref } = Astro.props
     <title>Astro</title>
     <ClientRouter />
   </head>
-  <body flex flex-col min-h-screen>
-    <nav p="x-4 y-4" md:p="x-16 y-4" border-b="1px solid #ccc" bg-white>
-      <div flex flex-row gap="2" items-center justify-between>
+  <body class="flex flex-col min-h-screen">
+    <nav class="px-4 py-4 md:px-16 md:py-4 border-b border-solid border-[#ccc] bg-white">
+      <div class="flex flex-row gap-2 items-center justify-between">
         <Link href="/">
           <Logo width={48} />
         </Link>
 
-        <div flex="~ row" gap="16" class="hidden md:flex">
+        <div class="flex flex-row gap-16 hidden md:flex">
           {
             links.map((el) => (
               <Link
                 class:list={[
-                  'text-black! decoration-none!',
+                  'text-black!',
+                  'decoration-none!',
                   'hover:border-b-2 hover:border-solid hover:border-slate-700',
                   {
                     'border-b-2 border-solid border-black':
@@ -80,22 +82,19 @@ const { parentHref } = Astro.props
 
         <button
           id="menu-toggle"
-          flex="~ col"
-          gap-1.5
-          p-2
-          class="md:hidden"
+          class="flex flex-col gap-1.5 p-2 md:hidden"
           aria-label="Menu"
         >
-          <span block w-6 h-0.5 bg-black></span>
-          <span block w-6 h-0.5 bg-black></span>
-          <span block w-6 h-0.5 bg-black></span>
+          <span class="block w-6 h-0.5 bg-black"></span>
+          <span class="block w-6 h-0.5 bg-black"></span>
+          <span class="block w-6 h-0.5 bg-black"></span>
         </button>
       </div>
     </nav>
 
     <div
       id="menu-overlay"
-      class="fixed inset-0 z-40 transition-opacity duration-300 pointer-events-none bg-black/50 op-0 data-[open]:op-100 data-[open]:pointer-events-auto ease"
+      class="fixed inset-0 z-40 transition-opacity duration-300 pointer-events-none bg-black/50 opacity-0 data-[open]:opacity-100 data-[open]:pointer-events-auto ease"
     >
     </div>
     <div
@@ -104,13 +103,10 @@ const { parentHref } = Astro.props
     >
       <button
         id="menu-close"
-        absolute
-        top-4
-        right-4
-        text-2xl
+        class="absolute top-4 right-4 text-2xl"
         aria-label="Close menu">&times;</button
       >
-      <nav flex flex-col gap-6 mt-8 transition:persist>
+      <nav class="flex flex-col gap-6 mt-8" transition:persist>
         {
           links.map((el) => (
             <Link
@@ -171,17 +167,12 @@ const { parentHref } = Astro.props
     </script>
 
     <main
-      flex-1
-      mb-4
-      px-4
-      container
-      mx-auto
-      mt-12
+      class="flex-1 mb-4 px-4 container mx-auto mt-12"
       transition:animate={slide({ duration: '0.5s' })}
     >
       <slot />
     </main>
-    <footer w-full border-t="1px solid black" text-sm px-4 py-2>
+    <footer class="w-full border-t border-solid border-black text-sm px-4 py-2">
       © {new Date().getFullYear()} Szymon Wrzos • Zbudowano w Astro. Więcej o stronie
       {' '}
       <Link

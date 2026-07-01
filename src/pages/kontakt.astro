@@ -35,25 +35,21 @@ const contacts = [
 
 <Layout parentHref="/kontakt">
   <section>
-    <header text-center text-4xl font-semibold mb-6>
+    <header class="text-center text-4xl font-semibold mb-6">
       <h1>Kontakt</h1>
     </header>
     <table>
       {
         contacts.map((item) => (
           <tr>
-            <td pr-2 py-1 flex items-center gap-1>
+            <td class="pr-2 py-1 flex items-center gap-1">
               <div class={`inline-block ${item.icon}`} />
               {item.label}:
             </td>
             <td>
               <a
                 href={item.href}
-                link:text-blue-500
-                visited:text-purple-500
-                hover-visited:border-b="2px solid purple-500"
-                hover:border-b="2px solid blue-500"
-                border-b="2px solid transparent"
+                class="text-blue-500 visited:text-purple-500 hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500 hover:border-b-2 hover:border-solid hover:border-blue-500 border-b-2 border-solid border-transparent"
                 target={item.external ? '_blank' : undefined}
               >
                 {item.name}

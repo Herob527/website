@@ -6,7 +6,7 @@ import tsconfig from '@root/tsconfig.json?raw'
 import packageJson from '@root/package.json?raw'
 import astroConfig from '@root/astro.config.mjs?raw'
 import mise from '@root/mise.toml?raw'
-import unocss from '@root/uno.config.ts?raw'
+import globalCss from '@root/src/styles/global.css?raw'
 import type { CodeLanguage } from 'astro'
 import { Code } from 'astro:components'
 
@@ -18,7 +18,7 @@ interface StackItem {
 
 const stack = [
   { type: 'Framework', name: 'Astro (SSG)', href: 'https://astro.build/' },
-  { type: 'Silnik styli', name: 'UnoCSS', href: 'https://unocss.dev/' },
+  { type: 'Silnik styli', name: 'Tailwind CSS', href: 'https://tailwindcss.com/' },
   {
     type: 'Skrypty',
     name: 'TypeScript',
@@ -67,9 +67,9 @@ const configs = [
     type: 'json',
   },
   {
-    name: 'uno.config.ts',
-    code: unocss,
-    type: 'ts',
+    name: 'src/styles/global.css',
+    code: globalCss,
+    type: 'css',
   },
   {
     name: 'mise.toml',
@@ -81,27 +81,23 @@ const configs = [
 
 <Layout parentHref="/o-witrynie">
   <section>
-    <header text-center text-4xl font-semibold mb-6>
+    <header class="text-center text-4xl font-semibold mb-6">
       <h1>O witrynie</h1>
     </header>
     <article>
-      <header text-2xl mb-4>
+      <header class="text-2xl mb-4">
         <h2>Stack technologiczny</h2>
       </header>
       <table>
         {
           stack.map((item) => (
             <tr>
-              <td pr-4 py-1>
+              <td class="pr-4 py-1">
                 {item.type}:
               </td>
               <td>
                 <a
-                  link:text-blue-500
-                  visited:text-purple-500
-                  hover-visited:border-b="2px solid purple-500"
-                  hover:border-b="2px solid blue-500"
-                  border-b="2px solid transparent"
+                  class="text-blue-500 visited:text-purple-500 hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500 hover:border-b-2 hover:border-solid hover:border-blue-500 border-b-2 border-solid border-transparent"
                   href={item.href}
                   target="_blank"
                 >
@@ -113,14 +109,14 @@ const configs = [
         }
       </table>
     </article>
-    <article mt-4>
-      <header text-2xl mb-4>
+    <article class="mt-4">
+      <header class="text-2xl mb-4">
         <h2>Konfiguracje</h2>
       </header>
-      <div flex flex-col gap-2>
+      <div class="flex flex-col gap-2">
         {
           configs.map((item) => (
-            <div overflow-hidden min-h-0>
+            <div class="overflow-hidden min-h-0">
               <input
                 type="checkbox"
                 id={`toggle-${item.name}`}
@@ -129,27 +125,20 @@ const configs = [
               />
               <label
                 for={`toggle-${item.name}`}
-                class="border-2 border-black"
-                flex
-                flex-row
-                items-center
+                class="border-2 border-black flex flex-row items-center"
               >
-                <p p-2 flex-1 border-r-2 border-black>
+                <p class="p-2 flex-1 border-r-2 border-black">
                   {item.name}
                 </p>
-                <span p-2 px-4 rotate-90 transition-transform>
+                <span class="p-2 px-4 rotate-90 transition-transform">
                   &rangle;
                 </span>
               </label>
 
               <div
-                grid
-                overflow-hidden
-                duration-400
-                ease-in-out
-                class="grid-rows-[0fr] transition-[grid-template-rows] peer-checked:grid-rows-[1fr]"
+                class="grid overflow-hidden duration-400 ease-in-out grid-rows-[0fr] transition-[grid-template-rows] peer-checked:grid-rows-[1fr]"
               >
-                <div min-h-0>
+                <div class="min-h-0">
                   <Code
                     class="p-4"
                     data-name={item.name}

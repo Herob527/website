@@ -72,52 +72,44 @@ const sorted = stagesWithContent
 
 <Layout parentHref="/zyciorys">
   <section>
-    <header text-center text-4xl font-semibold mb-6>
+    <header class="text-center text-4xl font-semibold mb-6">
       <h1>Życiorys</h1>
     </header>
 
-    <div max-w-900px mx-auto w-full md:px-4>
-      <div relative border-l="2px solid #e5e7eb" md:ml-6>
+    <div class="max-w-[900px] mx-auto w-full md:px-4">
+      <div class="relative border-l-2 border-solid border-[#e5e7eb] md:ml-6">
         {
           sorted.map((stage) => (
-            <div mb-12 pl-4 md:pl-8>
-              <span text-sm font-semibold text-gray-400 tabular-nums>
+            <div class="mb-12 pl-4 md:pl-8">
+              <span class="text-sm font-semibold text-gray-400 tabular-nums">
                 {formatDate(stage.startDate)} — {formatDate(stage.endDate)}
               </span>
 
               <div
-                mt-2
-                bg-white
-                shadow-sm
-                p-3
+                class="mt-2 bg-white shadow-sm p-3"
                 style={`border-left: 3px solid ${stage.color}`}
               >
-                <span font-semibold text-sm text-gray-800>
+                <span class="font-semibold text-sm text-gray-800">
                   {stage.entry.data.label}
                 </span>
                 <div
-                  text-sm
-                  text-gray-600
-                  leading-relaxed
-                  mt-1
-                  class="timeline-content"
-                  un-prose
+                  class="text-sm text-gray-600 leading-relaxed mt-1 timeline-content prose"
+                  style=""
                 >
                   <stage.Content />
                 </div>
                 {stage.included.map((inc: IncludedStage) => (
                   <div
-                    p-2
-                    mt-2
+                    class="p-2 mt-2"
                     style={`background: rgba(245,245,245,0.9); border-left: 2px solid ${stage.color}`}
                   >
-                    <span font-medium text-sm text-gray-700>
+                    <span class="font-medium text-sm text-gray-700">
                       {inc.entry.data.label}
                     </span>
-                    <span text-sm text-gray-500 tabular-nums block>
+                    <span class="text-sm text-gray-500 tabular-nums block">
                       {inc.entry.data.startDate} — {inc.entry.data.endDate}
                     </span>
-                    <div text-sm text-gray-600 leading-relaxed mt-1 un-prose>
+                    <div class="text-sm text-gray-600 leading-relaxed mt-1 prose">
                       <inc.Content />
                     </div>
                   </div>

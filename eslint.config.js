@@ -1,7 +1,6 @@
 import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import pluginAstro from 'eslint-plugin-astro'
-import unocss from '@unocss/eslint-plugin'
 
 export default [
   eslint.configs.recommended,
@@ -43,7 +42,6 @@ export default [
       },
     },
   },
-  unocss.configs.flat,
   {
     ignores: ['dist/', '.astro/', 'node_modules/'],
   },

@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig, svgoOptimizer } from 'astro/config'
-import UnoCSS from 'unocss/astro'
+import tailwindcss from '@tailwindcss/vite'
 import preact from '@astrojs/preact'
 
 import mdx from '@astrojs/mdx'
@@ -13,5 +13,8 @@ export default defineConfig({
     contentIntellisense: true,
     svgOptimizer: svgoOptimizer(),
   },
-  integrations: [preact(), UnoCSS(), mdx()],
+  integrations: [preact(), mdx()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 })
