@@ -8,6 +8,7 @@
     "jsxImportSource": "preact",
     "paths": {
       "@layouts/*": ["src/layouts/*"],
+      "@components/*": ["src/components/*"],
       "@assets/*": ["src/assets/*"],
       "@content/*": ["src/content/*"],
       "@root/*": ["./*"]
