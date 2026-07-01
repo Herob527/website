@@ -9,6 +9,7 @@ import plusPosition from '@assets/plus-position.png'
 import engines from '@assets/engines.png'
 import ttsText from '@assets/tts-text.png'
 import audioNodes from '@assets/audio-nodes.png'
+import runWorkflow from '@assets/run-workflow.png'
 import audio1 from '@assets/audios/da10__00000809_1.picked.mp3'
 import audio2 from '@assets/audios/da10__0000080d_1.picked.wav'
 import audio3 from '@assets/audios/da10__00000824_1.picked.mp3'
@@ -75,6 +76,7 @@ uv run main.py
 </div>
 
 Po złożeniu należy kliknąć `Run` i workflow zacznie pracować
+<Image src={runWorkflow} format="webp" alt="Widok ComfyUI" class="mt-0! mb-0!" />
 
 Na wstępie pobierze model z Huggingface a potem dopiero zacznie dalej przetwarzać
 
@@ -85,6 +87,8 @@ HiggsTTS 3 w teorii daje opcję nakierowania głosu na konkretną emocję lub st
 Żeby to zrobić, należy dać w prompcie specjalny tekst między &lt;|...|&gt; przed tekstem, który ma mieć daną cechę.
 
 Aktualna lista jest na [repo HiggsTTS 3 na Huggingface](https://huggingface.co/bosonai/higgs-tts-3-4b)
+
+Warto pogenerować niejeden raz, gdyż HiggsTTS może wypluć dla jednego rezultatu nieco inne, mniej lub bardziej pożądane, brzmienie.
 
 ### Tłumaczenie
 
