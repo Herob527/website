@@ -1,9 +1,53 @@
 ---
-title: 'ComfyUI - Przykład z HiggsTTS'
+title: 'ComfyUI i TTS - Przykład z HiggsTTS'
 description: 'Przykładowe użycia ComfyUI z HiggsTTS'
 date: '2026-06-30'
 ---
+import { Image } from 'astro:assets';
+import blueprint from  '@assets/higgs-tts-blueprint.png';
 
 ## Wstęp
 
-Tutaj zaprezentuję przykładowe zastosowanie ComfyUI z TTS
+Tutaj zaprezentuję przykładowe zastosowanie ComfyUI z TTS.
+
+ComfyUI natywnie nie ma TTSa, ale jest [TTS Audio Suite](https://github.com/diodiogod/TTS-Audio-Suite), które zawiera kompilację różnych TTSów do wypróbowania.
+
+Na bazie testów, `Higgs Audio v3 Engine` najlepiej się sprawdził w języku polskim, zatem będę go stosować w dalszym wpisie.
+
+## Instalacja
+
+Sam używałem ręcznej instalacji `TTS-Audio-Suite` więc jak `ComfyUI Manager` nie styknie, to oto lista kroków:
+
+```bash
+## Idziemy do folderu ComfyUI z rozszerzeniami
+cd /path/to/comfy-ui/custom_nodes
+## Klonujemy repo
+git clone https://github.com/diodiogod/TTS-Audio-Suite
+## Idziemy do korzenia ComfyUI
+cd ..
+## Instalujemy zależności 
+uv pip install -r custom_nodes/tts_audio_suite/requirements.txt
+## Uruchamiamy serwer i jak wszystko git, powinno dać informacje o tym, że załadowały się TTSy
+uv run main.py
+```
+
+## Składanie workflow
+
+1. Na początku należy kliknąć `+` na samej górze lub w `New` po kliknięciu loga ComfyUI w bocznym menu, by utworzyć nową przestrzeń roboczą (workflow).
+
+2. Potem należy kliknąć w `Nodes` i na dole powinien być `TTS Audio Suite` z którego należy przenieść `Higgs Audio v3 Engine` oraz `TTS Text` do przestrzeni roboczej
+
+3. Następnie trzebe zescrollować w górę do kategorii `Comfy nodes` i kliknąć w audio i przeciągnąć `Save Audio` oraz `Load Audio`
+
+4. `Load Audio` należy podłączyć do `opt_narrator` a `Higgs Audio v3 Engine` - `TTS_engine` w node `TTS Text`
+
+`Load Audio` - ustala, jaka próbka audio ma być sklonowana
+
+`Higgs Audio v3 Engine` - ustala, jaki silnik TTS ma być użyty. Można zamienić na inny dostępny `TTS Audio Suite` do testów
+
+5. Pole `audio` z `TTS Text` należy podłączyć do `audio` w node `Save Audio`, który zapisze plik w podanym formacie do `output` w folderze ComfyUI
+
+<div flex="~ col" gap-1>
+<Image src={blueprint} format="webp" alt="Widok ComfyUI" class="mt-0! mb-0!" />
+<i>Tak powinno to wyglądać</i>
+</div>
