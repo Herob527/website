@@ -68,7 +68,7 @@ Ręcznie, by zainstalować rozszerzenie do ComfyUI, należy wejść do folderu `
 ```bash
 echo $(pwd) # Powinien wskazać folder ComfyUI
 cd custom_nodes
-git clone https://github.com/<user>/<nazwa>
+git clone https://github.com/{user}/{nazwa}
 ```
 
 Trzeba mieć na uwadze, że rozszerzenia mogą mieć swoje zależności, które trzeba zainstalować zgodnie z instrukcją oraz to, że mogą być konflikty wersji pakietów pythonowych na przykład.
