@@ -37,7 +37,7 @@ git clone https://github.com/Comfy-Org/ComfyUI
 uv pip install -r requirements.txt
 ```
 
-Ważna rzecz: Tutaj instalacja zakłada GPU od NVIDIA, zatem dla GPU AMD należy zainstalować torch osobno kroku.
+Ważna rzecz: Tutaj instalacja zakłada GPU od NVIDIA, zatem dla GPU AMD należy zainstalować torch osobno.
 
 Testowanie na RX 9070.
 
