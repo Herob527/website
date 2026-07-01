@@ -7,6 +7,10 @@ order: 2
 parent: 'zsl-t'
 ---
 
-Pierwsze zetknięcie z komercyjnym IT. Helpdesk ręcznie tworzył konta i dopraszał o brakujące dane — przydzielono mi zadanie, aby to zmienić.
+Tutaj miałem okazję współpracować zarówno z helpdeskiem, jak i działem technicznym.
 
-Skrypty oparte na Powershellu opracowywał jeden z opiekunów, a moim zadaniem było stworzyć formularz, żeby się z tym komunikował.
+Na tamtym etapie dysponowałem wiedzą z zakresu JavaScriptu, HTML-a i CSS-a wyniesioną z technikum oraz rozwijaną samodzielnie.
+
+Moim zadaniem było przygotowanie frontendu formularza do tworzenia wewnętrznych kont użytkowników, obejmującego walidację oraz przejrzysty interfejs. Celem było odciążenie helpdesku poprzez usprawnienie procesu zakładania kont w sieci wewnętrznej.
+
+Projekt zakończył się powodzeniem, a po pewnym czasie mogłem zobaczyć stworzone przeze mnie rozwiązanie działające w środowisku produkcyjnym.

@@ -8,11 +8,15 @@ order: 1
 
 **Kierunek:** Technik Informatyk
 
-Programowanie zacząłem w 3-ciej klasie technikum — od podstaw algorytmiki i JavaScriptu, a następnie szybko poszedłem dalej: SQL, PHP, backend. Od tego momentu rozwijałem się samodzielnie, tworząc własne projekty jeszcze przed zajęciami.
+Programowanie miałem w programie od 3 klasy technikum.
 
-<br />
+Na wstępie było kombinowanie z uniwersalnym schematem blokowym algorytmu (USB-A) a potem przeszliśmy do JavaScriptu.
 
-Na zajęciach wspierałem kolegów w zadaniach, które sprawiały im trudność — szczególnie w tematach związanych z kodowaniem. To utwierdziło mnie w przekonaniu, że programowanie to moja główna ścieżka.
+Osobno też mieliśmy zajęcia z CSS oraz HTML (formularze, stylowanie).
+
+Tutaj właśnie złapałem bakcyla programowanie i zacząłem też we własnym zakresie majstrować z językiem.
+
+Też mieliśmy zagadnienia związane z MySQL a czwartej klasie PHP, w którym backend łączył się z bazą danych.
 
 <br />
 
