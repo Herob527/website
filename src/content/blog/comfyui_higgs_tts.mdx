@@ -83,65 +83,73 @@ HiggsTTS 3 w teorii daje opcję nakierowania głosu na konkretną emocję lub st
 
 Aktualna lista jest na [repo HiggsTTS 3 na Huggingface](https://huggingface.co/bosonai/higgs-tts-3-4b)
 
-Emocje:
+### Tłumaczenie
 
-| Token | Description |
-|-------|-------------|
-| `<\|emotion:elation\|>` | Elation / joy |
-| `<\|emotion:amusement\|>` | Amusement / playful laughter |
-| `<\|emotion:enthusiasm\|>` | Enthusiasm / excitement |
-| `<\|emotion:determination\|>` | Determination / firmness |
-| `<\|emotion:pride\|>` | Pride / confidence |
-| `<\|emotion:contentment\|>` | Calm satisfaction |
-| `<\|emotion:affection\|>` | Warmth / affection |
-| `<\|emotion:relief\|>` | Relief |
-| `<\|emotion:contemplation\|>` | Thoughtful / reflective |
-| `<\|emotion:confusion\|>` | Confused |
-| `<\|emotion:surprise\|>` | Surprised |
-| `<\|emotion:awe\|>` | Awe / wonder |
-| `<\|emotion:longing\|>` | Longing / yearning |
-| `<\|emotion:arousal\|>` | Heightened desire |
-| `<\|emotion:anger\|>` | Anger |
-| `<\|emotion:fear\|>` | Fear |
-| `<\|emotion:disgust\|>` | Disgust |
-| `<\|emotion:bitterness\|>` | Bitterness |
-| `<\|emotion:sadness\|>` | Sadness |
-| `<\|emotion:shame\|>` | Shame |
-| `<\|emotion:helplessness\|>` | Helplessness |
+#### Emocje
 
-Styl:
+| Token | Opis |
+|-------|------|
+| `<\|emotion:elation\|>` | Radość / wzniosłość |
+| `<\|emotion:amusement\|>` | Rozbawienie / figlarne śmiech |
+| `<\|emotion:enthusiasm\|>` | Entuzjazm / ekscytacja |
+| `<\|emotion:determination\|>` | Determinacja / stanowczość |
+| `<\|emotion:pride\|>` | Duma / pewność siebie |
+| `<\|emotion:contentment\|>` | Spokojne zadowolenie |
+| `<\|emotion:affection\|>` | Ciepło / afekt |
+| `<\|emotion:relief\|>` | Ulga |
+| `<\|emotion:contemplation\|>` | Zamyślenie / refleksja |
+| `<\|emotion:confusion\|>` | Dezorientacja |
+| `<\|emotion:surprise\|>` | Zaskoczenie |
+| `<\|emotion:awe\|>` | Podziw / zachwyt |
+| `<\|emotion:longing\|>` | Tęsknota / pragnienie |
+| `<\|emotion:arousal\|>` | Nasilone pragnienie |
+| `<\|emotion:anger\|>` | Złość |
+| `<\|emotion:fear\|>` | Strach |
+| `<\|emotion:disgust\|>` | Wstręt |
+| `<\|emotion:bitterness\|>` | Gorycz |
+| `<\|emotion:sadness\|>` | Smutek |
+| `<\|emotion:shame\|>` | Wstyd |
+| `<\|emotion:helplessness\|>` | Bezradność |
 
-| Token | Description |
-|-------|-------------|
-| `<\|style:singing\|>` | Singing |
-| `<\|style:shouting\|>` | Shouting / projected voice |
-| `<\|style:whispering\|>` | Whisper |
+#### Styl
 
-Wstawki dźwiękowe:
+| Token | Opis |
+|-------|------|
+| `<\|style:singing\|>` | Śpiew |
+| `<\|style:shouting\|>` | Krzyk / mocny głos |
+| `<\|style:whispering\|>` | Szept |
 
-| Token | Description | Suggested onomatopoeia |
-|-------|-------------|------------------------|
-| `<\|sfx:cough\|>` | Cough | Ahem |
-| `<\|sfx:laughter\|>` | Laughter | Haha / Hehe |
-| `<\|sfx:crying\|>` | Crying | Boohoo / Sob |
-| `<\|sfx:screaming\|>` | Screaming | Ahh / Aaah |
-| `<\|sfx:burping\|>` | Burping | Burp |
-| `<\|sfx:humming\|>` | Humming | Hmm / Mmm |
-| `<\|sfx:sigh\|>` | Sigh | Uh / Ahh |
-| `<\|sfx:sniff\|>` | Sniff | Sff |
-| `<\|sfx:sneeze\|>` | Sneeze | Achoo |
+#### Onomatopeje:
 
-Brzmienie:
+| Token | Opis | Sugerowana onomatopeja |
+|-------|------|------------------------|
+| `<\|sfx:cough\|>` | Kaszel | Ahem |
+| `<\|sfx:laughter\|>` | Śmiech | Haha / Hehe |
+| `<\|sfx:crying\|>` | Płacz | Boohoo / Sob |
+| `<\|sfx:screaming\|>` | Krzyk | Ahh / Aaah |
+| `<\|sfx:burping\|>` | Odbijanie | Burp |
+| `<\|sfx:humming\|>` | Nucenie | Hmm / Mmm |
+| `<\|sfx:sigh\|>` | Westchnienie | Uh / Ahh |
+| `<\|sfx:sniff\|>` | Powąchanie | Sff |
+| `<\|sfx:sneeze\|>` | Kichnięcie | Achoo |
 
-| Token | Effect |
-|-------|--------|
-| `<\|prosody:speed_very_slow\|>` | ≈0.65× speed |
-| `<\|prosody:speed_slow\|>` | ≈0.85× speed |
-| `<\|prosody:speed_fast\|>` | ≈1.2× speed |
-| `<\|prosody:speed_very_fast\|>` | ≈1.4× speed |
-| `<\|prosody:pitch_low\|>` | ≈−3 semitones |
-| `<\|prosody:pitch_high\|>` | ≈+2.5 semitones |
-| `<\|prosody:pause\|>` | ≈400–700 ms pause |
-| `<\|prosody:long_pause\|>` | ≈700–1500 ms pause |
-| `<\|prosody:expressive_high\|>` | More expressive delivery |
-| `<\|prosody:expressive_low\|>` | Flatter delivery |
+#### Ton i brzmienie:
+
+| Token | Efekt |
+|-------|-------|
+| `<\|prosody:speed_very_slow\|>` | ≈0.65× prędkości |
+| `<\|prosody:speed_slow\|>` | ≈0.85× prędkości |
+| `<\|prosody:speed_fast\|>` | ≈1.2× prędkości |
+| `<\|prosody:speed_very_fast\|>` | ≈1.4× prędkości |
+| `<\|prosody:pitch_low\|>` | ≈−3 półtony |
+| `<\|prosody:pitch_high\|>` | ≈+2.5 półtonu |
+| `<\|prosody:pause\|>` | ≈400–700 ms pauzy |
+| `<\|prosody:long_pause\|>` | ≈700–1500 ms pauzy |
+| `<\|prosody:expressive_high\|>` | Bardziej ekspresyjna interpretacja |
+| `<\|prosody:expressive_low\|>` | Bardziej monotonna interpretacja |
+
+Przykłady:
+
+> \<|emotion:determination|> Najwyższy czas oczyścić ten dom z tego tałatajstwa! \<|emotion:contentment|> Na mój znak?!
+
+> Do ataku, teraz! \<|style:shouting|>  \<|emotion:anger|> Zniszcz to; szybko!
