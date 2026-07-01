@@ -30,6 +30,8 @@ type hrefs = (typeof links)[number]['href']
 interface Props {
   parentHref?: hrefs
 }
+
+const { parentHref } = Astro.props
 ---
 
 <html lang="en">
@@ -53,8 +55,8 @@ interface Props {
           {
             links.map((el) => (
               <a
-                hover:border-b="2px solid #000"
-                border-b="2px solid transparent"
+                hover:border-b="2px solid slate-700"
+                border-b={el.href === parentHref ? '2px solid black' : '2px solid transparent'}
                 text="black!"
                 class="decoration-none!"
                 href={el.href}
@@ -95,8 +97,8 @@ interface Props {
         {
           links.map((el) => (
             <a
-              hover:border-b="2px solid #000"
-              border-b="2px solid transparent"
+              hover:border-b="2px solid slate-700"
+              border-b={el.href === parentHref ? '2px solid black' : '2px solid transparent'}
               href={el.href}
               text-lg
               text="black!"
