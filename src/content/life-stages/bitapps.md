@@ -47,3 +47,7 @@ Innym to naprawa zawieszania się procesu CRA w trakcie budowania w pipeline (wy
 Z czasem zaczęło brakować zadań na froncie to zaoferowano mi czas na naukę Kotlina, by wesprzeć zespół mobilny.
 
 Dzięki wsparciu zespołu, po dwóch miesiącach, zacząłem podejmować zadania też z Androida, nie tylko frontendu (miałem przydzielane, gdzie powinienem brać najpierw zadania)
+
+<br />
+
+Na skutek restrukturyzacji firma rozpoczęła likwidację działności, zatem po 2.5 roku musieliśmy się rozstać.
