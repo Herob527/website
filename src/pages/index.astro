@@ -6,11 +6,11 @@ import { Picture } from 'astro:assets'
 
 <Layout>
   <section>
-    <header class="text-center text-4xl font-semibold mb-6">
+    <header class="mb-6 text-4xl font-semibold text-center">
       <h1>Witaj!</h1>
     </header>
-    <div class="flex flex-col md:flex-row items-center gap-8">
-      <div class="flex flex-col items-center gap-2">
+    <div class="flex flex-col gap-8 items-center md:flex-row">
+      <div class="flex flex-col gap-2 items-center">
         <Picture
           src={logoKot}
           alt="Biały kotek z czarnymi plamkami"
@@ -20,7 +20,7 @@ import { Picture } from 'astro:assets'
         <i>Mruczek</i>
       </div>
 
-      <article class="flex flex-col gap-4 text-[4.5rem]">
+      <article class="flex flex-col gap-4 text-xl">
         <h2>
           Nazywam się Szymon Wrzos, znany również jako Herob i specjalizuję się
           w programowaniu frontendu, jednak nie straszne mi tworzenie aplikacji
