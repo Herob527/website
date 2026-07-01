@@ -60,7 +60,7 @@ const { parentHref, title } = Astro.props
           <Logo width={48} />
         </Link>
 
-        <div class="flex hidden flex-row gap-16 md:flex">
+        <div class="hidden flex-row gap-16 md:flex">
           {
             links.map((el) => (
               <Link
@@ -97,12 +97,12 @@ const { parentHref, title } = Astro.props
 
     <div
       id="menu-overlay"
-      class="fixed inset-0 z-40 opacity-0 transition-opacity duration-300 pointer-events-none bg-black/50 data-[open]:opacity-100 data-[open]:pointer-events-auto ease"
+      class="fixed inset-0 z-40 opacity-0 transition-opacity duration-300 pointer-events-none bg-black/50 data-open:opacity-100 data-open:pointer-events-auto ease"
     >
     </div>
     <div
       id="mobile-menu"
-      class="fixed top-0 right-0 z-50 p-6 w-64 h-full bg-white shadow-lg transition-transform duration-300 translate-x-full data-[open]:translate-x-0 ease"
+      class="fixed top-0 right-0 z-50 p-6 w-64 h-full bg-white shadow-lg transition-transform duration-300 translate-x-full data-open:translate-x-0 ease"
     >
       <button
         id="menu-close"
@@ -114,13 +114,9 @@ const { parentHref, title } = Astro.props
           links.map((el) => (
             <Link
               class:list={[
-                'text-lg',
-                'text-black!',
-                'decoration-none!',
+                'text-lg text-black! decoration-none!',
                 'mobile-link',
-                'hover:border-b-2',
-                'hover:border-solid',
-                'hover:border-slate-700',
+                'hover:border-b-2 hover:border-solid hover:border-slate-700',
                 {
                   'border-b-2 border-solid border-black':
                     el.href === parentHref,
