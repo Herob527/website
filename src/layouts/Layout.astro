@@ -56,7 +56,11 @@ const { parentHref } = Astro.props
             links.map((el) => (
               <a
                 hover:border-b="2px solid slate-700"
-                border-b={el.href === parentHref ? '2px solid black' : '2px solid transparent'}
+                border-b={
+                  el.href === parentHref
+                    ? '2px solid black'
+                    : '2px solid transparent'
+                }
                 text="black!"
                 class="decoration-none!"
                 href={el.href}
@@ -69,12 +73,15 @@ const { parentHref } = Astro.props
 
         <button
           id="menu-toggle"
-          class="flex flex-col gap-1.5 p-2 md:hidden"
+          flex="~ col"
+          gap-1.5
+          p-2
+          class="md:hidden"
           aria-label="Menu"
         >
-          <span class="block w-6 h-0.5 bg-black"></span>
-          <span class="block w-6 h-0.5 bg-black"></span>
-          <span class="block w-6 h-0.5 bg-black"></span>
+          <span block w-6 h-0.5 bg-black></span>
+          <span block w-6 h-0.5 bg-black></span>
+          <span block w-6 h-0.5 bg-black></span>
         </button>
       </div>
     </nav>
@@ -90,7 +97,10 @@ const { parentHref } = Astro.props
     >
       <button
         id="menu-close"
-        class="absolute top-4 right-4 text-2xl"
+        absolute
+        top-4
+        right-4
+        text-2xl
         aria-label="Close menu">&times;</button
       >
       <nav flex flex-col gap-6 mt-8 transition:persist>
@@ -98,7 +108,11 @@ const { parentHref } = Astro.props
           links.map((el) => (
             <a
               hover:border-b="2px solid slate-700"
-              border-b={el.href === parentHref ? '2px solid black' : '2px solid transparent'}
+              border-b={
+                el.href === parentHref
+                  ? '2px solid black'
+                  : '2px solid transparent'
+              }
               href={el.href}
               text-lg
               text="black!"
@@ -113,10 +127,10 @@ const { parentHref } = Astro.props
 
     <script>
       const setupMenu = () => {
-        const toggle = document.getElementById('menu-toggle')
-        const close = document.getElementById('menu-close')
-        const menu = document.getElementById('mobile-menu')
-        const overlay = document.getElementById('menu-overlay')
+        const toggle = document.querySelector('#menu-toggle')
+        const close = document.querySelector('#menu-close')
+        const menu = document.querySelector('#mobile-menu')
+        const overlay = document.querySelector('#menu-overlay')
         const links = document.querySelectorAll('.mobile-link')
 
         const openMenu = () => {
