@@ -51,7 +51,7 @@ uv pip install torch torchvision torchaudio --index-url https://download.pytorch
 uv run main.py
 ```
 
-### 4. Wejdź do panelu w przeglądarce (domyślnie na porcie 8188)
+### 4. Jak wszystko zadziała, wejdź do panelu w przeglądarce (domyślnie na porcie 8188)
 
 <http://localhost:8188>
 
