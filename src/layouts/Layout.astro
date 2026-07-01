@@ -24,6 +24,12 @@ const links = [
     label: 'Kontakt',
   },
 ] as const satisfies Link[]
+
+type navKey = keyof (typeof links)[number]['href']
+
+interface Props {
+  navKey: navKey
+}
 ---
 
 <html lang="en">
@@ -36,7 +42,7 @@ const links = [
     <title>Astro</title>
     <ClientRouter transition:animate={slide({ duration: '0.4s' })} />
   </head>
-  <body>
+  <body flex flex-col min-h-screen>
     <nav p="x-4 y-4" md:p="x-16 y-4" border-b="1px solid #ccc" bg-white>
       <div flex flex-row gap="2" items-center justify-between>
         <a href="/">
@@ -135,8 +141,22 @@ const links = [
       })
     </script>
 
-    <main mb-4 px-4 container mx-auto mt-12>
+    <main flex-1 mb-4 px-4 container mx-auto mt-12>
       <slot />
     </main>
+    <footer w-full border-t="1px solid black" text-sm px-4 py-2>
+      © {new Date().getFullYear()} Szymon Wrzos • Zbudowano w Astro. Więcej o stronie
+      {' '}
+      <a
+        link:text-blue-500
+        visited:text-purple-500
+        hover-visited:border-b="2px solid purple-500"
+        hover:border-b="2px solid blue-500"
+        border-b="2px solid transparent"
+        href="/o-witrynie"
+      >
+        tutaj
+      </a>
+    </footer>
   </body>
 </html>
