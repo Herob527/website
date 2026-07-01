@@ -22,4 +22,4 @@ Wprowadzałem też docker compose, by łatwiej było testować backend lokalnie 
 
 <br />
 
-Ostatecznie przyszło się rozstać przez to, że przyszło zbyt dużo projektów jak na możliwości firmy.
+Ostatecznie przyszło się rozstać przez to, że było za dużo ogarniania jak na skalę firmy
