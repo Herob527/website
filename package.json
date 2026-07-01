@@ -32,7 +32,6 @@
     "@unocss/preset-icons": "^66.7.4",
     "@unocss/preset-wind4": "^66.7.4",
     "@unocss/reset": "^66.7.4",
-    "@unocss/transformer-attributify-jsx": "^66.7.4",
     "eslint": "^10.6.0",
     "eslint-plugin-astro": "^2.1.1",
     "prettier": "^3.9.3",
