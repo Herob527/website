@@ -40,7 +40,7 @@ Obecnie to jest neituri.com z innym designem i wykonawcą.
 
 Jednym z konkretnych osiągnięć była migracja z Create-React-App na Vite, co znacząco przyspieszyło pipeline instalacji czy budowania.
 
-Innym to naprawa zawieszania się procesu CRA w trakcie budowania w pipeline (wystarczyło zmniejszyć MAX_OLD_SPACE_SIZE z 8192 na 6144 przed komendą budowania).
+Innym to naprawa zawieszania się procesu CRA w trakcie budowania w pipeline, który udało się rozwiązać metodą prób i błędów właściwie
 
 <br />
 
