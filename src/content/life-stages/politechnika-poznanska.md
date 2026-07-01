@@ -8,8 +8,8 @@ order: 3
 
 **Kierunek:** Edukacja Techniczno-Informatyczna
 
-Studia wybrałem głównie ze względu na praktyki zawodowe. Po drodze poznałem wartościowych ludzi i wykładowców, a wiedza z fizyki i inżynierii okazała się przydatna w zrozumieniu szerszego kontekstu technicznego.
+Studia wybrałem głównie ze względu na praktyki zawodowe. Mimo, że zakończyłem przedwcześnie, nie żałuję, gdyż poznałem wartościowych ludzi i wyniosłem przydatną później wiedzę z inżynierii i fizyki co pozwala lepiej zrozumieć te zagadnienia.
 
 <br />
 
-Z perspektywy programowania kierunek oferował powtórkę z technikum — ale znowu mogłem pomagać innym studentom w zadaniach, co utrwalało moje umiejętności i uczyło tłumaczenia złożonych tematów.
+W kontekście programowania zaś, to były podstawy C++, którego znałem, więc część zajęć to wspieranie kolegów we wskazywaniu co / czemu ich program nie działa.
