@@ -29,8 +29,7 @@ const posts = (await getCollection('blog'))
           <li>
             <Link
               href={`/blog/${post.id}`}
-              block
-              class="p-6 bg-gray-100 rounded-lg duration-300 hover:bg-gray-200 transition-[background-color]"
+              class="block p-6 bg-gray-100 rounded-lg duration-300 hover:bg-gray-200 transition-[background-color]"
             >
               <time text-sm text-gray-500>
                 {post.formattedDate}
