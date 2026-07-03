@@ -2,6 +2,11 @@
 import Layout from '@layouts/Layout.astro'
 import logoKot from '@assets/logo-kot.png'
 import { Picture } from 'astro:assets'
+import translations from '../utils/i18n'
+import { currentLocale, useI18n } from 'astro-nanostores-i18n:runtime'
+
+const i18n = useI18n('mainPage', translations[currentLocale.get()])
+console.log(i18n)
 ---
 
 <Layout title="Strona główna">
