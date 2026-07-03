@@ -40,6 +40,7 @@ const { parentHref, title } = Astro.props
 <html lang="pl">
   <head>
     <meta charset="utf-8" />
+    <title>{title ?? 'Astro'}</title>
     <link
       rel="icon"
       type="image/svg+xml"
@@ -48,7 +49,7 @@ const { parentHref, title } = Astro.props
     <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.ico`} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title ?? 'Astro'}</title>
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <ClientRouter />
   </head>
   <body class="flex flex-col min-h-screen">
