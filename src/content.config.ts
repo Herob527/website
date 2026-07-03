@@ -23,6 +23,7 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.string(),
+    written_by: z.string(),
   }),
 })
 
