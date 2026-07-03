@@ -14,9 +14,15 @@ export default defineConfig({
     contentIntellisense: true,
     svgOptimizer: svgoOptimizer(),
   },
+  i18n: {
+    defaultLocale: 'pl',
+    locales: ['pl', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss(), yaml()],
   },
 })
-
