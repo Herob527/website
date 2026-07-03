@@ -24,6 +24,7 @@ const blog = defineCollection({
     description: z.string(),
     date: z.string(),
     written_by: z.string(),
+    locale: z.string(),
   }),
 })
 
