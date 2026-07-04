@@ -18,7 +18,11 @@ interface StackItem {
 
 const stack = [
   { type: 'Framework', name: 'Astro (SSG)', href: 'https://astro.build/' },
-  { type: 'Silnik styli', name: 'Tailwind CSS', href: 'https://tailwindcss.com/' },
+  {
+    type: 'Silnik styli',
+    name: 'Tailwind CSS',
+    href: 'https://tailwindcss.com/',
+  },
   {
     type: 'Skrypty',
     name: 'TypeScript',
@@ -92,9 +96,7 @@ const configs = [
         {
           stack.map((item) => (
             <tr>
-              <td class="pr-4 py-1">
-                {item.type}:
-              </td>
+              <td class="pr-4 py-1">{item.type}:</td>
               <td>
                 <a
                   class="text-blue-500 visited:text-purple-500 hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500 hover:border-b-2 hover:border-solid hover:border-blue-500 border-b-2 border-solid border-transparent"
@@ -127,17 +129,13 @@ const configs = [
                 for={`toggle-${item.name}`}
                 class="border-2 border-black flex flex-row items-center"
               >
-                <p class="p-2 flex-1 border-r-2 border-black">
-                  {item.name}
-                </p>
+                <p class="p-2 flex-1 border-r-2 border-black">{item.name}</p>
                 <span class="p-2 px-4 rotate-90 transition-transform">
                   &rangle;
                 </span>
               </label>
 
-              <div
-                class="grid overflow-hidden duration-400 ease-in-out grid-rows-[0fr] transition-[grid-template-rows] peer-checked:grid-rows-[1fr]"
-              >
+              <div class="grid overflow-hidden duration-400 ease-in-out grid-rows-[0fr] transition-[grid-template-rows] peer-checked:grid-rows-[1fr]">
                 <div class="min-h-0">
                   <Code
                     class="p-4"
