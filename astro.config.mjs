@@ -9,7 +9,7 @@ import yaml from '@rollup/plugin-yaml'
 // https://astro.build/config
 export default defineConfig({
   site: 'https://herob527.github.io',
-  base: '/website',
+  base: import.meta.env.DEV ? '/' : '/website',
   experimental: {
     contentIntellisense: true,
     svgOptimizer: svgoOptimizer(),
