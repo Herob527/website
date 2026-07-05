@@ -40,3 +40,5 @@ export const geti18nStaticPaths = () => {
     },
   ] satisfies GetStaticPathsItem[]
 }
+
+export const DEFAULT_LOCALE = 'pl'
