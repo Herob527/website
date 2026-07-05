@@ -16,9 +16,11 @@ const transformed = Object.fromEntries(
 
 export const locales = Object.keys(transformed)
 
+export const DEFAULT_LOCALE = 'pl'
+
 export const initI18n = async () =>
   i18next.init({
-    lng: 'pl',
+    lng: DEFAULT_LOCALE,
     resources: transformed,
   })
 
@@ -40,5 +42,3 @@ export const geti18nStaticPaths = () => {
     },
   ] satisfies GetStaticPathsItem[]
 }
-
-export const DEFAULT_LOCALE = 'pl'
