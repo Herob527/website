@@ -23,4 +23,4 @@ Consult these guides before working on related tasks:
 
 ## Internal navigation
 
-When creating links to new page, use <Link /> component instead of base <a> tag
+When creating links to new page, use <Link /> from `src/components` instead of base <a> tag
