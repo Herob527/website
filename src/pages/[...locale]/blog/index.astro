@@ -31,21 +31,31 @@ export const getStaticPaths = (() => {
       <h1 class="text-4xl font-semibold text-center">Blog</h1>
     </header>
 
-    <ul class="flex flex-col gap-6">
-      {
-        posts.map((post) => (
-          <li>
-            <Link
-              href={`/blog/${post.id}`}
-              class="block p-6 bg-gray-100 rounded-lg duration-300 hover:bg-gray-200 transition-[background-color]"
-            >
-              <time class="text-sm text-gray-500">{post.formattedDate}</time>
-              <h2 class="mt-1 mb-2 text-xl font-medium">{post.data.title}</h2>
-              <p class="text-sm text-gray-600">{post.data.description}</p>
-            </Link>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      posts.length > 0 && (
+        <ul class="flex flex-col gap-6">
+          {posts.map((post) => (
+            <li>
+              <Link
+                href={`/blog/${post.id}`}
+                class="block p-6 bg-gray-100 rounded-lg duration-300 hover:bg-gray-200 transition-[background-color]"
+              >
+                <time class="text-sm text-gray-500">{post.formattedDate}</time>
+                <h2 class="mt-1 mb-2 text-xl font-medium">{post.data.title}</h2>
+                <p class="text-sm text-gray-600">{post.data.description}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    {
+      posts.length === 0 && (
+        <div class="text-xl text-center">
+          <p>Nic tu jeszcze nie ma</p>
+        </div>
+      )
+    }
   </section>
 </Layout>
