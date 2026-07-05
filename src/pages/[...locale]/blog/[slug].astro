@@ -10,23 +10,38 @@ export async function getStaticPaths() {
     await Promise.all(
       [...locales, undefined].flatMap(async (locale) => {
         const data = await getCollection('blog')
-        return data.map((el) => ({ slug: el.id, locale: locale }))
+        return data
+          .filter((el) => {
+            const postLocale = el.id.split('/')[0]
+            return locales.includes(postLocale)
+          })
+          .map((el) => {
+            const parts = el.id.split('/')
+            const slug = parts.length > 1 ? parts.slice(1).join('/') : el.id
+            const postLocale = parts[0]
+            return { slug, locale: locale, postLocale }
+          })
       }),
     )
   ).reduce((acc, cur) => [...acc, ...cur].flat(), [])
-  return collections.map((entry) => ({
-    params: {
-      slug: entry.slug,
-      locale: entry.locale,
-    },
-  }))
+
+  return collections
+    .filter((entry) => entry.locale === undefined || entry.locale === entry.postLocale)
+    .map((entry) => ({
+      params: {
+        slug: entry.slug,
+        locale: entry.locale,
+      },
+    }))
 }
 
 const { slug } = Astro.params
+const locale = Astro.currentLocale
 
-const blogItem = await getEntry('blog', slug)
+const entryId = locale ? `${locale}/${slug}` : slug
+const blogItem = await getEntry('blog', entryId)
 if (blogItem === undefined) {
-  throw new Error(`Blog post not found: ${slug}`)
+  throw new Error(`Blog post not found: ${entryId}`)
 }
 
 const { Content } = await render(blogItem)
