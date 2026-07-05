@@ -24,11 +24,6 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params
 
-// So eslint of typescript won't complain
-if (slug === undefined) {
-  throw new Error('Slug is undefined')
-}
-
 const blogItem = await getEntry('blog', slug)
 if (blogItem === undefined) {
   throw new Error(`Blog post not found: ${slug}`)
