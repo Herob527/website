@@ -11,6 +11,8 @@ import type { CodeLanguage, GetStaticPaths } from 'astro'
 import { Code } from 'astro:components'
 import { geti18nStaticPaths } from '@root/src/i18n'
 
+const { t } = Astro.locals
+
 interface StackItem {
   type: string
   name: string
@@ -18,22 +20,22 @@ interface StackItem {
 }
 
 const stack = [
-  { type: 'Framework', name: 'Astro (SSG)', href: 'https://astro.build/' },
+  { type: t('aboutPage.stack.framework'), name: 'Astro (SSG)', href: 'https://astro.build/' },
   {
-    type: 'Silnik styli',
+    type: t('aboutPage.stack.styleEngine'),
     name: 'Tailwind CSS',
     href: 'https://tailwindcss.com/',
   },
   {
-    type: 'Skrypty',
+    type: t('aboutPage.stack.scripts'),
     name: 'TypeScript',
     href: 'https://www.typescriptlang.org/',
   },
-  { type: 'Menadżer pakietów', name: 'Bun', href: 'https://bun.com/' },
-  { type: 'Linter', name: 'ESLint', href: 'https://eslint.org/' },
-  { type: 'Formatter', name: 'Prettier', href: 'https://prettier.io/' },
+  { type: t('aboutPage.stack.packageManager'), name: 'Bun', href: 'https://bun.com/' },
+  { type: t('aboutPage.stack.linter'), name: 'ESLint', href: 'https://eslint.org/' },
+  { type: t('aboutPage.stack.formatter'), name: 'Prettier', href: 'https://prettier.io/' },
   {
-    type: 'Edytor AI',
+    type: t('aboutPage.stack.aiEditor'),
     name: 'Opencode (MiMo V2.5 Free)',
     href: 'https://opencode.ai/',
   },
@@ -88,14 +90,14 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths
 ---
 
-<Layout parentHref="/o-witrynie" title="O witrynie">
+<Layout parentHref="/o-witrynie" title={t('aboutPage.title')}>
   <section>
     <header class="mb-6 text-4xl font-semibold text-center">
-      <h1>O witrynie</h1>
+      <h1>{t('aboutPage.title')}</h1>
     </header>
     <article>
       <header class="mb-4 text-2xl">
-        <h2>Stack technologiczny</h2>
+        <h2>{t('aboutPage.techStack')}</h2>
       </header>
       <table>
         {
@@ -118,7 +120,7 @@ export const getStaticPaths = (() => {
     </article>
     <article class="mt-4">
       <header class="mb-4 text-2xl">
-        <h2>Konfiguracje</h2>
+        <h2>{t('aboutPage.configs')}</h2>
       </header>
       <div class="flex flex-col gap-2">
         {

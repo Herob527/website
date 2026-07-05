@@ -12,10 +12,10 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths
 ---
 
-<Layout title="Strona główna">
+<Layout title={t('mainPage.title')}>
   <section>
     <header class="mb-6 text-4xl font-semibold text-center">
-      <h1>Witaj!</h1>
+      <h1>{t('mainPage.title')}</h1>
     </header>
     <div class="flex flex-col gap-8 items-center md:flex-row">
       <div class="flex flex-col gap-2 items-center">
@@ -33,19 +33,10 @@ export const getStaticPaths = (() => {
           {t('mainPage.aboutMe')}
         </h2>
         <div class="flex flex-col">
-          <span
-            >Po godzinach, poza rozwojem, to jadę tu i tam rowerem, robię
-            zdjęcia kotom czy trenuję karate obecnie.
-          </span>
-          <span>
-            Okazjonalnie podróżuję do innego miasta, by pozwiedzać czy odwiedzić
-            lokalne kocie kawiarnie.
-          </span>
+          <span>{t('mainPage.hobbies')}</span>
+          <span>{t('mainPage.travel')}</span>
         </div>
-        <p>
-          Zachęcam do przejrzenia bloga, gdzie obecnie znajduje się parę wpisów
-          o ComfyUI.
-        </p>
+        <p>{t('mainPage.blogCta')}</p>
       </article>
     </div>
   </section>

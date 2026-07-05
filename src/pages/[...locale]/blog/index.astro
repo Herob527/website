@@ -5,6 +5,8 @@ import { getCollection } from 'astro:content'
 import { geti18nStaticPaths } from '@root/src/i18n'
 import type { GetStaticPaths } from 'astro'
 
+const { t } = Astro.locals
+
 const posts = (
   await getCollection('blog', (el) => el.data.locale === Astro.currentLocale)
 )
@@ -25,10 +27,10 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths
 ---
 
-<Layout parentHref="/blog" title="Blog">
+<Layout parentHref="/blog" title={t('blogPage.title')}>
   <section class="mx-auto max-w-2xl">
     <header class="mb-10">
-      <h1 class="text-4xl font-semibold text-center">Blog</h1>
+      <h1 class="text-4xl font-semibold text-center">{t('blogPage.title')}</h1>
     </header>
 
     {
@@ -53,7 +55,7 @@ export const getStaticPaths = (() => {
     {
       posts.length === 0 && (
         <div class="text-xl text-center">
-          <p>Nic tu jeszcze nie ma</p>
+          <p>{t('blogPage.empty')}</p>
         </div>
       )
     }

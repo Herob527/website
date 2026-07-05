@@ -43,20 +43,8 @@ const stagesWithContent = await Promise.all(
   }),
 )
 
-const months = [
-  'Sty',
-  'Lut',
-  'Mar',
-  'Kwi',
-  'Maj',
-  'Cze',
-  'Lip',
-  'Sie',
-  'Wrz',
-  'Paź',
-  'Lis',
-  'Gru',
-]
+const { t } = Astro.locals
+const months = t('cvPage.months', { returnObjects: true }) as string[]
 
 const formatDate = (date: Temporal.PlainDate) => {
   return `${months[date.month - 1]} ${date.year.toString()}`
@@ -76,10 +64,10 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths
 ---
 
-<Layout parentHref="/zyciorys" title="Życiorys">
+<Layout parentHref="/zyciorys" title={t('cvPage.title')}>
   <section>
     <header class="mb-6 text-4xl font-semibold text-center">
-      <h1>Życiorys</h1>
+      <h1>{t('cvPage.title')}</h1>
     </header>
 
     <div class="mx-auto w-full md:px-4 max-w-[900px]">

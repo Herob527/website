@@ -3,6 +3,8 @@ import { ClientRouter, slide } from 'astro:transitions'
 import Logo from '@assets/logo.svg'
 import Link from '@components/Link.astro'
 import '../styles/global.css'
+const { t } = Astro.locals
+
 interface LinkItem {
   href: string
   label: string
@@ -11,19 +13,19 @@ interface LinkItem {
 const links = [
   {
     href: '/zyciorys',
-    label: 'Życiorys',
+    label: t('nav.cv'),
   },
   {
     href: '/blog',
-    label: 'Blog',
+    label: t('nav.blog'),
   },
   {
     href: '/o-witrynie',
-    label: 'O witrynie',
+    label: t('nav.about'),
   },
   {
     href: '/kontakt',
-    label: 'Kontakt',
+    label: t('nav.contact'),
   },
 ] as const satisfies LinkItem[]
 
@@ -175,13 +177,13 @@ const { parentHref, title } = Astro.props
       <slot />
     </main>
     <footer class="py-2 px-4 w-full text-sm border-t border-black border-solid">
-      © {new Date().getFullYear()} Szymon Wrzos • Zbudowano w Astro. Więcej o stronie
+      © {new Date().getFullYear()} Szymon Wrzos • {t('footer.builtIn')}
       {' '}
       <Link
         class="text-blue-500 border-b-2 border-transparent border-solid visited:text-purple-500 hover:border-b-2 hover:border-blue-500 hover:border-solid hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500"
         href="/o-witrynie"
       >
-        tutaj
+        {t('footer.here')}
       </Link>
     </footer>
   </body>

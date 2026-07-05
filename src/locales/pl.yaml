@@ -1,5 +1,61 @@
+nav:
+  cv: Życiorys
+  blog: Blog
+  about: O witrynie
+  contact: Kontakt
+
+footer:
+  builtIn: Zbudowano w Astro. Więcej o stronie
+  here: tutaj
+
 mainPage:
+  title: Witaj!
   aboutMe: >
     Nazywam się Szymon Wrzos, znany również jako Herob i specjalizuję się
     w programowaniu frontendu, jednak nie straszne mi tworzenie aplikacji
     mobilnej czy backendu do obu.
+  hobbies: >
+    Po godzinach, poza rozwojem, to jadę tu i tam rowerem, robię
+    zdjęcia kotom czy trenuję karate obecnie.
+  travel: >
+    Okazjonalnie podróżuję do innego miasta, by pozwiedzać czy odwiedzić
+    lokalne kocie kawiarnie.
+  blogCta: >
+    Zachęcam do przejrzenia bloga, gdzie obecnie znajduje się parę wpisów
+    o ComfyUI.
+
+aboutPage:
+  title: O witrynie
+  techStack: Stack technologiczny
+  configs: Konfiguracje
+  stack:
+    framework: Framework
+    styleEngine: Silnik styli
+    scripts: Skrypty
+    packageManager: Menadżer pakietów
+    linter: Linter
+    formatter: Formatter
+    aiEditor: Edytor AI
+
+contactPage:
+  title: Kontakt
+
+cvPage:
+  title: Życiorys
+  months:
+    - Sty
+    - Lut
+    - Mar
+    - Kwi
+    - Maj
+    - Cze
+    - Lip
+    - Sie
+    - Wrz
+    - Paź
+    - Lis
+    - Gru
+
+blogPage:
+  title: Blog
+  empty: Nic tu jeszcze nie ma

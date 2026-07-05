@@ -1,3 +1,59 @@
+nav:
+  cv: CV
+  blog: Blog
+  about: About
+  contact: Contact
+
+footer:
+  builtIn: Built with Astro. More about the site
+  here: here
+
 mainPage:
+  title: Welcome!
   aboutMe: >
-    I'm Szymon Wrzos, known as Herob and I specialise mainly in coding frontend, but I'm no stranger for mobile in backend development.
+    I'm Szymon Wrzos, known as Herob and I specialise mainly in coding frontend,
+    but I'm no stranger for mobile in backend development.
+  hobbies: >
+    Outside of work, I like to ride my bike here and there, take photos of cats,
+    and practice karate.
+  travel: >
+    Occasionally I travel to another city to explore or visit local cat cafés.
+  blogCta: >
+    Feel free to check out the blog, where there are currently a few posts
+    about ComfyUI.
+
+aboutPage:
+  title: About this site
+  techStack: Technology stack
+  configs: Configurations
+  stack:
+    framework: Framework
+    styleEngine: Style engine
+    scripts: Scripts
+    packageManager: Package manager
+    linter: Linter
+    formatter: Formatter
+    aiEditor: AI editor
+
+contactPage:
+  title: Contact
+
+cvPage:
+  title: CV
+  months:
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+
+blogPage:
+  title: Blog
+  empty: Nothing here yet
