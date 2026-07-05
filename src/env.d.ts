@@ -1,7 +1,9 @@
 import i18next from 'i18next'
 
-declare namespace App {
-  interface Locals {
-    t: typeof i18next.getFixedT
+declare global {
+  namespace App {
+    interface Locals {
+      t: ReturnType<typeof i18next.getFixedT>
+    }
   }
 }
