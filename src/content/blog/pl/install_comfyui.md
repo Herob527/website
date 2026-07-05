@@ -3,7 +3,6 @@ title: 'ComfyUI - Instalacja'
 description: 'Instrukcje instalacji i hostowania ComfyUI lokalnie - Linux'
 date: '2026-06-29'
 written_by: human
-locale: pl
 ---
 
 ## Wstęp
