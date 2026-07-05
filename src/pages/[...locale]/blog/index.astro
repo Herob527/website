@@ -8,7 +8,10 @@ import type { GetStaticPaths } from 'astro'
 const { t } = Astro.locals
 
 const posts = (
-  await getCollection('blog', (el) => el.data.locale === Astro.currentLocale)
+  await getCollection(
+    'blog',
+    (el) => el.id.split('/')[0] === Astro.currentLocale,
+  )
 )
   .sort(
     (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
@@ -39,7 +42,7 @@ export const getStaticPaths = (() => {
           {posts.map((post) => (
             <li>
               <Link
-                href={`/blog/${post.id}`}
+                href={`/blog/${post.id.split('/')[1]}`}
                 class="block p-6 bg-gray-100 rounded-lg duration-300 hover:bg-gray-200 transition-[background-color]"
               >
                 <time class="text-sm text-gray-500">{post.formattedDate}</time>
