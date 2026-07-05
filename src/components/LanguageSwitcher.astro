@@ -1,9 +1,8 @@
 ---
-import { locales, DEFAULT_LOCALE } from '../i18n'
+import { DEFAULT_LOCALE } from '../i18n'
 
 const currentLocale = Astro.currentLocale ?? DEFAULT_LOCALE
-const alternateLocale =
-  locales.find((l) => l !== currentLocale) ?? DEFAULT_LOCALE
+const { t } = Astro.locals
 
 const base = import.meta.env.BASE_URL
 const pathname = Astro.url.pathname
@@ -13,35 +12,38 @@ if (relativePath.startsWith(`/${currentLocale}`)) {
   relativePath = relativePath.slice(`/${currentLocale}`.length) || '/'
 }
 
-const href =
-  alternateLocale === DEFAULT_LOCALE
+const plHref =
+  DEFAULT_LOCALE === 'pl'
     ? `${base}${relativePath}`
-    : `${base}/${alternateLocale}${relativePath}`
+    : `${base}/pl${relativePath}`
 
-const { t } = Astro.locals
+const enHref = `${base}/en${relativePath}`
 
 const currentIsPl = currentLocale === 'pl'
-const ariaLabel = currentIsPl ? t('langSwitcher.toEn') : t('langSwitcher.toPl')
 ---
 
 <span class="inline-flex gap-1 items-center">
-  <span
-    class:list={[
-      'w-6 h-4.5',
-      {
-        'icon-[flag--pl-4x3]': currentIsPl,
-        'icon-[flag--us-4x3]': !currentIsPl,
-      },
-    ]}></span>
+  {
+    currentIsPl ? (
+      <span class="w-6 h-4.5 icon-[flag--pl-4x3]" />
+    ) : (
+      <a
+        href={plHref.replace('//', '/')}
+        aria-label={t('langSwitcher.toPl')}
+        class="w-6 h-4.5 icon-[flag--pl-4x3] opacity-40 hover:opacity-100 transition-opacity"
+      />
+    )
+  }
   <span class="text-gray-300">|</span>
-  <a
-    href={href.replace('//', '/')}
-    aria-label={ariaLabel}
-    class:list={[
-      'w-6 h-4.5 opacity-40 hover:opacity-100 transition-opacity',
-      {
-        'icon-[flag--us-4x3]': currentIsPl,
-        'icon-[flag--pl-4x3]': !currentIsPl,
-      },
-    ]}></a>
+  {
+    !currentIsPl ? (
+      <span class="w-6 h-4.5 icon-[flag--us-4x3]" />
+    ) : (
+      <a
+        href={enHref.replace('//', '/')}
+        aria-label={t('langSwitcher.toEn')}
+        class="w-6 h-4.5 icon-[flag--us-4x3] opacity-40 hover:opacity-100 transition-opacity"
+      />
+    )
+  }
 </span>
