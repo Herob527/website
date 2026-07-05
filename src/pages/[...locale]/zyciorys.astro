@@ -18,22 +18,28 @@ interface StageWithContent {
   included: IncludedStage[]
 }
 
+const locale = Astro.currentLocale ?? 'pl'
+
 const allStages = await getCollection('lifeStages')
 
-const parents = allStages
+const localeStages = allStages.filter((s) => s.id.startsWith(`${locale}/`))
+
+const parents = localeStages
   .filter((s) => !s.data.parent)
   .sort((a, b) => a.data.order - b.data.order)
 
-const children = allStages
+const children = localeStages
   .filter((s) => s.data.parent)
   .sort((a, b) => a.data.order - b.data.order)
+
+const stripLocale = (id: string) => id.replace(/^[a-z]{2}\//, '')
 
 const stagesWithContent = await Promise.all(
   parents.map(async (parent) => {
     const { Content } = await render(parent)
     const included = await Promise.all(
       children
-        .filter((c) => c.data.parent === parent.id)
+        .filter((c) => c.data.parent === stripLocale(parent.id))
         .map(async (c) => {
           const { Content: IncContent } = await render(c)
           return { entry: c, Content: IncContent }
