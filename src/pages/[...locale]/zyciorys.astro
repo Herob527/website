@@ -2,6 +2,8 @@
 import Layout from '@layouts/Layout.astro'
 import { getCollection, render, type CollectionEntry } from 'astro:content'
 import type { AstroComponentFactory } from 'astro/runtime/server/render/astro/factory.js'
+import { geti18nStaticPaths } from '@root/src/i18n'
+import type { GetStaticPaths } from 'astro'
 
 type LifeStageEntry = CollectionEntry<'lifeStages'>
 
@@ -68,32 +70,36 @@ const sorted = stagesWithContent
     color: s.entry.data.color,
   }))
   .sort((a, b) => Temporal.PlainDate.compare(a.startDate, b.startDate))
+
+export const getStaticPaths = (() => {
+  return geti18nStaticPaths()
+}) satisfies GetStaticPaths
 ---
 
 <Layout parentHref="/zyciorys" title="Życiorys">
   <section>
-    <header class="text-center text-4xl font-semibold mb-6">
+    <header class="mb-6 text-4xl font-semibold text-center">
       <h1>Życiorys</h1>
     </header>
 
-    <div class="max-w-[900px] mx-auto w-full md:px-4">
-      <div class="relative border-l-2 border-solid border-[#e5e7eb] md:ml-6">
+    <div class="mx-auto w-full md:px-4 max-w-[900px]">
+      <div class="relative border-l-2 border-solid md:ml-6 border-[#e5e7eb]">
         {
           sorted.map((stage) => (
-            <div class="mb-12 pl-4 md:pl-8">
-              <span class="text-sm font-semibold text-gray-400 tabular-nums">
+            <div class="pl-4 mb-12 md:pl-8">
+              <span class="text-sm font-semibold tabular-nums text-gray-400">
                 {formatDate(stage.startDate)} — {formatDate(stage.endDate)}
               </span>
 
               <div
-                class="mt-2 bg-white shadow-sm p-3"
+                class="p-3 mt-2 bg-white shadow-sm"
                 style={`border-left: 3px solid ${stage.color}`}
               >
-                <span class="font-semibold text-sm text-gray-800">
+                <span class="text-sm font-semibold text-gray-800">
                   {stage.entry.data.label}
                 </span>
                 <div
-                  class="text-sm text-gray-600 leading-relaxed mt-1 timeline-content prose"
+                  class="mt-1 text-sm leading-relaxed text-gray-600 timeline-content prose"
                   style=""
                 >
                   <stage.Content />
@@ -103,13 +109,13 @@ const sorted = stagesWithContent
                     class="p-2 mt-2"
                     style={`background: rgba(245,245,245,0.9); border-left: 2px solid ${stage.color}`}
                   >
-                    <span class="font-medium text-sm text-gray-700">
+                    <span class="text-sm font-medium text-gray-700">
                       {inc.entry.data.label}
                     </span>
-                    <span class="text-sm text-gray-500 tabular-nums block">
+                    <span class="block text-sm tabular-nums text-gray-500">
                       {inc.entry.data.startDate} — {inc.entry.data.endDate}
                     </span>
-                    <div class="text-sm text-gray-600 leading-relaxed mt-1 prose">
+                    <div class="mt-1 text-sm leading-relaxed text-gray-600 prose">
                       <inc.Content />
                     </div>
                   </div>

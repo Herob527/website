@@ -7,8 +7,9 @@ import packageJson from '@root/package.json?raw'
 import astroConfig from '@root/astro.config.mjs?raw'
 import mise from '@root/mise.toml?raw'
 import globalCss from '@root/src/styles/global.css?raw'
-import type { CodeLanguage } from 'astro'
+import type { CodeLanguage, GetStaticPaths } from 'astro'
 import { Code } from 'astro:components'
+import { geti18nStaticPaths } from '@root/src/i18n'
 
 interface StackItem {
   type: string
@@ -81,25 +82,29 @@ const configs = [
     type: 'toml',
   },
 ] as const satisfies ConfigItem[]
+
+export const getStaticPaths = (() => {
+  return geti18nStaticPaths()
+}) satisfies GetStaticPaths
 ---
 
 <Layout parentHref="/o-witrynie" title="O witrynie">
   <section>
-    <header class="text-center text-4xl font-semibold mb-6">
+    <header class="mb-6 text-4xl font-semibold text-center">
       <h1>O witrynie</h1>
     </header>
     <article>
-      <header class="text-2xl mb-4">
+      <header class="mb-4 text-2xl">
         <h2>Stack technologiczny</h2>
       </header>
       <table>
         {
           stack.map((item) => (
             <tr>
-              <td class="pr-4 py-1">{item.type}:</td>
+              <td class="py-1 pr-4">{item.type}:</td>
               <td>
                 <a
-                  class="text-blue-500 visited:text-purple-500 hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500 hover:border-b-2 hover:border-solid hover:border-blue-500 border-b-2 border-solid border-transparent"
+                  class="text-blue-500 border-b-2 border-transparent border-solid visited:text-purple-500 hover:border-b-2 hover:border-blue-500 hover:border-solid hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500"
                   href={item.href}
                   target="_blank"
                 >
@@ -112,7 +117,7 @@ const configs = [
       </table>
     </article>
     <article class="mt-4">
-      <header class="text-2xl mb-4">
+      <header class="mb-4 text-2xl">
         <h2>Konfiguracje</h2>
       </header>
       <div class="flex flex-col gap-2">
@@ -127,15 +132,15 @@ const configs = [
               />
               <label
                 for={`toggle-${item.name}`}
-                class="border-2 border-black flex flex-row items-center"
+                class="flex flex-row items-center border-2 border-black"
               >
-                <p class="p-2 flex-1 border-r-2 border-black">{item.name}</p>
-                <span class="p-2 px-4 rotate-90 transition-transform">
+                <p class="flex-1 p-2 border-r-2 border-black">{item.name}</p>
+                <span class="p-2 px-4 transition-transform rotate-90">
                   &rangle;
                 </span>
               </label>
 
-              <div class="grid overflow-hidden duration-400 ease-in-out grid-rows-[0fr] transition-[grid-template-rows] peer-checked:grid-rows-[1fr]">
+              <div class="grid overflow-hidden ease-in-out duration-400 grid-rows-[0fr] transition-[grid-template-rows] peer-checked:grid-rows-[1fr]">
                 <div class="min-h-0">
                   <Code
                     class="p-4"

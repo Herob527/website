@@ -1,9 +1,15 @@
 ---
+import type { GetStaticPaths } from 'astro'
 import Layout from '@layouts/Layout.astro'
 import logoKot from '@assets/logo-kot.png'
 import { Picture } from 'astro:assets'
+import { geti18nStaticPaths } from '@root/src/i18n'
 
 const { t } = Astro.locals
+
+export const getStaticPaths = (() => {
+  return geti18nStaticPaths()
+}) satisfies GetStaticPaths
 ---
 
 <Layout title="Strona główna">

@@ -1,5 +1,7 @@
 ---
 import Layout from '@layouts/Layout.astro'
+import { geti18nStaticPaths } from '@root/src/i18n'
+import type { GetStaticPaths } from 'astro'
 
 interface ContactItem {
   icon: string
@@ -31,25 +33,29 @@ const contacts = [
     external: true,
   },
 ] satisfies ContactItem[]
+
+export const getStaticPaths = (() => {
+  return geti18nStaticPaths()
+}) satisfies GetStaticPaths
 ---
 
 <Layout parentHref="/kontakt" title="Kontakt">
   <section>
-    <header class="text-center text-4xl font-semibold mb-6">
+    <header class="mb-6 text-4xl font-semibold text-center">
       <h1>Kontakt</h1>
     </header>
     <table>
       {
         contacts.map((item) => (
           <tr>
-            <td class="pr-2 py-1 flex items-center gap-1">
+            <td class="flex gap-1 items-center py-1 pr-2">
               <span class={`inline-block w-5 h-5 ${item.icon}`} />
               {item.label}:
             </td>
             <td>
               <a
                 href={item.href}
-                class="text-blue-500 visited:text-purple-500 hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500 hover:border-b-2 hover:border-solid hover:border-blue-500 border-b-2 border-solid border-transparent"
+                class="text-blue-500 border-b-2 border-transparent border-solid visited:text-purple-500 hover:border-b-2 hover:border-blue-500 hover:border-solid hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500"
                 target={item.external ? '_blank' : undefined}
               >
                 {item.name}

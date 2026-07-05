@@ -1,14 +1,23 @@
 ---
 import Layout from '@layouts/Layout.astro'
+import { locales } from '@root/src/i18n'
 import { render } from 'astro:content'
 import { getEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
-  const collections = await getCollection('blog')
+  const collections = (
+    await Promise.all(
+      [...locales, undefined].flatMap(async (locale) => {
+        const data = await getCollection('blog')
+        return data.map((el) => ({ slug: el.id, locale: locale }))
+      }),
+    )
+  ).reduce((acc, cur) => [...acc, ...cur].flat(), [])
   return collections.map((entry) => ({
     params: {
-      slug: entry.id,
+      slug: entry.slug,
+      locale: entry.locale,
     },
   }))
 }
