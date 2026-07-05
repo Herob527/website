@@ -22,8 +22,6 @@ await i18next.init({
 const onRequest = defineMiddleware(async (context, next) => {
   const { currentLocale } = context
 
-  console.log(currentLocale, i18next.language)
-
   context.locals.t = i18next.getFixedT(currentLocale ?? 'pl')
   return next()
 })
