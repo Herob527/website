@@ -2,6 +2,7 @@
 import { ClientRouter, slide } from 'astro:transitions'
 import Logo from '@assets/logo.svg'
 import Link from '@components/Link.astro'
+import LanguageSwitcher from '@components/LanguageSwitcher.astro'
 import '../styles/global.css'
 const { t } = Astro.locals
 
@@ -66,7 +67,7 @@ const { parentHref, title } = Astro.props
           <Logo height={40} />
         </Link>
 
-        <div class="hidden flex-row gap-16 md:flex">
+        <div class="hidden flex-row gap-16 items-center md:flex">
           {
             links.map((el) => (
               <Link
@@ -86,6 +87,8 @@ const { parentHref, title } = Astro.props
               </Link>
             ))
           }
+          <span class="text-gray-300">|</span>
+          <LanguageSwitcher />
         </div>
 
         <button
@@ -135,6 +138,8 @@ const { parentHref, title } = Astro.props
             </Link>
           ))
         }
+        <hr class="border-gray-300" />
+        <LanguageSwitcher />
       </nav>
     </div>
 

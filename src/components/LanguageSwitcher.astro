@@ -1,0 +1,33 @@
+---
+import { locales, DEFAULT_LOCALE } from '../i18n'
+
+const currentLocale = Astro.currentLocale ?? DEFAULT_LOCALE
+const alternateLocale =
+  locales.find((l) => l !== currentLocale) ?? DEFAULT_LOCALE
+
+const base = import.meta.env.BASE_URL
+const pathname = Astro.url.pathname
+
+let relativePath = base !== '/' ? pathname.replace(base, '') : pathname
+if (relativePath.startsWith(`/${currentLocale}`)) {
+  relativePath = relativePath.slice(`/${currentLocale}`.length) || '/'
+}
+
+const href =
+  alternateLocale === DEFAULT_LOCALE
+    ? `${base}${relativePath}`
+    : `${base}/${alternateLocale}${relativePath}`
+
+const label = alternateLocale === 'en' ? 'English' : 'Polski'
+---
+
+<a
+  href={href.replace('//', '/')}
+  class:list={[
+    'text-black! decoration-none!',
+    'hover:border-b-2 hover:border-solid hover:border-slate-700',
+    'border-b-2 border-solid border-transparent',
+  ]}
+>
+  {label}
+</a>
