@@ -17,7 +17,7 @@ Steps below are based on [ComfyUI docs](https://docs.comfy.org/installation/syst
 
 ## Initial requirements
 
-I strongly recommend using [mise](https://mise.jdx.dev/) to install [uv](https://docs.astral.sh/uv/getting-started/installation/) by command `mise use -g uv` or `pipx install uv`
+I strongly recommend using [mise](https://mise.jdx.dev/) to install [uv](https://docs.astral.sh/uv/getting-started/installation/) by command `mise use -g uv`
 
 - python 3.12+
 - git

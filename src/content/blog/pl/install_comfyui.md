@@ -17,7 +17,7 @@ To, co tutaj jest opisane jest możliwe do znalezienia w [docsach ComfyUI](https
 
 ## Wstępne wymagania
 
-Sugeruję użyć [mise](https://mise.jdx.dev/) do instalacji [uv](https://docs.astral.sh/uv/getting-started/installation/) poprzez `mise use -g uv` lub `pipx install uv`
+Sugeruję użyć [mise](https://mise.jdx.dev/) do instalacji [uv](https://docs.astral.sh/uv/getting-started/installation/) poprzez `mise use -g uv`
 
 - python 3.12+
 - git
