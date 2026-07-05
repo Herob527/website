@@ -57,3 +57,7 @@ cvPage:
 blogPage:
   title: Blog
   empty: Nothing here yet
+
+langSwitcher:
+  toEn: Switch to English
+  toPl: Przełącz na Polski

@@ -18,16 +18,30 @@ const href =
     ? `${base}${relativePath}`
     : `${base}/${alternateLocale}${relativePath}`
 
-const label = alternateLocale === 'en' ? 'English' : 'Polski'
+const { t } = Astro.locals
+
+const currentIsPl = currentLocale === 'pl'
+const ariaLabel = currentIsPl ? t('langSwitcher.toEn') : t('langSwitcher.toPl')
 ---
 
-<a
-  href={href.replace('//', '/')}
-  class:list={[
-    'text-black! decoration-none!',
-    'hover:border-b-2 hover:border-solid hover:border-slate-700',
-    'border-b-2 border-solid border-transparent',
-  ]}
->
-  {label}
-</a>
+<span class="inline-flex gap-1 items-center">
+  <span
+    class:list={[
+      'w-6 h-4.5',
+      {
+        'icon-[flag--pl-4x3]': currentIsPl,
+        'icon-[flag--us-4x3]': !currentIsPl,
+      },
+    ]}></span>
+  <span class="text-gray-300">|</span>
+  <a
+    href={href.replace('//', '/')}
+    aria-label={ariaLabel}
+    class:list={[
+      'w-6 h-4.5 opacity-40 hover:opacity-100 transition-opacity',
+      {
+        'icon-[flag--us-4x3]': currentIsPl,
+        'icon-[flag--pl-4x3]': !currentIsPl,
+      },
+    ]}></a>
+</span>
