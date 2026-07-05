@@ -13,7 +13,7 @@ const posts = (
   )
   .map((post) => ({
     ...post,
-    formattedDate: new Intl.DateTimeFormat('pl-PL', {
+    formattedDate: new Intl.DateTimeFormat(Astro.currentLocale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
