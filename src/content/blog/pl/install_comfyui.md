@@ -11,7 +11,7 @@ written_by: human
 
 Takie elementy (tzw. node) mogą ładować CSV, wyciągać tekst na podstawie regexa, uruchamiać trening RVC czy generować tekst z HiggsTTS i to wszystko może się łączyć w ramach jednego łańcucha elementów.
 
-Tutaj dam kroki do instalacji na Linuxie (Fedora 44), bo na tym obecnie pracuję.
+Tutaj dam kroki do instalacji na Linuxie (Fedora 44), bo obecnie na tym testowałem.
 
 To, co tutaj jest opisane jest możliwe do znalezienia w [docsach ComfyUI](https://docs.comfy.org/installation/system_requirements).
 
@@ -40,7 +40,7 @@ uv pip install -r requirements.txt
 
 Ważna rzecz: Tutaj instalacja zakłada GPU od NVIDIA, zatem dla GPU AMD należy zainstalować torch osobno.
 
-Testowanie na RX 9070.
+Testowane na RX 9070.
 
 ```bash
 uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.2 --reinstall
@@ -60,7 +60,7 @@ uv run main.py
 
 ## Rozszerzenia
 
-Samo ComfyUI nie jest, o ironio, _comfy_ gdy trzeba pobrać modele, że trzeba to zrobić ręcznie oraz może mieć brakujące opcje.
+Samo ComfyUI nie jest, o ironio, _comfy_ gdy trzeba pobrać modele lub rozszerzenia, że trzeba pobrać i wstawić do odpowiedniego folderu we własnym zakresie.
 
 Na szczęście są rozwiązana społeczności, które to ułatwiają.
 
