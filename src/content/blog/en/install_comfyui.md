@@ -54,7 +54,7 @@ uv run main.py
 
 ### 4. If everything goes smoothly, open panel in browser (default port is 8188)
 
-<http://localhost:8188>
+[http://localhost:8188](http://localhost:8188)
 
 ### 5. We are in panel
 

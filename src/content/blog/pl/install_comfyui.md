@@ -54,7 +54,7 @@ uv run main.py
 
 ### 4. Jak wszystko zadziała, wejdź do panelu w przeglądarce (domyślnie na porcie 8188)
 
-<http://localhost:8188>
+[http://localhost:8188](http://localhost:8188)
 
 ### 5. I jesteśmy w panelu
 
