@@ -22,6 +22,7 @@ interface Frontmatter {
   description: string
   date: string
   written_by: string
+  language: string
 }
 
 const articles = await Promise.all(
@@ -40,6 +41,8 @@ const articles = await Promise.all(
       content: item,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       name: blogPath.split('/').at(-1)!,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      language: blogPath.split('/').at(-2)!,
     }
   }),
 )
@@ -82,7 +85,7 @@ Output only the rewritten MDX content. Do not include explanations, notes, or ma
     ] satisfies ChatLike
 
     const output = Bun.file(
-      `generated/${article.name.replace('.mdx', `.${modelName.replaceAll('/', '_')}`)}.mdx`,
+      `generated/${article.language}/${article.name.replace('.mdx', `.${modelName.replaceAll('/', '_')}`)}.mdx`,
     )
     await output.write('')
     const writer = output.writer()
@@ -93,7 +96,7 @@ Output only the rewritten MDX content. Do not include explanations, notes, or ma
     }
     const { stats } = await prediction
     console.log(
-      `Redacted ${article.name} successfully with model: ${modelName}. Speed: ${stats.tokensPerSecond ? stats.tokensPerSecond.toString() : 'undefined'}`,
+      `\nRedacted ${article.name} successfully with model: ${modelName}. Speed: ${stats.tokensPerSecond ? stats.tokensPerSecond.toString() : 'undefined'}`,
     )
     await writer.end()
   }
