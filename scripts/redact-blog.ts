@@ -23,17 +23,20 @@ interface Frontmatter {
   written_by: string
 }
 
-for (const blogPath of blogCollections) {
-  const item = await Bun.file(blogPath).text()
-  const compiled = mdxToJs(item)
+const frontMatters = await Promise.all(
+  blogCollections.map(async (blogPath) => {
+    const item = await Bun.file(blogPath).text()
+    const compiled = mdxToJs(item)
 
-  const { frontmatter } = compiled
-  if (!frontmatter?.value) {
-    throw new Error('No frontmatter')
-  }
-  const val = YAML.parse(frontmatter.value) as Frontmatter
-  console.log(val)
-}
+    const { frontmatter } = compiled
+    if (!frontmatter?.value) {
+      throw new Error('No frontmatter')
+    }
+    const val = YAML.parse(frontmatter.value) as Frontmatter
+    return { blogPath, frontmatter: val }
+  }),
+)
+console.log(frontMatters)
 
 // const blogCollections = import.meta.glob('../src/content/blog/**/*.md', {
 //   import: 'default',
