@@ -1,6 +1,7 @@
 ---
 import Layout from '@layouts/Layout.astro'
 import { locales } from '@root/src/i18n'
+import { getEntries } from 'astro:content'
 import { render } from 'astro:content'
 import { getEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
@@ -26,7 +27,10 @@ export async function getStaticPaths() {
   ).reduce((acc, cur) => [...acc, ...cur].flat(), [])
 
   return collections
-    .filter((entry) => entry.locale === undefined || entry.locale === entry.postLocale)
+    .filter(
+      (entry) =>
+        entry.locale === undefined || entry.locale === entry.postLocale,
+    )
     .map((entry) => ({
       params: {
         slug: entry.slug,
@@ -40,6 +44,12 @@ const locale = Astro.currentLocale
 
 const entryId = locale ? `${locale}/${slug}` : slug
 const blogItem = await getEntry('blog', entryId)
+const aiItems = await getCollection('blogAI', (item) => {
+  const hasCurrentLocale =
+    item.filePath?.split('/').at(-2) === Astro.currentLocale
+  const isChildOfBlogItem = item.data.parentId.id === slug
+  return hasCurrentLocale && isChildOfBlogItem
+})
 if (blogItem === undefined) {
   throw new Error(`Blog post not found: ${entryId}`)
 }
