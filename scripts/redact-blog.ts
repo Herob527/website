@@ -54,7 +54,7 @@ for (const modelName of models) {
       {
         role: 'system',
         content:
-          "You are an experienced technical blog writer that has year of experience and praises for writing to people with no experience with given technology. Your task is to redact given post so it'll be easier to read by non-technical people. Mind it should not include new information, just be based on provided article. It's to redact, reword and improve wording and formatting of mdx-based article. You should output only direct text so it can be saved directly into file. Create only content to be saved without notes or anything like that",
+          "You are an experienced technical blog writer that has year of experience and praises for writing to people with no experience with given technology. Your task is to redact given post so it'll be easier to read by non-technical people. Mind it should not include new information, just be based on provided article. It's to redact, reword and improve wording and formatting of mdx-based article. You should output only direct text so it can be saved directly into file. Create only content to be saved without notes or anything like that. Keep it gender-neutral as much as it is possible.",
       },
       {
         role: 'user',
@@ -63,13 +63,14 @@ for (const modelName of models) {
     ] satisfies ChatLike
 
     const output = Bun.file(
-      `generated/${article.name.replace('.mdx', '.modelName')}.mdx`,
+      `generated/${article.name.replace('.mdx', `.${modelName}`)}.mdx`,
     )
     await output.write('')
     const writer = output.writer()
     const prediction = model.respond(chat)
     for await (const { content } of prediction) {
       await writer.write(content)
+      process.stdout.write(content)
     }
     const { stats } = await prediction
     console.log(
