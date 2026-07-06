@@ -4,6 +4,7 @@ import { getCollection, render, type CollectionEntry } from 'astro:content'
 import type { AstroComponentFactory } from 'astro/runtime/server/render/astro/factory.js'
 import { geti18nStaticPaths } from '@root/src/i18n'
 import type { GetStaticPaths } from 'astro'
+import { DEFAULT_LANGUAGE } from '@root/src/constants'
 
 type LifeStageEntry = CollectionEntry<'lifeStages'>
 
@@ -18,7 +19,7 @@ interface StageWithContent {
   included: IncludedStage[]
 }
 
-const locale = Astro.currentLocale ?? 'pl'
+const locale = Astro.currentLocale ?? DEFAULT_LANGUAGE
 
 const allStages = await getCollection('lifeStages')
 

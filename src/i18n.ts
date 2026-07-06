@@ -1,5 +1,6 @@
 import type { GetStaticPathsItem } from 'astro'
 import i18next from 'i18next'
+import { DEFAULT_LANGUAGE } from './constants'
 
 const translations = import.meta.glob('./locales/*.yaml', {
   eager: true,
@@ -16,11 +17,9 @@ const transformed = Object.fromEntries(
 
 export const locales = Object.keys(transformed)
 
-export const DEFAULT_LOCALE = 'pl'
-
 export const initI18n = async () =>
   i18next.init({
-    lng: DEFAULT_LOCALE,
+    lng: DEFAULT_LANGUAGE,
     resources: transformed,
   })
 

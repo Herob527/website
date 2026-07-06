@@ -5,6 +5,7 @@ import mdx from '@astrojs/mdx'
 
 import sitemap from '@astrojs/sitemap'
 import yaml from '@rollup/plugin-yaml'
+import { DEFAULT_LANGUAGE } from './src/constants'
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,8 +16,8 @@ export default defineConfig({
     svgOptimizer: svgoOptimizer(),
   },
   i18n: {
-    defaultLocale: 'pl',
-    locales: ['pl', 'en'],
+    defaultLocale: DEFAULT_LANGUAGE,
+    locales: [DEFAULT_LANGUAGE, 'en'],
     routing: {
       prefixDefaultLocale: false,
     },
