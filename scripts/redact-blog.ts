@@ -1,7 +1,8 @@
 import { LMStudioClient } from '@lmstudio/sdk'
 import { exit } from 'process'
 import type { Model } from './models'
-import { Glob } from 'bun'
+import { Glob, YAML } from 'bun'
+import { mdxToJs } from 'satteri'
 
 const client = new LMStudioClient()
 
@@ -14,7 +15,25 @@ const models: Model[] = [
 
 const blogGlob = new Glob('src/content/blog/**/*.{md,mdx}')
 const blogCollections = await Array.fromAsync(blogGlob.scan())
-console.log(blogCollections)
+
+interface Frontmatter {
+  title: string
+  description: string
+  date: string
+  written_by: string
+}
+
+for (const blogPath of blogCollections) {
+  const item = await Bun.file(blogPath).text()
+  const compiled = mdxToJs(item)
+
+  const { frontmatter } = compiled
+  if (!frontmatter?.value) {
+    throw new Error('No frontmatter')
+  }
+  const val = YAML.parse(frontmatter.value) as Frontmatter
+  console.log(val)
+}
 
 // const blogCollections = import.meta.glob('../src/content/blog/**/*.md', {
 //   import: 'default',
