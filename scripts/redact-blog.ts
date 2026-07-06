@@ -7,7 +7,7 @@ import { mdxToJs } from 'satteri'
 const client = new LMStudioClient()
 
 const models: Model[] = [
-  'google/gemma-4-e4b',
+  'qwen3-0.6b',
   // 'microsoft/phi-4-reasoning-plus',
   // 'zai-org/glm-4.7-flash',
   // 'google/gemma-4-26b-a4b-qat',
@@ -85,21 +85,36 @@ Output only the rewritten MDX content. Do not include explanations, notes, or ma
       },
     ] satisfies ChatLike
 
-    const output = Bun.file(
-      `generated/${article.language}/${article.name.replace('.mdx', `.${modelName.replaceAll('/', '_')}`)}.mdx`,
+    const fileName = article.name.replace(
+      /\.(mdx?)$/,
+      `.${modelName.replaceAll('/', '_')}.$1`,
     )
-    await output.unlink()
-    const writer = output.writer({ highWaterMark: 1024 ** 2 })
+
+    const filePath = `generated/${article.language}/${fileName}`
+    const output = Bun.file(filePath)
+    if (await output.exists()) {
+      await output.unlink()
+    }
     const prediction = model.respond(chat)
     for await (const { content } of prediction) {
-      await writer.write(content)
       process.stdout.write(content)
     }
-    const { stats } = await prediction
+    const { stats, nonReasoningContent } = await prediction
+    const frontmatterWithAI = {
+      ...article.frontmatter,
+      written_by: modelName,
+    } satisfies Frontmatter
+    const template = `
+---
+${YAML.stringify(frontmatterWithAI)}
+---
+${nonReasoningContent}  
+`
+    await output.write(template)
+
     console.log(
       `\nRedacted ${article.name} successfully with model: ${modelName}. Speed: ${stats.tokensPerSecond ? stats.tokensPerSecond.toString() : 'undefined'}`,
     )
-    await writer.end()
   }
 
   await model.unload()
