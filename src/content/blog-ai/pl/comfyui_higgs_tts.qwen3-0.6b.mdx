@@ -1,0 +1,76 @@
+
+---
+parentId: comfyui_higgs_tts
+written_by: qwen3-0.6b
+---
+
+
+## KomfyUI - Przykład z HiggsTTS 3  
+
+Tutaj zaprezentuję przykładowe użycie **ComfyUI** z TTS Audio Suite.  
+ComfyUI nie ma TTSa, ale jest [TTS Audio Suite](https://github.com/diodiogod/TTS-Audio-Suite), który zawiera kompilację różnych TTSów do wypróbowania.  
+
+### Instalacja
+
+Na bazie testów `Higgs Audio v3 Engine` najlepiej się sprawdził w języku polskim, więc użyjmy go w dalszym wpisie.
+
+```bash
+# Klonujemy repo
+git clone https://github.com/diodiogod/TTS-Audio-Suite
+
+# Uruchomimy ComfyUI
+cd /path/to/comfy-ui/custom_nodes
+uv pip install -r custom_nodes/tts_audio_suite/requirements.txt
+uv run main.py
+```
+
+### Składanie workflow  
+
+1. W bocznym menu kliknij `+` na **Node** i zrób wklejęcie **New Workflow**.  
+
+2. Z `Extensions` wybierz **TTS Audio Suite**.  
+
+   - Przeciągnij **Higgs Audio v3 Engine** do przestrzeni roboczej.  
+   - Przeciągnij **TTS Text** do `Audio Nodes`.  
+
+3. Ustaw `Load Audio` i `Save Audio`.  
+
+4. Podłącz `opt_narrator` do `audio`, a `Higgs Audio v3 Engine` do `Save Audio`.  
+
+5. Wybierz format pliku:  
+   - *`audio1.picked.mp3`* – w formacie MP3 (jednozna)  
+   - *`audio2.wav`* – w formacie Wav (wielostronnego).  
+
+### Promptowanie HiggsTTS 3
+
+HiggsTTS 3 umożliwia nakierowanie głosu na konkretną emocję lub styl.  
+
+#### Emocje  
+| Token | Opis |
+|--------|------|
+| `<\|emotion:elation\|>` | Radość / wzniosłość |
+| ...    | ... |
+
+#### Styl  
+| Token | Opis         |
+|--------|--------------|
+| `<\|style:singing\|>` | Śpiew                |
+
+#### Onomatopeje:
+| Token | Opis         |
+|--------|--------------|
+| `<\|sfx:cough\|>`     | Kaszel       |
+| ...    | ...          |
+
+### Przykłady
+
+> **Emocja: determination**  
+> Najwyższy czas oczyścić ten dom z tego tałatajstwa!  
+
+> **Styl: shouting**  
+> Zniszcz to; szybko!  
+
+> **Emocja: relief**  
+> W ostatniej chwili! ...  
+> **Onomatopej: sigh** ...  
+> **Emocja: relief** Jesteśmy tutaj bezpieczni.  

@@ -1,0 +1,83 @@
+
+---
+parentId: comfyui_higgs_tts
+written_by: qwen3-0.6b
+---
+
+
+## ComfyUI & HiggsTTS: Simple Example Workflow  
+
+### Overview  
+ComfyUI does not have a built-in TTS node, but you can use third-party tools like [Higgs Audio v3 Engine](https://huggingface.co/bosonai/higgs-tts-3-4b) and the [TTS Audio Suite](https://github.com/diodiogod/TTS-Audio-Suite) to generate polished speech.  
+
+---
+
+### Installation  
+
+1. **Clone TTS Audio Suite**  
+   ```bash
+   git clone https://github.com/diodiogod/TTS-Audio-Suite
+   ```
+
+2. **Install dependencies**  
+   ```bash
+   uv pip install -r custom_nodes/tts_audio_suite/requirements.txt
+   ```
+
+3. **Run ComfyUI**  
+   Start the server:  
+   ```bash
+   uv run main.py
+   ```
+
+---
+
+### Creating a Workflow  
+
+1. **Start New Workflow**  
+   Click the "+" icon (plus position) after opening ComfyUI to create a new workflow.  
+
+2. **Add TTS Engine**  
+   - Go to **Nodes → Extensions** → **TTS Audio Suite**.  
+   - Drag `Higgs Audio v3 Engine` from **Engines** into workspace.  
+   - Drag `TTS Text` from **Text to Speech** into the workspace.  
+
+3. **Load and Save Audio**  
+   - Go to **Audio Nodes**, drag **Save Audio** and **Load Audio** into the workspace.  
+
+4. **Connect Nodes**  
+   - The **Higgs Audio v3 Engine** connects to **TTS Text** (via `audio`).  
+   - The **Load Audio** node connects to the **opt_narrator** and the **Higgs Audio v3 Engine**, which generates speech.  
+
+5. **Finalize and Run**  
+   After assembling, click **Run** to generate audio.  
+
+---
+
+### Using HiggsTTS 3 for Customization  
+
+HiggsTTS supports:  
+- **Emotions**: Tokens like `<|emotion:determination|>` create mood changes.  
+- **Style**: Tokens like `<|style:singing|>` change voice tone.  
+- **Sound Effects**: Tokens like `<|sfx:cough|>` add vocal effects.  
+- **Prosody**: Tokens like `<|prosody:pitch_low|>` adjust pitch and speed.  
+
+For example, to create a "determined" tone:  
+```text
+Najwyższy czas oczyścić ten dom z tego tałatajstwa! (emotion:determination)
+```
+
+---
+
+### Example Prompt  
+
+> **Text**: *"Do ataku, teraz! Zniszcz to; szybko!"*  
+> **Style**: `<|style:shouting|>`  
+> **Emotion**: `<|emotion:anger|>`  
+> **Sound Effects**: `<|sfx:crying|>`  
+
+---
+
+### Summary  
+
+This workflow demonstrates how ComfyUI and HiggsTTS 3 combine to generate high-quality speech with customization.  
