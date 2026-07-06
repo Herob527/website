@@ -7,7 +7,7 @@ written_by: human
 
 ## Wstęp
 
-**ComfyUI** to aplikacja, która umożliwia graficzne łączenie ze sobą elementów przetwazania danych.
+**ComfyUI** to aplikacja, która umożliwia graficzne łączenie ze sobą elementów przetwarzania danych.
 
 Takie elementy (tzw. node) mogą ładować CSV, wyciągać tekst na podstawie regexa, uruchamiać trening RVC czy generować tekst z HiggsTTS i to wszystko może się łączyć w ramach jednego łańcucha elementów.
 
