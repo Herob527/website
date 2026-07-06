@@ -1,5 +1,5 @@
 ---
-import { DEFAULT_LOCALE } from '../i18n'
+import { DEFAULT_LANGUAGE } from '../constants'
 
 interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   href: string
@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL
 const currentLocale = Astro.currentLocale
 
 const localizedHref =
-  currentLocale === DEFAULT_LOCALE ? href : `/${currentLocale}${href}`
+  currentLocale === DEFAULT_LANGUAGE ? href : `/${currentLocale}${href}`
 
 const finalHref =
   href.startsWith('/') && base !== '/'
