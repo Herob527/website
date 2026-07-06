@@ -21,8 +21,12 @@ interface Frontmatter {
   title: string
   description: string
   date: string
-  written_by: string
   language: string
+}
+
+interface AiBlog {
+  parentId: string
+  written_by: string
 }
 
 const articles = await Promise.all(
@@ -55,9 +59,7 @@ for (const modelName of models) {
     },
   })
 
-  for (const article of articles.filter(
-    (article) => article.frontmatter.written_by === 'human',
-  )) {
+  for (const article of articles) {
     const chat = [
       {
         role: 'system',
@@ -90,7 +92,7 @@ Output only the rewritten MDX content. Do not include explanations, notes, or ma
       `.${modelName.replaceAll('/', '_')}.$1`,
     )
 
-    const filePath = `generated/${article.language}/${fileName}`
+    const filePath = `src/content/blog-ai/${article.language}/${fileName}`
     const output = Bun.file(filePath)
     if (await output.exists()) {
       await output.unlink()
@@ -101,9 +103,9 @@ Output only the rewritten MDX content. Do not include explanations, notes, or ma
     }
     const { stats, nonReasoningContent } = await prediction
     const frontmatterWithAI = {
-      ...article.frontmatter,
+      parentId: fileName.split('.')[0],
       written_by: modelName,
-    } satisfies Frontmatter
+    } satisfies AiBlog
     const template = `
 ---
 ${YAML.stringify(frontmatterWithAI, null, 2)}
