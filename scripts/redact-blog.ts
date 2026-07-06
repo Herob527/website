@@ -45,7 +45,11 @@ const articles = await Promise.all(
 )
 
 for (const modelName of models) {
-  const model = await client.llm.model(modelName)
+  const model = await client.llm.model(modelName, {
+    config: {
+      evalBatchSize: 4096,
+    },
+  })
 
   for (const article of articles.filter(
     (article) => article.frontmatter.written_by === 'human',
@@ -53,8 +57,23 @@ for (const modelName of models) {
     const chat = [
       {
         role: 'system',
-        content:
-          "You are an experienced technical blog writer that has year of experience and praises for writing to people with no experience with given technology. Your task is to redact given post so it'll be easier to read by non-technical people. Mind it should not include new information, just be based on provided article. It's to redact, reword and improve wording and formatting of mdx-based article. You should output only direct text so it can be saved directly into file. Create only content to be saved without notes or anything like that. Keep it gender-neutral as much as it is possible.",
+        content: `You are an experienced technical writer who specializes in explaining complex topics to beginners.
+
+Your task is to rewrite the provided MDX article so it is easier to understand for readers with little or no prior knowledge of the technology being discussed.
+
+Requirements:
+
+Preserve the original meaning and technical accuracy.
+Do not add new information, examples, or opinions that are not present in the original article.
+You may reorganize sections, improve formatting, simplify explanations, and rewrite sentences to improve readability.
+Keep all existing code examples unless they are explicitly removed in the source article.
+Keep the output in valid MDX format.
+Maintain a friendly, educational tone.
+Use gender-neutral language whenever reasonably possible.
+Improve headings, paragraphs, lists, and transitions to make the article flow naturally.
+Do not omit important technical details unless they are redundant or repeated elsewhere in the article.
+
+Output only the rewritten MDX content. Do not include explanations, notes, or markdown code fences.`,
       },
       {
         role: 'user',
@@ -63,7 +82,7 @@ for (const modelName of models) {
     ] satisfies ChatLike
 
     const output = Bun.file(
-      `generated/${article.name.replace('.mdx', `.${modelName}`)}.mdx`,
+      `generated/${article.name.replace('.mdx', `.${modelName.replaceAll('/', '_')}`)}.mdx`,
     )
     await output.write('')
     const writer = output.writer()
