@@ -106,7 +106,7 @@ Output only the rewritten MDX content. Do not include explanations, notes, or ma
     } satisfies Frontmatter
     const template = `
 ---
-${YAML.stringify(frontmatterWithAI)}
+${YAML.stringify(frontmatterWithAI, null, 2)}
 ---
 ${nonReasoningContent}  
 `
