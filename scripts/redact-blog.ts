@@ -51,6 +51,7 @@ for (const modelName of models) {
   const model = await client.llm.model(modelName, {
     config: {
       evalBatchSize: 4096,
+      flashAttention: true,
     },
   })
 
@@ -87,8 +88,8 @@ Output only the rewritten MDX content. Do not include explanations, notes, or ma
     const output = Bun.file(
       `generated/${article.language}/${article.name.replace('.mdx', `.${modelName.replaceAll('/', '_')}`)}.mdx`,
     )
-    await output.write('')
-    const writer = output.writer()
+    await output.unlink()
+    const writer = output.writer({ highWaterMark: 1024 ** 2 })
     const prediction = model.respond(chat)
     for await (const { content } of prediction) {
       await writer.write(content)
