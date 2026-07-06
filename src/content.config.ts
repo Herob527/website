@@ -1,4 +1,4 @@
-import { defineCollection } from 'astro:content'
+import { defineCollection, reference } from 'astro:content'
 import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 
@@ -23,8 +23,18 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.string(),
+  }),
+})
+
+const blogAI = defineCollection({
+  loader: glob({
+    pattern: '**/*.{md,mdx}',
+    base: './src/content/blog-ai',
+  }),
+  schema: z.object({
+    parentId: reference('blog'),
     written_by: z.string(),
   }),
 })
 
-export const collections = { lifeStages, blog }
+export const collections = { lifeStages, blog, blogAI }
