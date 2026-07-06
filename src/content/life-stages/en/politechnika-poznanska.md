@@ -1,7 +1,7 @@
 ---
 startDate: '2020-10-01'
 endDate: '2022-10-30'
-label: 'Politechnika Poznańska'
+label: 'University of Technology in Poznań'
 color: '#f59e0b'
 order: 3
 ---

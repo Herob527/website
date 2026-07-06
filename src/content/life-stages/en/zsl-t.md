@@ -1,7 +1,7 @@
 ---
 startDate: '2016-09-01'
 endDate: '2020-06-30'
-label: 'ZSL-T / Technikum nr 19 w Poznaniu'
+label: 'ZSL-T / Technical school nr 19 in Poznań'
 color: '#6366f1'
 order: 1
 ---

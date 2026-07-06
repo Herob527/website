@@ -1,7 +1,7 @@
 ---
 startDate: '2022-11-01'
 endDate: '2025-04-01'
-label: 'Praca w BitApps sp. z o.o.'
+label: 'Job at BitApps sp. z o.o.'
 color: '#10b981'
 order: 5
 ---

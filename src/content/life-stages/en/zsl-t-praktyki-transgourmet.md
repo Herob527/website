@@ -1,7 +1,7 @@
 ---
 startDate: '2018-03-01'
 endDate: '2018-03-30'
-label: 'Praktyki w Transgourmet'
+label: 'Internshipt at Transgourmet'
 color: '#6366f1'
 order: 2
 parent: 'zsl-t'
