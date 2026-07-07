@@ -110,30 +110,35 @@ const { t } = Astro.locals
 </Layout>
 
 <script>
-  const humanToken = 'human'
-  const writer = document.querySelector<HTMLSelectElement>('#article-writer')
-  const label = document.querySelector<HTMLParagraphElement>(
-    '#article-write-label',
-  )
-  const humanWritten = document.querySelector<HTMLDivElement>('#human')
-  const aiRedacted = [
-    ...document.querySelectorAll<HTMLDivElement>('.ai-redacted'),
-  ]
-  if (writer === null || label === null || humanWritten === null)
-    throw new Error('Elements not found')
+  import { viewTransitionCallback } from '@root/src/utils'
 
-  writer.addEventListener('change', (val) => {
-    const value = (val?.target as HTMLSelectElement).value
-    if (value === humanToken) {
-      aiRedacted.forEach((item) => item.style.display === 'none')
-      humanWritten.style.display = 'block'
-      return
-    }
+  const init = () => {
+    const humanToken = 'human'
+    const writer = document.querySelector<HTMLSelectElement>('#article-writer')
+    const label = document.querySelector<HTMLParagraphElement>(
+      '#article-write-label',
+    )
+    const humanWritten = document.querySelector<HTMLDivElement>('#human')
+    const aiRedacted = [
+      ...document.querySelectorAll<HTMLDivElement>('.ai-redacted'),
+    ]
+    if (writer === null || label === null || humanWritten === null) return
 
-    humanWritten.style.display = 'none'
-    const target = aiRedacted.find((item) => item.dataset.redactor === value)
-    if (target) {
-      target.style.display = 'block'
-    }
-  })
+    writer.addEventListener('change', (val) => {
+      const value = (val?.target as HTMLSelectElement).value
+      if (value === humanToken) {
+        aiRedacted.forEach((item) => item.style.display === 'none')
+        humanWritten.style.display = 'block'
+        return
+      }
+
+      humanWritten.style.display = 'none'
+      const target = aiRedacted.find((item) => item.dataset.redactor === value)
+      if (target) {
+        target.style.display = 'block'
+      }
+    })
+  }
+
+  viewTransitionCallback(init)
 </script>

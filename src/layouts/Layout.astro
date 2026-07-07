@@ -144,6 +144,8 @@ const { parentHref, title } = Astro.props
     </div>
 
     <script>
+      import { viewTransitionCallback } from '../utils'
+
       const setupMenu = () => {
         const toggle = document.querySelector('#menu-toggle')
         const close = document.querySelector('#menu-close')
@@ -167,9 +169,7 @@ const { parentHref, title } = Astro.props
         links.forEach((link) => link.addEventListener('click', closeMenu))
       }
 
-      setupMenu()
-
-      document.addEventListener('astro:after-swap', () => {
+      viewTransitionCallback(() => {
         window.scrollTo({ left: 0, top: 0, behavior: 'instant' })
         setupMenu()
       })
