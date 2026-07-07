@@ -70,31 +70,35 @@ const { t } = Astro.locals
     <header class="mb-6 text-4xl font-semibold text-center">
       <h1>{blogItem.data.title}</h1>
     </header>
-    <div class="flex gap-4 justify-center items-center">
-      <p
-        id="article-write-label"
-        class="after:content-[':'] after:ml-0.5"
-        data-redactor={t('blogPage.redactor')}
-        data-author={t('blogPage.author')}
-      >
-        {t('blogPage.author')}
-      </p>
-      <select
-        class="py-2 px-4 bg-gray-100 border border-gray-300"
-        id="article-writer"
-      >
-        <optgroup label={t('blogPage.human')}>
-          <option selected value="human">{t('blogPage.me')}</option>
-        </optgroup>
-        <optgroup label={t('blogPage.clankers')}>
-          {
-            renderedAiItems.map((item) => (
-              <option>{item.data.written_by}</option>
-            ))
-          }
-        </optgroup>
-      </select>
-    </div>
+    {
+      renderedAiItems.length > 0 && (
+        <div class="flex gap-4 justify-center items-center">
+          <p
+            id="article-write-label"
+            class="after:content-[':'] after:ml-0.5"
+            data-redactor={t('blogPage.redactor')}
+            data-author={t('blogPage.author')}
+          >
+            {t('blogPage.author')}
+          </p>
+          <select
+            class="py-2 px-4 bg-gray-100 border border-gray-300"
+            id="article-writer"
+          >
+            <optgroup label={t('blogPage.human')}>
+              <option selected value="human">
+                {t('blogPage.me')}
+              </option>
+            </optgroup>
+            <optgroup label={t('blogPage.clankers')}>
+              {renderedAiItems.map((item) => (
+                <option>{item.data.written_by}</option>
+              ))}
+            </optgroup>
+          </select>
+        </div>
+      )
+    }
 
     <div class="container mx-auto prose" id="human">
       <Content />
