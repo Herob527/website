@@ -108,9 +108,9 @@ const { t } = Astro.locals
       renderedAiItems.map(({ data, Content }) => {
         return (
           <div
-            class="container mx-auto prose ai-redacted"
+            class="container hidden mx-auto prose ai-redacted data-[visible='true']:block"
             data-redactor={data.written_by}
-            style="display: none"
+            data-visible="false"
           >
             <Content />
           </div>
@@ -137,8 +137,8 @@ const { t } = Astro.locals
 
     writer.addEventListener('change', (val) => {
       const value = (val?.target as HTMLSelectElement).value
+      aiRedacted.forEach((item) => (item.dataset.visible = 'false'))
       if (value === humanToken) {
-        aiRedacted.forEach((item) => item.style.display === 'none')
         humanWritten.style.display = 'block'
         label.innerText = label.dataset.author!
         return
@@ -147,8 +147,9 @@ const { t } = Astro.locals
       humanWritten.style.display = 'none'
       label.innerText = label.dataset.redactor!
       const target = aiRedacted.find((item) => item.dataset.redactor === value)
+      console.log(target?.dataset)
       if (target) {
-        target.style.display = 'block'
+        target.dataset.visible = 'true'
       }
     })
   }
