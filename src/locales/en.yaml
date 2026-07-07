@@ -59,7 +59,7 @@ blogPage:
   empty: Nothing here yet
   me: Me
   human: Human
-  clankers: Clankers
+  clankers: Local LLM 
   author: Author
   redactor: Redacted by
 
