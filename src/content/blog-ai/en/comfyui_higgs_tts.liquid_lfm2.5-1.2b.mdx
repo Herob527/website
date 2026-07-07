@@ -1,0 +1,90 @@
+
+---
+parentId: comfyui_higgs_tts
+written_by: liquid/lfm2.5-1.2b
+---
+Here’s a simplified and clearer version of the MDX content, written in a way that’s easy to understand for beginners:
+
+---
+
+## What This Article Is About
+
+This guide shows how to use **ComfyUI** with **HiggsTTS** to generate speech. It explains the steps to set up the tools and run a simple workflow.
+
+---
+
+### Installation Steps
+
+1. First, go to the ComfyUI folder and open the custom nodes.
+2. Clone the HiggsTTS audio suite repository.
+3. Install the required packages using pip.
+4. Start the server and wait for the TTS engines to load.
+
+---
+
+## Building the Workflow
+
+To create a workflow, follow these steps:
+
+1. Open ComfyUI and click on the logo to start a new workflow.
+2. Drag the **TTS Audio Suite** from the Extensions section into your workspace.
+3. Add the **TTS Text** node next to it.
+4. Drag the **Higgs Audio v3 Engine** into the workspace.
+5. Connect the audio output from the TTS Text node to the Higgs Audio engine.
+6. Save and load audio files as needed.
+
+---
+
+### How It Works
+
+- The workflow starts by downloading a speech model from HuggingFace.
+- Then it uses the TTS engines to generate speech based on your text.
+- You can adjust settings like speed, pitch, and emotion to change the tone of the voice.
+
+---
+
+## Using HiggsTTS 3
+
+HiggsTTS 3 lets you control the style and emotion of the generated speech. To use it:
+
+- Put special tokens between `|...|` in your text.
+- These tokens help shape how the voice sounds.
+- You can experiment with different settings to get the desired effect.
+
+---
+
+### Key Features
+
+- **Emotions**: Change the tone of the voice (e.g., happy, sad, angry).
+- **Style**: Adjust pitch, speed, and volume.
+- **Sound Effects**: Add effects like coughing, laughing, or crying.
+
+---
+
+## Prosody
+
+Prosody refers to how speech sounds are timed and emphasized. It affects how natural the speech sounds.
+
+| Feature        | Description                          |
+|----------------|--------------------------------------|
+| Speed           | Controls how fast the speech plays   |
+| Pitch           | Changes the tone of the voice        |
+| Pause duration  | Adds natural breaks in speech        |
+| Emotion        | Sets the overall mood of the text    |
+
+---
+
+## Example Use Case
+
+You can use this setup to generate voiceovers for videos or audio files. For example, you might want to create a Polish voice for a TTS engine.
+
+---
+
+### References
+
+- [HiggsTTS 3 on GitHub](https://huggingface.co/bosonai/higgs-tts-3-4b)
+- [Emotion Tokens Guide](https://huggingface.co/docs/transformers/tokenizers#emotion)
+
+---
+
+Let me know if you'd like help with any specific part of this process!  

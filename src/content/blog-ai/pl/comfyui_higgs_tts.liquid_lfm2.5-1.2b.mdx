@@ -1,0 +1,78 @@
+
+---
+parentId: comfyui_higgs_tts
+written_by: liquid/lfm2.5-1.2b
+---
+# Przykład użycia ComfyUI z TTS – kompletna instrukcja
+
+W tym artykule pokażemy, jak używać ComfyUI w połączeniu z narzędzią TTS (Tekst do Mowy). Jest to prosty sposób na generowanie głosów mowy dla tekstu.
+
+## Co jest potrzebne?
+
+- Baza danych z nazwami plików i plików zależności
+- Komenda do uruchomienia ComfyUI
+- Podstawowe kroki do skonfigurowania
+
+## Jak rozpocząć?
+
+1. Przejdź do folderu, gdzie umieszczono ComfyUI – np. `cd /path/to/comfy-ui`.
+2. Utwórz nowy katalog dla ComfyUI:
+   ```bash
+   cd ..
+   git clone https://github.com/diodiogod/TTS-Audio-Suite
+   ```
+3. Wpisz w menu „New” lub „+” nową przestrzeń roboczą (workflow).
+4. Zainstaluj zależności:
+   ```bash
+   pip install -r custom_nodes/requirements.txt
+   ```
+5. Uruchom serwer:
+   ```bash
+   python run.py
+   ```
+
+## Skonfiguracja workflows
+
+- W przestrzeni roboczej dodaj:
+  - **Engines**: `Higgs Audio v3 Engine`
+  - **Text to Speech**: `TTS Text`
+
+### Przykładowe kroki w diagramie:
+
+```
++---------------------+
+|   ComfyUI           |
++---------------------+
+       |
+       v
++-------------------+-------------------+
+|  TTS Audio Suite    |                     |
++-------------------+-------------------+
+       |                          |
+       v                          v
++-------------------+-------------------+
+|  TTS Text (Higgs)   |<---------------------+
+|  TTS Engine        |                     |
++-------------------+-------------------+
+```
+
+## Jak wybrać głos?
+
+- Możesz dodać ustawienie **TTS Audio Suite**, aby testować różne głosy.
+- Jeśli chcesz zmienić język – użyj promy z `seed` lub zmieniaj domyślny styl.
+
+## Co robią oni?
+
+- **ComfyUI** tworzy interfejs graficzny do edycji tekstu.
+- **TTS Audio Suite** generuje audio mowy z wybranym głosem i stylem.
+- Po skonfigurowaniu możesz uruchomić proces i uzyskać wyniki.
+
+## Przykładowe użycie
+
+Pominiemy, że używamy modelu z Hugging Face – można go dostosować do własnych potrzeb.
+
+> 💡 W praktyce: zacznij od prostego modelu i stopniowo dodawaj detalje.
+
+---
+
+Tutaj wszystko jest w prostych krokach, więc nie martw się, jeśli coś nie rozumiesz.  
