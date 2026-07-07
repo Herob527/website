@@ -96,7 +96,7 @@ Output only the rewritten MDX content. Do not include explanations, notes, or ma
     const filePath = `src/content/blog-ai/${article.language}/${fileName}`
     const output = Bun.file(filePath)
     if (await output.exists()) {
-      await output.unlink()
+      continue
     }
     const prediction = model.respond(chat)
     for await (const { content } of prediction) {
