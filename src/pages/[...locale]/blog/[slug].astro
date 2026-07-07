@@ -1,7 +1,6 @@
 ---
 import Layout from '@layouts/Layout.astro'
 import { locales } from '@root/src/i18n'
-import { getEntries } from 'astro:content'
 import { render } from 'astro:content'
 import { getEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
@@ -50,11 +49,13 @@ const aiItems = await getCollection('blogAI', (item) => {
   const isChildOfBlogItem = item.data.parentId.id === slug
   return hasCurrentLocale && isChildOfBlogItem
 })
+
 if (blogItem === undefined) {
   throw new Error(`Blog post not found: ${entryId}`)
 }
 
 const { Content } = await render(blogItem)
+const { t } = Astro.locals
 ---
 
 <Layout parentHref="/blog" title={`Blog - ${blogItem.data.title}`}>
@@ -62,6 +63,20 @@ const { Content } = await render(blogItem)
     <header class="mb-6 text-4xl font-semibold text-center">
       <h1>{blogItem.data.title}</h1>
     </header>
+    <div class="flex justify-center items-center">
+      <select
+        class="py-2 px-4 bg-gray-100 border border-gray-300"
+        id="article-writer"
+      >
+        <optgroup label={t('blogPage.human')}>
+          <option selected value="human">{t('blogPage.me')}</option>
+        </optgroup>
+        <optgroup label={t('blogPage.clankers')}>
+          {aiItems.map((item) => <option>{item.data.written_by}</option>)}
+        </optgroup>
+      </select>
+    </div>
+
     <div class="container mx-auto prose">
       <Content />
     </div>
