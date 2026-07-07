@@ -50,6 +50,13 @@ const aiItems = await getCollection('blogAI', (item) => {
   return hasCurrentLocale && isChildOfBlogItem
 })
 
+const renderedAiItems = await Promise.all(
+  aiItems.map(async (item) => {
+    const { Content } = await render(item)
+    return { ...item, Content }
+  }),
+)
+
 if (blogItem === undefined) {
   throw new Error(`Blog post not found: ${entryId}`)
 }
@@ -73,7 +80,11 @@ const { t } = Astro.locals
           <option selected value="human">{t('blogPage.me')}</option>
         </optgroup>
         <optgroup label={t('blogPage.clankers')}>
-          {aiItems.map((item) => <option>{item.data.written_by}</option>)}
+          {
+            renderedAiItems.map((item) => (
+              <option>{item.data.written_by}</option>
+            ))
+          }
         </optgroup>
       </select>
     </div>
@@ -83,14 +94,14 @@ const { t } = Astro.locals
     </div>
 
     {
-      aiItems.map((el) => {
+      renderedAiItems.map(({ data, Content }) => {
         return (
           <div
             class="container mx-auto prose ai-redacted"
-            data-redactor={el.data.written_by}
+            data-redactor={data.written_by}
             style="display: none"
           >
-            <el.body />
+            <Content />
           </div>
         )
       })
