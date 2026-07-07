@@ -68,6 +68,7 @@ Your task is to rewrite the provided MDX article so it is easier to understand f
 Requirements:
 
 Preserve the original meaning and technical accuracy.
+Preserve the original language of given article.
 Do not add new information, examples, or opinions that are not present in the original article.
 You may reorganize sections, improve formatting, simplify explanations, and rewrite sentences to improve readability.
 Keep all existing code examples unless they are explicitly removed in the source article.
