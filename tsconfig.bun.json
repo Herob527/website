@@ -1,0 +1,13 @@
+{
+  "include": ["scripts"],
+  "compilerOptions": {
+    "types": ["@types/bun"],
+    "baseUrl": ".",
+    "paths": {
+      "@layouts/*": ["src/layouts/*"],
+      "@components/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"],
+      "@root/*": ["./*"]
+    }
+  }
+}

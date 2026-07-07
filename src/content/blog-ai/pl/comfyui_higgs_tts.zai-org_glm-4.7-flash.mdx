@@ -1,7 +1,7 @@
+
 ---
-title: 'ComfyUI i TTS - Przykład z HiggsTTS'
-description: 'Przykładowe użycia ComfyUI z HiggsTTS'
-date: '2026-07-01'
+parentId: comfyui_higgs_tts
+written_by: zai-org/glm-4.7-flash
 ---
 
 import { Image } from 'astro:assets'
@@ -17,32 +17,32 @@ import audio3 from '@assets/audios/da10__00000824_1.picked.mp3'
 
 ## Wstęp
 
-Tutaj zaprezentuję przykładowe zastosowanie ComfyUI z TTS.
+W tym wpisie pokażę, jak wykorzystać ComfyUI do generowania mowy. ComfyUI nie posiada wbudowanego modułu do zamiany tekstu na mowę (TTS), ale istnieje rozszerzenie o nazwie **TTS Audio Suite**, które zawiera kompilację różnych silników TTS gotowych do użycia.
 
-ComfyUI natywnie nie ma TTSa, ale jest [TTS Audio Suite](https://github.com/diodiogod/TTS-Audio-Suite), które zawiera kompilację różnych TTSów do wypróbowania.
-
-Na bazie testów, `Higgs Audio v3 Engine` najlepiej się sprawdził w języku polskim, zatem będę go stosować w dalszym wpisie.
+Na podstawie testów, **Higgs Audio v3 Engine** najlepiej radzi sobie z językiem polskim, dlatego będziemy go wykorzystywać w dalszej części poradnika.
 
 ## Instalacja
 
-Sam używałem ręcznej instalacji `TTS-Audio-Suite` więc jak `ComfyUI Manager` nie styknie, to oto lista kroków:
+Ponieważ instalacja przez menedżera rozszerzeń ComfyUI może nie działać, oto instrukcja ręcznej instalacji:
 
 ```bash
 ## Idziemy do folderu ComfyUI z rozszerzeniami
 cd /path/to/comfy-ui/custom_nodes
-## Klonujemy repo
+## Klonujemy repozytorium
 git clone https://github.com/diodiogod/TTS-Audio-Suite
-## Idziemy do korzenia ComfyUI
+## Wracamy do katalogu głównego ComfyUI
 cd ..
-## Instalujemy zależności
+## Instalujemy wymagane zależności
 uv pip install -r custom_nodes/tts_audio_suite/requirements.txt
-## Uruchamiamy serwer i jak wszystko git, powinno dać informacje o tym, że załadowały się TTSy
+## Uruchamiamy serwer. Jeśli instalacja się powiodła, zobaczysz informację o załadowanych silnikach TTS
 uv run main.py
 ```
 
 ## Składanie workflow
 
-1. Na początku należy kliknąć `+` na samej górze lub w `New` po kliknięciu loga ComfyUI w bocznym menu, by utworzyć nową przestrzeń roboczą (workflow).
+### 1. Tworzenie przestrzeni roboczej
+
+Na początku musimy utworzyć nową przestrzeń roboczą (workflow). Można to zrobić, klikając ikonę `+` u góry lub przycisk `New` w menu bocznym po kliknięciu logo ComfyUI.
 
 <div class="flex flex-col gap-1">
   <Image
@@ -53,10 +53,12 @@ uv run main.py
   />
 </div>
 
-2. Potem należy kliknąć w `Nodes` i w sekcji `Extensions` powinien być `TTS Audio Suite`
+### 2. Dodawanie węzłów głównych
 
-   1. Z `Engines` należy przeciągnąć `Higgs Audio v3 Engine` do przestrzeni roboczej
-   2. Z `Text to Speech` należy przeciągnąć `TTS Text`
+Kliknij w sekcję `Nodes` w menu bocznym. W zakładce `Extensions` powinieneś zobaczyć `TTS Audio Suite`.
+
+1. Z kategorii `Engines` przeciągnij węzeł **Higgs Audio v3 Engine** do obszaru roboczego.
+2. Z kategorii `Text to Speech` przeciągnij węzeł **TTS Text**.
 
 <div class="flex flex-col md:flex-row gap-1 items-center">
     <Image src={engines} format="webp" alt="Pozycje silników TTS" class="mt-0! mb-0!" />
@@ -65,17 +67,24 @@ uv run main.py
 
 </div>
 
-3. Następnie trzeba zescrollować w górę do kategorii `Comfy nodes` i kliknąć w audio i przeciągnąć `Save Audio` oraz `Load Audio`
+### 3. Dodawanie węzłów audio
+
+Przewiń w górę do kategorii `Comfy nodes` i kliknij w `audio`. Przeciągnij do obszaru roboczego węzły **Save Audio** oraz **Load Audio**.
 
 <Image src={audioNodes} format="webp" alt="Widok ComfyUI" class="mt-0! mb-0!" />
-4. `Load Audio` należy podłączyć do `opt_narrator` a `Higgs Audio v3 Engine` -
-`TTS_engine` w node `TTS Text`
 
-`Load Audio` - ustala, jaka próbka audio ma być sklonowana
+### 4. Podłączanie węzłów
 
-`Higgs Audio v3 Engine` - ustala, jaki silnik TTS ma być użyty. Można zamienić na inny dostępny `TTS Audio Suite` do testów
+Teraz musimy podłączyć węzły, aby system wiedział, jak działa.
 
-5. Pole `audio` z `TTS Text` należy podłączyć do `audio` w node `Save Audio`, który zapisze plik w podanym formacie do `output` w folderze ComfyUI
+*   Węzeł **Load Audio** podłącz do wejścia `opt_narrator` w węźle **TTS Text**.
+    *   *Dlaczego?* Ten węzeł ustala, jaka próbka audio ma być sklonowana.
+*   Węzeł **Higgs Audio v3 Engine** podłącz do wejścia `TTS_engine` w węźle **TTS Text**.
+    *   *Dlaczego?* Ten węzeł wybiera konkretny silnik TTS. Możesz go zamienić na inny dostępny w TTS Audio Suite, aby przetestować różne głosy.
+
+### 5. Zapisywanie wyniku
+
+Pole `audio` z węzła **TTS Text** należy podłączyć do pola `audio` w węźle **Save Audio**. Węzeł ten zapisze wygenerowany plik w podanym formacie do folderu `output` w głównym katalogu ComfyUI.
 
 <div class="flex flex-col gap-1">
   <Image
@@ -84,10 +93,12 @@ uv run main.py
     alt="Widok ComfyUI"
     class="mt-0! mb-0!"
   />
-  <i>Tak mniej więcej powinno to wyglądać</i>
+  <i>Tak mniej więcej powinno wyglądać gotowe połączenie</i>
 </div>
 
-Po złożeniu należy kliknąć `Run` i workflow zacznie pracować
+### 6. Uruchomienie
+
+Gdy wszystko jest podłączone, kliknij przycisk **Run**. Workflow rozpocznie pracę.
 
 <Image
   src={runWorkflow}
@@ -96,19 +107,17 @@ Po złożeniu należy kliknąć `Run` i workflow zacznie pracować
   class="mt-0! mb-0!"
 />
 
-Na wstępie pobierze model z Huggingface a potem dopiero zacznie dalej przetwarzać
+Na początku proces pobierze odpowiednie modele z Huggingface, a dopiero potem przystąpi do dalszego przetwarzania.
 
 ## Promptowanie HiggsTTS 3
 
-HiggsTTS 3 w teorii daje opcję nakierowania głosu na konkretną emocję lub styl.
+HiggsTTS 3 oferuje możliwość sterowania głosem poprzez emocje i styl. Aby to osiągnąć, w polu tekstowym (prompcie) należy użyć specjalnych tagów w formacie `<|...|>` przed tekstem, który ma mieć daną cechę.
 
-Żeby to zrobić, należy dać w prompcie specjalny tekst między &lt;|...|&gt; przed tekstem, który ma mieć daną cechę.
+Aktualna lista dostępnych tagów znajduje się w [repozytorium HiggsTTS 3 na Huggingface](https://huggingface.co/bosonai/higgs-tts-3-4b).
 
-Aktualna lista jest na [repo HiggsTTS 3 na Huggingface](https://huggingface.co/bosonai/higgs-tts-3-4b)
+Warto eksperymentować z ustawieniem `seed` (domyślnie zmienia się przy każdym uruchomieniu workflow), ponieważ HiggsTTS może wygenerować nieco inne brzmienie – bardziej lub mniej pożądane – dla tego samego tekstu przy każdym przebiegu.
 
-Warto sprawdzać różne ustawienia `seed` (domyślnie się zmienia per uruchomienie workflow), gdyż HiggsTTS może wypluć dla jednego zestawu tekst + audio nieco inne, mniej lub bardziej pożądane, brzmienie za każdą generacją.
-
-Można też próbować zmusić angielski głos, by brzmiał na polski, jednak to różnie wygląda, gdyż raz wyjdzie głos gadający ładną polszczyzną a raz po dekadzie w USA.
+Można też próbować "zmusić" angielski głos do brzmienia po polsku, ale wyniki mogą być różne: raz wyjdzie głos mówiący ładną polszczyzną, a raz brzmiący jak ktoś z USA.
 
 ### Tłumaczenie
 
@@ -146,7 +155,7 @@ Można też próbować zmusić angielski głos, by brzmiał na polski, jednak to
 | `<\|style:shouting\|>`   | Krzyk / mocny głos |
 | `<\|style:whispering\|>` | Szept              |
 
-#### Onomatopeje:
+#### Onomatopeje
 
 | Token                 | Opis         | Sugerowana onomatopeja |
 | --------------------- | ------------ | ---------------------- |
@@ -160,7 +169,7 @@ Można też próbować zmusić angielski głos, by brzmiał na polski, jednak to
 | `<\|sfx:sniff\|>`     | Powąchanie   | Sff                    |
 | `<\|sfx:sneeze\|>`    | Kichnięcie   | Achoo                  |
 
-#### Ton i brzmienie:
+#### Ton i brzmienie (Prosody)
 
 | Token                           | Efekt                              |
 | ------------------------------- | ---------------------------------- |
@@ -175,9 +184,9 @@ Można też próbować zmusić angielski głos, by brzmiał na polski, jednak to
 | `<\|prosody:expressive_high\|>` | Bardziej ekspresyjna interpretacja |
 | `<\|prosody:expressive_low\|>`  | Bardziej monotonna interpretacja   |
 
-### Przykłady:
+### Przykłady
 
-Teksty zostały wygenerowane na podstawie próbek z gry TES V: Skyrim w trakcie prac nad dubbingiem do [House of Horrors - Quest Expansion](https://www.nexusmods.com/skyrimspecialedition/mods/57285) - Jeszcze nie gotowy
+Teksty poniżej zostały wygenerowane na podstawie próbek z gry TES V: Skyrim w trakcie prac nad dubbingiem do [House of Horrors - Quest Expansion](https://www.nexusmods.com/skyrimspecialedition/mods/57285) - Jeszcze nie gotowy.
 
 > \<|emotion:determination|> Najwyższy czas oczyścić ten dom z tego tałatajstwa! \<|emotion:contentment|> Na mój znak?!
 
@@ -193,4 +202,4 @@ Teksty zostały wygenerowane na podstawie próbek z gry TES V: Skyrim w trakcie 
 
 > \<|emotion:relief|> W ostatniej chwili! ... \<|sfx:sigh|> ... \<|emotion:relief|> Jesteśmy tutaj bezpieczni.
 
-<audio controls src={audio3} />
+<audio controls src={audio3} />  

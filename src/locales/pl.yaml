@@ -59,6 +59,11 @@ cvPage:
 blogPage:
   title: Blog
   empty: Nic tu jeszcze nie ma
+  me: Ja
+  human: Człowiek 
+  clankers: Blaszak 
+  author: Autor
+  redactor: Zredagowane przez
 
 langSwitcher:
   toEn: Switch to English

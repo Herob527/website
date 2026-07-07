@@ -26,7 +26,10 @@ export async function getStaticPaths() {
   ).reduce((acc, cur) => [...acc, ...cur].flat(), [])
 
   return collections
-    .filter((entry) => entry.locale === undefined || entry.locale === entry.postLocale)
+    .filter(
+      (entry) =>
+        entry.locale === undefined || entry.locale === entry.postLocale,
+    )
     .map((entry) => ({
       params: {
         slug: entry.slug,
@@ -40,11 +43,26 @@ const locale = Astro.currentLocale
 
 const entryId = locale ? `${locale}/${slug}` : slug
 const blogItem = await getEntry('blog', entryId)
+const aiItems = await getCollection('blogAI', (item) => {
+  const hasCurrentLocale =
+    item.filePath?.split('/').at(-2) === Astro.currentLocale
+  const isChildOfBlogItem = item.data.parentId.id === slug
+  return hasCurrentLocale && isChildOfBlogItem
+})
+
+const renderedAiItems = await Promise.all(
+  aiItems.map(async (item) => {
+    const { Content } = await render(item)
+    return { ...item, Content }
+  }),
+)
+
 if (blogItem === undefined) {
   throw new Error(`Blog post not found: ${entryId}`)
 }
 
 const { Content } = await render(blogItem)
+const { t } = Astro.locals
 ---
 
 <Layout parentHref="/blog" title={`Blog - ${blogItem.data.title}`}>
@@ -52,8 +70,89 @@ const { Content } = await render(blogItem)
     <header class="mb-6 text-4xl font-semibold text-center">
       <h1>{blogItem.data.title}</h1>
     </header>
-    <div class="container mx-auto prose">
+    {
+      renderedAiItems.length > 0 && (
+        <div class="flex gap-4 justify-center items-center">
+          <p
+            id="article-write-label"
+            class="after:content-[':'] after:ml-0.5"
+            data-redactor={t('blogPage.redactor')}
+            data-author={t('blogPage.author')}
+          >
+            {t('blogPage.author')}
+          </p>
+          <select
+            class="py-2 px-4 bg-gray-100 border border-gray-300"
+            id="article-writer"
+          >
+            <optgroup label={t('blogPage.human')}>
+              <option selected value="human">
+                {t('blogPage.me')}
+              </option>
+            </optgroup>
+            <optgroup label={t('blogPage.clankers')}>
+              {renderedAiItems.map((item) => (
+                <option>{item.data.written_by}</option>
+              ))}
+            </optgroup>
+          </select>
+        </div>
+      )
+    }
+
+    <div class="container mx-auto prose" id="human">
       <Content />
     </div>
+
+    {
+      renderedAiItems.map(({ data, Content }) => {
+        return (
+          <div
+            class="container hidden mx-auto prose ai-redacted data-[visible='true']:block"
+            data-redactor={data.written_by}
+            data-visible="false"
+          >
+            <Content />
+          </div>
+        )
+      })
+    }
   </section>
 </Layout>
+
+<script>
+  import { viewTransitionCallback } from '@root/src/utils'
+
+  const init = () => {
+    const humanToken = 'human'
+    const writer = document.querySelector<HTMLSelectElement>('#article-writer')
+    const label = document.querySelector<HTMLParagraphElement>(
+      '#article-write-label',
+    )
+    const humanWritten = document.querySelector<HTMLDivElement>('#human')
+    const aiRedacted = [
+      ...document.querySelectorAll<HTMLDivElement>('.ai-redacted'),
+    ]
+    if (writer === null || label === null || humanWritten === null) return
+
+    writer.addEventListener('change', (val) => {
+      const value = (val?.target as HTMLSelectElement).value
+      aiRedacted.forEach((item) => (item.dataset.visible = 'false'))
+      if (value === humanToken) {
+        humanWritten.style.display = 'block'
+        label.innerText = label.dataset.author!
+        return
+      }
+
+      humanWritten.style.display = 'none'
+      label.innerText = label.dataset.redactor!
+      const target = aiRedacted.find((item) => item.dataset.redactor === value)
+      console.log(target?.dataset)
+      if (target) {
+        target.dataset.visible = 'true'
+      }
+    })
+  }
+
+  viewTransitionCallback(init)
+</script>

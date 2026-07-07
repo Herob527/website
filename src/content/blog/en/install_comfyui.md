@@ -2,7 +2,6 @@
 title: 'ComfyUI - installation'
 description: 'Instructions for installing and hosting ComfyUI locally - Linux'
 date: '2026-06-29'
-written_by: human
 ---
 
 ## Wstęp
@@ -54,7 +53,7 @@ uv run main.py
 
 ### 4. If everything goes smoothly, open panel in browser (default port is 8188)
 
-<http://localhost:8188>
+[http://localhost:8188](http://localhost:8188)
 
 ### 5. We are in panel
 

@@ -57,6 +57,11 @@ cvPage:
 blogPage:
   title: Blog
   empty: Nothing here yet
+  me: Me
+  human: Human
+  clankers: Local LLM 
+  author: Author
+  redactor: Redacted by
 
 langSwitcher:
   toEn: Switch to English

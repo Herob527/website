@@ -1,9 +1,8 @@
----
-title: 'ComfyUI and TTS - Example with HiggsTTS'
-description: 'Example usage of ComfyUI with HiggsTTS'
-date: '2026-07-01'
----
 
+---
+parentId: comfyui_higgs_tts
+written_by: zai-org/glm-4.7-flash
+---
 import { Image } from 'astro:assets'
 import blueprint from '@assets/higgs-tts-blueprint.png'
 import plusPosition from '@assets/plus-position.png'
@@ -17,32 +16,32 @@ import audio3 from '@assets/audios/da10__00000824_1.picked.mp3'
 
 ## Introduction
 
-There I'll present example usage of ComfyUI with TTS.
+In this guide, we will walk through an example of using ComfyUI with Text-to-Speech (TTS).
 
-ComfyUI natively doesn't have TTS node, but there is [TTS Audio Suite](https://github.com/diodiogod/TTS-Audio-Suite) package that contains many nodes integrating various TTS engines to try on.
+ComfyUI does not have a TTS node built-in, but the [TTS Audio Suite](https://github.com/diodiogod/TTS-Audio-Suite) package contains many nodes that integrate various TTS engines for you to try.
 
-After tests, `Higgs Audio v3 Engine` turned out to be the best solution for generating polish speech and that's why I'll be using it further.
+After testing different engines, the `Higgs Audio v3 Engine` was found to be the best solution for generating Polish speech, so we will use it for the rest of this guide.
 
 ## Installation
 
-I myself went with installing manually `TTS-Audio-Suite` so if `ComfyUI Manager` doesn't work, these are the steps:
+If the ComfyUI Manager does not work for you, you can install the package manually. Here are the steps:
 
 ```bash
-## First we go to ComfyUI's custom_nodes  folder
+## First, navigate to ComfyUI's custom_nodes folder
 cd /path/to/comfy-ui/custom_nodes
-## Clone the repo
+## Clone the repository
 git clone https://github.com/diodiogod/TTS-Audio-Suite
-## Back to the root
+## Go back to the root directory
 cd ..
-## Install the deps
+## Install the dependencies
 uv pip install -r custom_nodes/tts_audio_suite/requirements.txt
-## Run the server and you should see the TTS engines loading progress
+## Run the server; you should see the TTS engines loading progress
 uv run main.py
 ```
 
-## Building the workflow
+## Building the Workflow
 
-1. First of all, you need to click `+` on the top or `New` after clicking the logo of ComfyUI to create new workflow.
+1.  **Create a new workflow.** Click the `+` button at the top or select `New` after clicking the ComfyUI logo.
 
 <div class="flex flex-col gap-1">
   <Image
@@ -53,10 +52,9 @@ uv run main.py
   />
 </div>
 
-2. Then click `Nodes`, scroll to `Extensions` sections and there you should find `TTS Audio Suite`
-
-   1. From `Engines` drag `Higgs Audio v3 Engine` into workspace
-   2. From `Text to Speech` drag `TTS Text`
+2.  **Add the TTS nodes.** Scroll to the `Extensions` section and find `TTS Audio Suite`.
+    *   Drag `Higgs Audio v3 Engine` into the workspace.
+    *   Drag `TTS Text` into the workspace.
 
 <div class="flex flex-col md:flex-row gap-1 items-center">
     <Image src={engines} format="webp" alt="TTS Engines position" class="mt-0! mb-0!" />
@@ -65,17 +63,18 @@ uv run main.py
 
 </div>
 
-3. Next scroll into `Comfy nodes` section, click audio then drag `Save Audio` and `Load Audio` into workspace
+3.  **Add audio nodes.** Scroll to the `Comfy nodes` section, click `audio`, and drag `Save Audio` and `Load Audio` into the workspace.
 
 <Image src={audioNodes} format="webp" alt="ComfyUI view" class="mt-0! mb-0!" />
-4. `Load Audio` should be connected to `opt_narrator`, `Higgs Audio v3 Engine` -
-`TTS_engine` in node `TTS Text`
 
-`Load Audio` - determines the audio sample that should be cloned
+4.  **Connect the nodes.**
+    *   Connect `Load Audio` to the `opt_narrator` input.
+    *   Connect `Higgs Audio v3 Engine` to the `TTS_engine` input in the `TTS Text` node.
 
-`Higgs Audio v3 Engine` - determines the TTS engine that should be used. Maybe be exchanged for another for experiments.
+    *   `Load Audio` determines the audio sample that should be cloned.
+    *   `Higgs Audio v3 Engine` determines which TTS engine should be used. You can swap this out for other engines to experiment.
 
-5. Field `audio` in `TTS Text` should be connected with `audio` in node `Save Audio`, that will save the audio into `output` in ComfyUI folder
+5.  **Connect the output.** Connect the `audio` field in `TTS Text` to the `audio` field in the `Save Audio` node. This will save the generated audio to the `output` folder in ComfyUI.
 
 <div class="flex flex-col gap-1">
   <Image
@@ -87,7 +86,7 @@ uv run main.py
   <i>It should look like this</i>
 </div>
 
-After assembling the workflow, click `Run` and workflow will being working.
+Once the workflow is assembled, click `Run` to start processing.
 
 <Image
   src={runWorkflow}
@@ -96,19 +95,19 @@ After assembling the workflow, click `Run` and workflow will being working.
   class="mt-0! mb-0!"
 />
 
-At first it'll download model from Huggingface, then it'll start generating audio.
+At first, it will download the model from Huggingface, and then it will begin generating the audio.
 
 ## Prompting HiggsTTS 3
 
-HiggsTTS 3 in theory allows manipulating style and emotions of voice.
+HiggsTTS 3 allows you to manipulate the style and emotions of the voice.
 
-To do that, you need to put special tokens between &lt;|...|&gt; before text, that should have given trait. 
+To do this, you need to insert special tokens between `<|...|>` tags before the text you want to affect.
 
-Current list is in [HiggsTTS3 repo on Huggingface](https://huggingface.co/bosonai/higgs-tts-3-4b)
+The current list of tokens is available in the [HiggsTTS3 repo on Huggingface](https://huggingface.co/bosonai/higgs-tts-3-4b).
 
-To achieve desired effect, it's worth trying generating over and over with different seeds since HiggsTTS will output slightly different results for same text + audio pair.
+To achieve the desired effect, it is worth trying to generate the audio multiple times with different seeds, as HiggsTTS will output slightly different results for the same text and audio pair.
 
-It's also possible to force english voice to sound like polish, but the results may vary from having english accent to have proper polish or accents being mixed.
+It is also possible to force an English voice to sound Polish, though the results may vary from having an English accent to having proper Polish, or a mix of both.
 
 ### Reference
 
@@ -177,7 +176,7 @@ It's also possible to force english voice to sound like polish, but the results 
 
 ### Examples (PL lang):
 
-Texts were generated based on samples from TES V: Skyrim while working on polish dubbing of mod [House of Horrors - Quest Expansion](https://www.nexusmods.com/skyrimspecialedition/mods/57285).
+Texts were generated based on samples from TES V: Skyrim while working on the Polish dubbing of the mod [House of Horrors - Quest Expansion](https://www.nexusmods.com/skyrimspecialedition/mods/57285).
 
 > \<|emotion:determination|> Najwyższy czas oczyścić ten dom z tego tałatajstwa! \<|emotion:contentment|> Na mój znak?!
 
@@ -192,4 +191,4 @@ Texts were generated based on samples from TES V: Skyrim while working on polish
 
 > \<|emotion:relief|> W ostatniej chwili! ... \<|sfx:sigh|> ... \<|emotion:relief|> Jesteśmy tutaj bezpieczni.
 
-<audio controls src={audio3} />
+<audio controls src={audio3} />  
