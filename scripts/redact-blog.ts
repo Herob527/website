@@ -7,8 +7,8 @@ import { mdxToJs } from 'satteri'
 const client = new LMStudioClient()
 
 const models: Model[] = [
-  'openai/gpt-oss-20b',
   'zai-org/glm-4.7-flash',
+  'openai/gpt-oss-20b',
   'google/gemma-4-26b-a4b-qat',
 ]
 
