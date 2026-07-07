@@ -1,0 +1,194 @@
+
+---
+parentId: comfyui_higgs_tts
+written_by: zai-org/glm-4.7-flash
+---
+import { Image } from 'astro:assets'
+import blueprint from '@assets/higgs-tts-blueprint.png'
+import plusPosition from '@assets/plus-position.png'
+import engines from '@assets/engines.png'
+import ttsText from '@assets/tts-text.png'
+import audioNodes from '@assets/audio-nodes.png'
+import runWorkflow from '@assets/run-workflow.png'
+import audio1 from '@assets/audios/da10__00000809_1.picked.mp3'
+import audio2 from '@assets/audios/da10__0000080d_1.picked.wav'
+import audio3 from '@assets/audios/da10__00000824_1.picked.mp3'
+
+## Introduction
+
+In this guide, we will walk through an example of using ComfyUI with Text-to-Speech (TTS).
+
+ComfyUI does not have a TTS node built-in, but the [TTS Audio Suite](https://github.com/diodiogod/TTS-Audio-Suite) package contains many nodes that integrate various TTS engines for you to try.
+
+After testing different engines, the `Higgs Audio v3 Engine` was found to be the best solution for generating Polish speech, so we will use it for the rest of this guide.
+
+## Installation
+
+If the ComfyUI Manager does not work for you, you can install the package manually. Here are the steps:
+
+```bash
+## First, navigate to ComfyUI's custom_nodes folder
+cd /path/to/comfy-ui/custom_nodes
+## Clone the repository
+git clone https://github.com/diodiogod/TTS-Audio-Suite
+## Go back to the root directory
+cd ..
+## Install the dependencies
+uv pip install -r custom_nodes/tts_audio_suite/requirements.txt
+## Run the server; you should see the TTS engines loading progress
+uv run main.py
+```
+
+## Building the Workflow
+
+1.  **Create a new workflow.** Click the `+` button at the top or select `New` after clicking the ComfyUI logo.
+
+<div class="flex flex-col gap-1">
+  <Image
+    src={plusPosition}
+    format="webp"
+    alt="Positions of plus"
+    class="mt-0! mb-0!"
+  />
+</div>
+
+2.  **Add the TTS nodes.** Scroll to the `Extensions` section and find `TTS Audio Suite`.
+    *   Drag `Higgs Audio v3 Engine` into the workspace.
+    *   Drag `TTS Text` into the workspace.
+
+<div class="flex flex-col md:flex-row gap-1 items-center">
+    <Image src={engines} format="webp" alt="TTS Engines position" class="mt-0! mb-0!" />
+
+    <Image src={ttsText} format="webp" alt="TTS Text position" class="mt-0! mb-0!" />
+
+</div>
+
+3.  **Add audio nodes.** Scroll to the `Comfy nodes` section, click `audio`, and drag `Save Audio` and `Load Audio` into the workspace.
+
+<Image src={audioNodes} format="webp" alt="ComfyUI view" class="mt-0! mb-0!" />
+
+4.  **Connect the nodes.**
+    *   Connect `Load Audio` to the `opt_narrator` input.
+    *   Connect `Higgs Audio v3 Engine` to the `TTS_engine` input in the `TTS Text` node.
+
+    *   `Load Audio` determines the audio sample that should be cloned.
+    *   `Higgs Audio v3 Engine` determines which TTS engine should be used. You can swap this out for other engines to experiment.
+
+5.  **Connect the output.** Connect the `audio` field in `TTS Text` to the `audio` field in the `Save Audio` node. This will save the generated audio to the `output` folder in ComfyUI.
+
+<div class="flex flex-col gap-1">
+  <Image
+    src={blueprint}
+    format="webp"
+    alt="ComfyUI view"
+    class="mt-0! mb-0!"
+  />
+  <i>It should look like this</i>
+</div>
+
+Once the workflow is assembled, click `Run` to start processing.
+
+<Image
+  src={runWorkflow}
+  format="webp"
+  alt="ComfyUI view"
+  class="mt-0! mb-0!"
+/>
+
+At first, it will download the model from Huggingface, and then it will begin generating the audio.
+
+## Prompting HiggsTTS 3
+
+HiggsTTS 3 allows you to manipulate the style and emotions of the voice.
+
+To do this, you need to insert special tokens between `<|...|>` tags before the text you want to affect.
+
+The current list of tokens is available in the [HiggsTTS3 repo on Huggingface](https://huggingface.co/bosonai/higgs-tts-3-4b).
+
+To achieve the desired effect, it is worth trying to generate the audio multiple times with different seeds, as HiggsTTS will output slightly different results for the same text and audio pair.
+
+It is also possible to force an English voice to sound Polish, though the results may vary from having an English accent to having proper Polish, or a mix of both.
+
+### Reference
+
+#### Emotions
+
+| Token                         | Description                    |
+| ----------------------------- | ------------------------------ |
+| `<\|emotion:elation\|>`       | Elation / joy                  |
+| `<\|emotion:amusement\|>`     | Amusement / playful laughter   |
+| `<\|emotion:enthusiasm\|>`    | Enthusiasm / excitement        |
+| `<\|emotion:determination\|>` | Determination / firmness       |
+| `<\|emotion:pride\|>`         | Pride / confidence             |
+| `<\|emotion:contentment\|>`   | Calm satisfaction              |
+| `<\|emotion:affection\|>`     | Warmth / affection             |
+| `<\|emotion:relief\|>`        | Relief                         |
+| `<\|emotion:contemplation\|>` | Thoughtful / reflective        |
+| `<\|emotion:confusion\|>`     | Confused                       |
+| `<\|emotion:surprise\|>`      | Surprised                      |
+| `<\|emotion:awe\|>`           | Awe / wonder                   |
+| `<\|emotion:longing\|>`       | Longing / yearning             |
+| `<\|emotion:arousal\|>`       | Heightened desire              |
+| `<\|emotion:anger\|>`         | Anger                          |
+| `<\|emotion:fear\|>`          | Fear                           |
+| `<\|emotion:disgust\|>`       | Disgust                        |
+| `<\|emotion:bitterness\|>`    | Bitterness                     |
+| `<\|emotion:sadness\|>`       | Sadness                        |
+| `<\|emotion:shame\|>`         | Shame                          |
+| `<\|emotion:helplessness\|>`  | Helplessness                   |
+
+#### Style
+
+| Token                    | Description                |
+| ------------------------ | -------------------------- |
+| `<\|style:singing\|>`    | Singing                    |
+| `<\|style:shouting\|>`   | Shouting / projected voice |
+| `<\|style:whispering\|>` | Whisper                    |
+
+#### Sound Effects
+
+| Token                 | Description   | Suggested onomatopoeia |
+| --------------------- | ------------- | ---------------------- |
+| `<\|sfx:cough\|>`     | Cough         | Ahem                   |
+| `<\|sfx:laughter\|>`  | Laughter      | Haha / Hehe            |
+| `<\|sfx:crying\|>`    | Crying        | Boohoo / Sob           |
+| `<\|sfx:screaming\|>` | Screaming     | Ahh / Aaah             |
+| `<\|sfx:burping\|>`   | Burping       | Burp                   |
+| `<\|sfx:humming\|>`   | Humming       | Hmm / Mmm              |
+| `<\|sfx:sigh\|>`      | Sigh          | Uh / Ahh               |
+| `<\|sfx:sniff\|>`     | Sniff         | Sff                    |
+| `<\|sfx:sneeze\|>`    | Sneeze        | Achoo                  |
+
+#### Prosody
+
+| Token                           | Effect                               |
+| ------------------------------- | ------------------------------------ |
+| `<\|prosody:speed_very_slow\|>` | ≈0.65× speed                         |
+| `<\|prosody:speed_slow\|>`      | ≈0.85× speed                         |
+| `<\|prosody:speed_fast\|>`      | ≈1.2× speed                          |
+| `<\|prosody:speed_very_fast\|>` | ≈1.4× speed                          |
+| `<\|prosody:pitch_low\|>`       | ≈−3 semitones                        |
+| `<\|prosody:pitch_high\|>`      | ≈+2.5 semitones                      |
+| `<\|prosody:pause\|>`           | ≈400–700 ms pause                    |
+| `<\|prosody:long_pause\|>`      | ≈700–1500 ms pause                   |
+| `<\|prosody:expressive_high\|>` | More expressive delivery             |
+| `<\|prosody:expressive_low\|>`  | Flatter delivery                     |
+
+### Examples (PL lang):
+
+Texts were generated based on samples from TES V: Skyrim while working on the Polish dubbing of the mod [House of Horrors - Quest Expansion](https://www.nexusmods.com/skyrimspecialedition/mods/57285).
+
+> \<|emotion:determination|> Najwyższy czas oczyścić ten dom z tego tałatajstwa! \<|emotion:contentment|> Na mój znak?!
+
+<audio controls src={audio1} />
+<i>
+  There question mark was used to hack the desired tone.
+</i>
+
+> Do ataku, teraz! \<|style:shouting|> \<|emotion:anger|> Zniszcz to; szybko!
+
+<audio controls src={audio2} />
+
+> \<|emotion:relief|> W ostatniej chwili! ... \<|sfx:sigh|> ... \<|emotion:relief|> Jesteśmy tutaj bezpieczni.
+
+<audio controls src={audio3} />  

@@ -1,0 +1,194 @@
+
+---
+parentId: comfyui_higgs_tts
+written_by: google/gemma-4-26b-a4b-qat
+---
+import { Image } from 'astro:assets'
+import blueprint from '@assets/higgs-tts-blueprint.png'
+import plusPosition from '@assets/plus-position.png'
+import engines from '@assets/engines.png'
+import ttsText from '@assets/tts-text.png'
+import audioNodes from '@assets/audio-nodes.png'
+import runWorkflow from '@assets/run-workflow.png'
+import audio1 from '@assets/audios/da10__00000809_1.picked.mp3'
+import audio2 from '@assets/audios/da10__0000080d_1.picked.wav'
+import audio3 from '@assets/audios/da10__00000824_1.picked.mp3'
+
+## Wstęp
+
+W tym artykule zobaczysz, jak połączyć ComfyUI z technologią Text-to-Speech (TTS), aby generować mowę.
+
+Natywnie ComfyUI nie posiada funkcji TTS, ale można to uzupełnić za pomocą rozszerzenia [TTS Audio Suite](https://github.com/diodiogod/TTS-Audio-Suite). Pakiet ten zawiera zestaw różnych silników TTS, które można przetestować.
+
+Z moich testów wynika, że `Higgs Audio v3 Engine` najlepiej radzi sobie w języku polskim, dlatego to właśnie tego silnika użyję w poniższym przykładzie.
+
+## Instalacja
+
+Jeśli nie korzystasz z ComfyUI Manager, możesz zainstalować rozszerzenie ręcznie, wykonując poniższe kroki w terminalu:
+
+```bash
+## 1. Wejdź do folderu z rozszerzeniami ComfyUI
+cd /path/to/comfy-ui/custom_nodes
+
+## 2. Sklonuj repozytorium
+git clone https://github.com/diodiogod/TTS-Audio-Suite
+
+## 3. Wróć do folderu głównego ComfyUI
+cd ..
+
+## 4. Zainstaluj niezbędne biblioteki
+uv pip install -r custom_nodes/tts_audio_suite/requirements.txt
+
+## 5. Uruchom serwer
+## Jeśli wszystko przebiegnie pomyślnie, w konsoli zobaczysz informację o załadowaniu silników TTS
+uv run main.py
+```
+
+## Składanie workflow
+
+Aby przygotować proces generowania dźwięku, należy skonfigurować odpowiednie połączenia między modułami (węzłami).
+
+1.  **Utwórz nową przestrzeń roboczą**: Kliknij przycisk `+` na górze ekranu lub wybierz opcję `New` w menu (po kliknięciu loga ComfyUI w bocznym pasku).
+
+<div class="flex flex-col gap-1">
+  <Image
+    src={plusPosition}
+    format="webp"
+    alt="Pozycje plusa"
+    class="mt-0! mb-0!"
+  />
+</div>
+
+2.  **Dodaj odpowiednie moduły**: Kliknij przycisk `Nodes`, przejdź do sekcji `Extensions` i znajdź `TTS Audio Suite`. Następnie:
+    *   Z sekcji `Engines` przeciągnij `Higgs Audio v3 Engine` do obszaru roboczego.
+    *   Z sekcji `Text to Speech` przeciągnij `TTS Text` do obszaru roboczego.
+
+<div class="flex flex-col md:flex-row gap-1 items-center">
+    <Image src={engines} format="webp" alt="Pozycje silników TTS" class="mt-0! mb-0!" />
+    <Image src={ttsText} format="webp" alt="Pozycja text to speech " class="mt-0! mb-0!" />
+</div>
+
+3.  **Dodaj moduły audio**: Przewiń listę w górę do kategorii `Comfy nodes`, wybierz sekcję `audio` i dodaj dwa moduły: `Save Audio` oraz `Load Audio`.
+
+<Image src={audioNodes} format="webp" alt="Widok ComfyUI" class="mt-0! mb-0!" />
+
+4.  **Połącz moduły (Workflow)**:
+    *   Podłącz wejście `Load Audio` do wejścia `opt_narrator` w module `TTS Text`.
+        *   *Węzeł `Load Audio` służy do wskazania próbki dźwięku, z której głos ma zostać sklonowany.*
+    *   Podłącz `Higgs Audio v3 Engine` do wejścia `TTS_engine` w module `TTS Text`.
+        *   *Węzeł ten odpowiada za wybór silnika TTS. Możesz go zmienić na inny, jeśli chcesz przetestować inne brzmienie.*
+    *   Podłącz wyjście `audio` z modułu `TTS Text` do wejścia `audio` w module `Save Audio`.
+        *   *Plik wynikowy zostanie zapisany w formacie określonym w ustawieniach i trafi do folderu `output` w katalogu ComfyUI.*
+
+<div class="flex flex-col gap-1">
+  <Image
+    src={blueprint}
+    format="webp"
+    alt="Widok ComfyUI"
+    class="mt-0! mb-0!"
+  />
+  <i>Tak powinien prezentować się gotowy schemat połączeń</i>
+</div>
+
+5.  **Uruchom proces**: Gdy wszystkie połączenia są gotowe, kliknij `Run`.
+
+<Image
+  src={runWorkflow}
+  format="webp"
+  alt="Widok ComfyUI"
+  class="mt-0! mb-0!"
+/>
+
+*Uwaga: Przy pierwszym uruchomieniu system musi pobrać niezbędne modele z serwisu Huggingface.*
+
+## Promptowanie HiggsTTS 3
+
+Silnik HiggsTTS 3 pozwala na kontrolowanie emocji oraz stylu wypowiedzi. Aby tego dokonać, w polu tekstowym należy umieścić specjalne znaczniki `<\|...\|>` przed fragmentem tekstu, który ma otrzymać daną cechę.
+
+Szczegółową listę dostępnych znaczników znajdziesz na [stronie HiggsTTS 3 na Huggingface](https://huggingface.co/bosonai/higgs-tts-3-4b).
+
+**Wskazówki:**
+*   **Seed**: Warto eksperymentować z parametrem `seed` (domyślnie zmienia się on przy każdym uruchomieniu). HiggsTTS może wygenerować nieco inne brzmienie dla tego samego tekstu i próbki audio przy każdej kolejnej próbie.
+*   **Język**: Możesz spróbować użyć angielskiego głosu, aby mówił po polsku. Efekt bywa nieprzewidywalny – czasem brzmi to naturalnie, a czasem z silnym, obcym akcentem.
+
+### Parametry głosowe
+
+#### Emocje
+
+| Token | Opis |
+| :--- | :--- |
+| `<\|emotion:elation\|>` | Radość / wzniosłość |
+| `<\|emotion:amusement\|>` | Rozbawienie / figlarny śmiech |
+| `<\|emotion:enthusiasm\|>` | Entuzjazm / ekscytacja |
+| `<\|emotion:determination\|>` | Determinacja / stanowczość |
+| `<\|emotion:pride\|>` | Duma / pewność siebie |
+| `<\|emotion:contentment\|>` | Spokojne zadowolenie |
+| `<\|emotion:affection\|>` | Ciepło / afekt |
+| `<\|emotion:relief\|>` | Ulga |
+| `<\|emotion:contemplation\|>` | Zamyślenie / refleksja |
+| `<\|emotion:confusion\|>` | Dezorientacja |
+| `<\|emotion:surprise\|>` | Zaskoczenie |
+| `<\|emotion:awe\|>` | Podziw / zachwyt |
+| `<\|emotion:longing\|>` | Tęsknota / pragnienie |
+| `<\|emotion:arousal\|>` | Nasilone pragnienie |
+| `<\|emotion:anger\|>` | Złość |
+| `<\|emotion:fear\|>` | Strach |
+| `<\|emotion:disgust\|>` | Wstręt |
+| `<\|emotion:bitterness\|>` | Gorycz |
+| `<\|emotion:sadness\|>` | Smutek |
+| `<\|emotion:shame\|>` | Wstyd |
+| `<\|emotion:helplessness\|>` | Bezradność |
+
+#### Styl
+
+| Token | Opis |
+| :--- | :--- |
+| `<\|style:singing\|>` | Śpiew |
+| `<\|style:shouting\|>` | Krzyk / mocny głos |
+| `<\|style:whispering\|>` | Szept |
+
+#### Onomatopeje (efekty dźwiękowe)
+
+| Token | Opis | Sugerowane użycie |
+| :--- | :--- | :--- |
+| `<\|sfx:cough\|>` | Kaszel | Ahem |
+| `<\|sfx:laughter\|>` | Śmiech | Haha / Hehe |
+| `<\|sfx:crying\|>` | Płacz | Boohoo / Sob |
+| `<\|sfx:screaming\|>` | Krzyk | Ahh / Aaah |
+| `<\|sfx:burping\|>` | Odbijanie | Burp |
+| `<\|sfx:humming\|>` | Nucenie | Hmm / Mmm |
+| `<\|sfx:sigh\|>` | Westchnienie | Uh / Ahh |
+| `<\|sfx:sniff\|>` | Powąchanie | Sff |
+| `<\|sfx:sneeze\|>` | Kichnięcie | Achoo |
+
+#### Ton i tempo (Prosodia)
+
+| Token | Efekt |
+| :--- | :--- |
+| `<\|prosody:speed_very_slow\|>` | Prędkość ok. 0.65× |
+| `<\|prosody:speed_slow\|>` | Prędkość ok. 0.85× |
+| `<\|prosody:speed_fast\|>` | Prędkość ok. 1.2× |
+| `<\|prosody:speed_very_fast\|>` | Prędkość ok. 1.4× |
+| `<\|prosody:pitch_low\|>` | Obniżenie tonu o ok. -3 półtony |
+| `<\|prosody:pitch_high\|>` | Podwyższenie tonu o ok. +2.5 półtonu |
+| `<\|prosody:pause\|>` | Pauza (ok. 400–700 ms) |
+| `<\|prosody:long_pause\|>` | Długa pauza (ok. 700–1500 ms) |
+| `<\|prosody:expressive_high\|>` | Bardziej ekspresyjna interpretacja |
+| `<\|prosody:expressive_low\|>` | Bardziej monotonna interpretacja |
+
+### Przykłady praktyczne
+
+Poniższe teksty zostały przygotowane na podstawie próbek z gry TES V: Skyrim na potrzeby prac nad rozszerzeniem modyfikacji [House of Horrors](https://www.nexusmods.com/skyrimspecialedition/mods/57285).
+
+> `<\|emotion:determination\|> Najwyższy czas oczyścić ten dom z tego tałatajstwa! <\|emotion:contentment\|> Na mój znak?!`
+
+<audio controls src={audio1} />
+<i>W tym przypadku znak zapytania został użyty, aby wpłynąć na ton wypowiedzi i dopasować go do kontekstu.</i>
+
+> Do ataku, teraz! `<\|style:shouting\|> <\|emotion:anger\|> Zniszcz to; szybko!`
+
+<audio controls src={audio2} />
+
+> `<\|emotion:relief\|> W ostatniej chwili! ... `\<\|sfx:sigh\|>` ... `\<\|emotion:relief\|> Jesteśmy tutaj bezpieczni.`
+
+<audio controls src={audio3} />  
