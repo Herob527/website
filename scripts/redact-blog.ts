@@ -8,6 +8,7 @@ const client = new LMStudioClient()
 
 const models: Model[] = [
   'qwen3-0.6b',
+  'liquid/lfm2.5-1.2b',
   // 'microsoft/phi-4-reasoning-plus',
   // 'zai-org/glm-4.7-flash',
   // 'google/gemma-4-26b-a4b-qat',
