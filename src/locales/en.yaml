@@ -57,6 +57,9 @@ cvPage:
 blogPage:
   title: Blog
   empty: Nothing here yet
+  me: Me
+  human: Human
+  clankers: Clankers
 
 langSwitcher:
   toEn: Switch to English
