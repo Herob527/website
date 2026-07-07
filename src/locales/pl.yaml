@@ -62,6 +62,8 @@ blogPage:
   me: Ja
   human: Człowiek 
   clankers: Blaszak 
+  author: Autor
+  redactor: Zredagowane przez
 
 langSwitcher:
   toEn: Switch to English

@@ -60,6 +60,8 @@ blogPage:
   me: Me
   human: Human
   clankers: Clankers
+  author: Author
+  redactor: Redacted by
 
 langSwitcher:
   toEn: Switch to English

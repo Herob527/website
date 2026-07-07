@@ -71,7 +71,14 @@ const { t } = Astro.locals
       <h1>{blogItem.data.title}</h1>
     </header>
     <div class="flex gap-4 justify-center items-center">
-      <p id="article-write-label">Autor:</p>
+      <p
+        id="article-write-label"
+        class="after:content-[':'] after:ml-0.5"
+        data-redactor={t('blogPage.redactor')}
+        data-author={t('blogPage.author')}
+      >
+        Autor
+      </p>
       <select
         class="py-2 px-4 bg-gray-100 border border-gray-300"
         id="article-writer"
@@ -129,10 +136,12 @@ const { t } = Astro.locals
       if (value === humanToken) {
         aiRedacted.forEach((item) => item.style.display === 'none')
         humanWritten.style.display = 'block'
+        label.innerText = label.dataset.author!
         return
       }
 
       humanWritten.style.display = 'none'
+      label.innerText = label.dataset.redactor!
       const target = aiRedacted.find((item) => item.dataset.redactor === value)
       if (target) {
         target.style.display = 'block'
