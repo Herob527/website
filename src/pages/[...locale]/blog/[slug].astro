@@ -63,7 +63,8 @@ const { t } = Astro.locals
     <header class="mb-6 text-4xl font-semibold text-center">
       <h1>{blogItem.data.title}</h1>
     </header>
-    <div class="flex justify-center items-center">
+    <div class="flex gap-4 justify-center items-center">
+      <p id="article-write-label">Autor:</p>
       <select
         class="py-2 px-4 bg-gray-100 border border-gray-300"
         id="article-writer"
@@ -77,8 +78,51 @@ const { t } = Astro.locals
       </select>
     </div>
 
-    <div class="container mx-auto prose">
+    <div class="container mx-auto prose" id="human">
       <Content />
     </div>
+
+    {
+      aiItems.map((el) => {
+        return (
+          <div
+            class="container mx-auto prose ai-redacted"
+            data-redactor={el.data.written_by}
+            style="display: none"
+          >
+            <el.body />
+          </div>
+        )
+      })
+    }
   </section>
 </Layout>
+
+<script>
+  const humanToken = 'human'
+  const writer = document.querySelector<HTMLSelectElement>('#article-writer')
+  const label = document.querySelector<HTMLParagraphElement>(
+    '#article-write-label',
+  )
+  const humanWritten = document.querySelector<HTMLDivElement>('#human')
+  const aiRedacted = [
+    ...document.querySelectorAll<HTMLDivElement>('.ai-redacted'),
+  ]
+  if (writer === null || label === null || humanWritten === null)
+    throw new Error('Elements not found')
+
+  writer.addEventListener('change', (val) => {
+    const value = (val?.target as HTMLSelectElement).value
+    if (value === humanToken) {
+      aiRedacted.forEach((item) => item.style.display === 'none')
+      humanWritten.style.display = 'block'
+      return
+    }
+
+    humanWritten.style.display = 'none'
+    const target = aiRedacted.find((item) => item.dataset.redactor === value)
+    if (target) {
+      target.style.display = 'block'
+    }
+  })
+</script>
