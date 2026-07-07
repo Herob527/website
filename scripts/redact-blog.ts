@@ -7,12 +7,9 @@ import { mdxToJs } from 'satteri'
 const client = new LMStudioClient()
 
 const models: Model[] = [
-  'qwen3-0.6b',
-  'liquid/lfm2.5-1.2b',
-  // 'microsoft/phi-4-reasoning-plus',
-  // 'zai-org/glm-4.7-flash',
-  // 'google/gemma-4-26b-a4b-qat',
-  // 'openai/gpt-oss-20b',
+  'openai/gpt-oss-20b',
+  'zai-org/glm-4.7-flash',
+  'google/gemma-4-26b-a4b-qat',
 ]
 
 const blogGlob = new Glob('src/content/blog/**/*.{md,mdx}')
@@ -80,7 +77,10 @@ Use gender-neutral language whenever reasonably possible.
 Improve headings, paragraphs, lists, and transitions to make the article flow naturally.
 Do not omit important technical details unless they are redundant or repeated elsewhere in the article.
 
-Output only the rewritten MDX content. Do not include explanations, notes, or markdown code fences.`,
+Output only the rewritten MDX content. Do not include explanations, notes, or markdown code fences.
+
+Skip the frontmatter, it'll be later injected into script.
+`,
       },
       {
         role: 'user',
