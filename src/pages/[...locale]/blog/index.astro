@@ -64,3 +64,14 @@ export const getStaticPaths = (() => {
     }
   </section>
 </Layout>
+
+<script>
+  import { viewTransitionCallback } from '@root/src/utils'
+
+  viewTransitionCallback(() => {
+    const audios = document.querySelectorAll('audio')
+    audios.forEach((audio) => {
+      audio.replaceWith(audio.cloneNode())
+    })
+  })
+</script>
