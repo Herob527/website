@@ -12,6 +12,7 @@ if (relativePath.startsWith(`/${currentLocale}`)) {
   relativePath = relativePath.slice(`/${currentLocale}`.length) || '/'
 }
 
+// TODO: Dehardcode language since it looks akward and imagine adding another language
 const plHref =
   DEFAULT_LANGUAGE === 'pl'
     ? `${base}${relativePath}`
