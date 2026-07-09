@@ -4,7 +4,6 @@ import type { Model } from './models'
 import { Glob, YAML } from 'bun'
 import { mdxToJs } from 'satteri'
 import { z } from 'zod'
-// import { mdxToJs } from 'satteri'
 
 const client = new LMStudioClient()
 
