@@ -4,6 +4,7 @@ import Link from '@components/Link.astro'
 import { getCollection } from 'astro:content'
 import { geti18nStaticPaths } from '@root/src/i18n'
 import type { GetStaticPaths } from 'astro'
+import { dateUtils } from '@root/src/date-utils'
 
 const { t } = Astro.locals
 
@@ -13,16 +14,18 @@ const posts = (
     (el) => el.id.split('/')[0] === Astro.currentLocale,
   )
 )
-  .sort(
-    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
+  .sort((a, b) =>
+    dateUtils.compare(
+      dateUtils.parse(b.data.date),
+      dateUtils.parse(a.data.date),
+    ),
   )
   .map((post) => ({
     ...post,
-    formattedDate: new Intl.DateTimeFormat(Astro.currentLocale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }).format(new Date(post.data.date)),
+    formattedDate: dateUtils.format(
+      dateUtils.parse(post.data.date),
+      Astro.currentLocale ?? 'en',
+    ),
   }))
 
 export const getStaticPaths = (() => {
