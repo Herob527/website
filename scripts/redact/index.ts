@@ -9,6 +9,8 @@ import fixer from './prompts/mdxFixer.md?raw'
 
 const client = new LMStudioClient()
 
+const MAX_TOKENS = 24000
+
 const models: Model[] = [
   'zai-org/glm-4.7-flash',
   'openai/gpt-oss-20b',
@@ -68,7 +70,7 @@ if (toGenerate.length === 0) {
 
 const redactArticle = async (model: LLM, chat: ChatLike) => {
   const prediction = model.respond(chat, {
-    maxTokens: 24000,
+    maxTokens: MAX_TOKENS,
   })
   for await (const { content } of prediction) {
     process.stdout.write(content)
