@@ -10,9 +10,10 @@ import fixer from './prompts/mdxFixer.md?raw'
 const client = new LMStudioClient()
 
 const models: Model[] = [
-  'zai-org/glm-4.7-flash',
-  'openai/gpt-oss-20b',
-  'google/gemma-4-26b-a4b-qat',
+  'qwen/qwen3.5-9b',
+  // 'zai-org/glm-4.7-flash',
+  // 'openai/gpt-oss-20b',
+  // 'google/gemma-4-26b-a4b-qat',
 ]
 
 const redactorPrompt = redactor
@@ -148,6 +149,19 @@ ${latestError ?? error}
   }
 }
 
+const withRetry = <T>(fn: () => T) => {
+  const maxRetries = 5
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return fn()
+    } catch (e) {
+      log(`Error: ${String(e)}`)
+      log(`Retrying...`)
+    }
+  }
+  throw new Error('Max retries exceeded')
+}
+
 let loadedModel: LLM | null = null
 
 for (const { inputPath, outputPath, model, parent } of toGenerate) {
@@ -181,7 +195,10 @@ for (const { inputPath, outputPath, model, parent } of toGenerate) {
     written_by: model,
   } satisfies AiBlog
 
-  let { nonReasoningContent } = await redactArticle(loadedModel, chat)
+  let { nonReasoningContent } = await withRetry(() =>
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    redactArticle(loadedModel!, chat),
+  )
   const { error } = validateMdx(nonReasoningContent)
   if (error) {
     nonReasoningContent = await fixupMdx(
