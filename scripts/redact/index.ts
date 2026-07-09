@@ -166,7 +166,9 @@ const withRetry = <T>(fn: () => T) => {
 
 let loadedModel: LLM | null = null
 
-for (const { inputPath, outputPath, model, parent } of toGenerate) {
+for (let i = 0; i < toGenerate.length; i++) {
+  const { inputPath, outputPath, model, parent } = toGenerate[i]
+  const ahead: (typeof toGenerate)[number] | undefined = toGenerate[i + 1]
   const article = articles.get(inputPath)
   if (!article) throw new Error(`No article found under ${inputPath}`)
 
@@ -222,11 +224,13 @@ ${nonReasoningContent}
   log(
     `Finished generating redaction by '${model}' of '${parent}' to '${outputPath}'`,
   )
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (model !== ahead?.model) {
+    await loadedModel.unload()
+    loadedModel = null
 
-  await loadedModel.unload()
-  loadedModel = null
-
-  log(`Unloaded ${model}`)
+    log(`Unloaded ${model}`)
+  }
 }
 
 exit(0)
