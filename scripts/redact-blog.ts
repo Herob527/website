@@ -92,6 +92,12 @@ const redactArticle = async (model: LLM, chat: ChatLike) => {
   return { stats, nonReasoningContent }
 }
 
+const createTimestamp = () =>
+  Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'medium',
+    timeStyle: 'medium',
+  }).format(new Date())
+
 let loadedModel: LLM | null = null
 
 for (const { inputPath, outputPath, model, parent } of aiGenerationData) {
@@ -116,10 +122,17 @@ for (const { inputPath, outputPath, model, parent } of aiGenerationData) {
     },
   ] satisfies ChatLike
 
+  const startDate = createTimestamp()
+
+  console.info(
+    `(${startDate}): Began generating redaction by '${model}' of '${parent}' to '${outputPath}'`,
+  )
+
   const frontmatterWithAI = {
     parentId: parent,
     written_by: model,
   } satisfies AiBlog
+
   const { nonReasoningContent } = await redactArticle(loadedModel, chat)
 
   const output = Bun.file(outputPath)
