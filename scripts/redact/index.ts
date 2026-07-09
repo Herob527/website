@@ -127,10 +127,16 @@ ${latestError ?? error}
     ] satisfies ChatLike
   let index = 0
 
+  const maxAttempts = 5
+
   const schema = z.object({ fixed: z.string() })
   // It's assumed it'll eventually fix mdx... hopefully
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   while (true) {
+    if (index >= maxAttempts) {
+      log(`Fixing mdx failed after ${index.toString()} attempts`)
+      return mdx
+    }
     log(`Fixing mdx, iteration ${index.toString()}`)
     const data = model.respond(chat(), {
       structured: { type: 'json', jsonSchema: schema.toJSONSchema() },
@@ -154,17 +160,20 @@ ${latestError ?? error}
   }
 }
 
-const withRetry = <T>(fn: () => T) => {
+const withRetry = async <T>(fn: () => Promise<T>) => {
   const maxRetries = 5
+  let lastError: unknown
   for (let i = 0; i < maxRetries; i++) {
     try {
-      return fn()
+      await new Promise((resolve) => setTimeout(resolve, 500 * (i + 1)))
+      return await fn()
     } catch (e) {
+      lastError = e
       log(`Error: ${String(e)}`)
-      log(`Retrying...`)
+      log(`Retrying... (${(i + 1).toString()}/${maxRetries.toString()})`)
     }
   }
-  throw new Error('Max retries exceeded')
+  throw new Error(`Max retries exceeded: ${String(lastError)}`)
 }
 
 let loadedModel: LLM | null = null
