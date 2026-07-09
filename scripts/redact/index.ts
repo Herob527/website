@@ -124,6 +124,7 @@ ${latestError ?? error}
   let index = 0
 
   const schema = z.object({ fixed: z.string() })
+  // It's assumed it'll eventually fix mdx... hopefully
   while (true) {
     log(`Fixing mdx, iteration ${index.toString()}`)
     const data = model.respond(chat(), {
