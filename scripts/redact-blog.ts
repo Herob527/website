@@ -40,11 +40,16 @@ Output only the rewritten MDX content. Do not include explanations, notes, or ma
 Skip the top frontmatter, it'll be later injected into script.
 `
 
-const fixMdxPrompt = `You are experienced fixer of mdx files. Your task is to search for unclosed tags or unescaped < >
-
-Tags are delimited by <name> like <p>. In this case, you add at the end of the string closing tag.
+const fixMdxPrompt = `You are experienced fixer of mdx files. Your task is to search for unescaped < >
 
 Unescaped < are like <| |>. In this case, you add backslash to < or >. Ex. \\<| 
+
+
+This
+> <|emotion:relief|> W ostatniej chwili! ... <|sfx:sigh|> ... <|emotion:relief|> Jesteśmy tutaj bezpieczni.
+Becomes
+> \\<|emotion:relief|> W ostatniej chwili! ... \\<|sfx:sigh|> ... \\<|emotion:relief|> Jesteśmy tutaj bezpieczni.
+
 
 You shall output only string, nothing more.
 `
@@ -118,6 +123,7 @@ const validateMdx = (mdx: string) => {
     mdxToJs(mdx)
     return { isValid: true, error: undefined } as const
   } catch (e) {
+    log('Error while validating mdx.')
     if (e instanceof Error) {
       return { isValid: false, error: e.message } as const
     }
@@ -148,25 +154,36 @@ ${latestError ?? error}
 `,
       },
     ] satisfies ChatLike
+  let index = 0
 
+  const schema = z.object({ fixed: z.string() })
   while (true) {
-    const schema = z.object({ fixed: z.string() })
-    const data = await model.respond(chat(), {
+    log(`Fixing mdx, iteration ${index.toString()}`)
+    const data = model.respond(chat(), {
       structured: { type: 'json', jsonSchema: schema.toJSONSchema() },
     })
-    const { error } = validateMdx(data.nonReasoningContent)
+
+    for await (const { content } of data) {
+      process.stdout.write(content)
+    }
+    const { nonReasoningContent, content } = await data
+    const { error } = validateMdx(nonReasoningContent)
+
     if (error) {
       latestError = error
+      index += 1
       continue
     }
-    const parsed = schema.parse(JSON.parse(data.content))
+    const parsed = schema.parse(JSON.parse(content))
+
+    log(`Fixing mdx finished`)
     return parsed.fixed
   }
 }
 
 let loadedModel: LLM | null = null
 
-for (const { inputPath, outputPath, model, parent } of aiGenerationData) {
+for (const { inputPath, outputPath, model, parent } of toGenerate) {
   const article = articles.get(inputPath)
   if (!article) throw new Error(`No article found under ${inputPath}`)
 
@@ -198,7 +215,7 @@ for (const { inputPath, outputPath, model, parent } of aiGenerationData) {
   } satisfies AiBlog
 
   let { nonReasoningContent } = await redactArticle(loadedModel, chat)
-  const { error } = validateMdx('<Test>')
+  const { error } = validateMdx(nonReasoningContent)
   if (error) {
     nonReasoningContent = await fixupMdx(
       loadedModel,
