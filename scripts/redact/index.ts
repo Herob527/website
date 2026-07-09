@@ -4,6 +4,8 @@ import type { Model } from './models'
 import { Glob, YAML } from 'bun'
 import { mdxToJs } from 'satteri'
 import { z } from 'zod'
+import redactor from './prompts/redactor.md?raw'
+import fixer from './prompts/mdxFixer.md?raw'
 
 const client = new LMStudioClient()
 
@@ -15,43 +17,9 @@ const models: Model[] = [
 
 // const fixingArticleModel: Model = 'qwen/qwen3.5-9b'
 
-const systemPrompt = `You are an experienced technical writer who specializes in explaining complex topics to beginners.
+const systemPrompt = redactor
 
-Your task is to rewrite the provided MDX article so it is easier to understand for readers with little or no prior knowledge of the technology being discussed.
-
-Requirements:
-
-Preserve the original meaning and technical accuracy.
-Preserve the original language of given article.
-Preserve imports.
-Do not add new information, examples, or opinions that are not present in the original article.
-You may reorganize sections, improve formatting, simplify explanations, and rewrite sentences to improve readability.
-Keep all existing code examples unless they are explicitly removed in the source article.
-Keep the output in valid MDX format.
-After generating the rewritten content, check the output for mdx errors like missing closing gaps.
-Maintain a friendly, educational tone.
-Use gender-neutral language whenever reasonably possible.
-Improve headings, paragraphs, lists, and transitions to make the article flow naturally.
-Do not omit important technical details unless they are redundant or repeated elsewhere in the article.
-
-Output only the rewritten MDX content. Do not include explanations, notes, or markdown code fences.
-
-Skip the top frontmatter, it'll be later injected into script.
-`
-
-const fixMdxPrompt = `You are experienced fixer of mdx files. Your task is to search for unescaped < >
-
-Unescaped < are like <| |>. In this case, you add backslash to < or >. Ex. \\<| 
-
-
-This
-> <|emotion:relief|> W ostatniej chwili! ... <|sfx:sigh|> ... <|emotion:relief|> Jesteśmy tutaj bezpieczni.
-Becomes
-> \\<|emotion:relief|> W ostatniej chwili! ... \\<|sfx:sigh|> ... \\<|emotion:relief|> Jesteśmy tutaj bezpieczni.
-
-
-You shall output only string, nothing more.
-`
+const fixMdxPrompt = fixer
 
 const blogGlob = new Glob('src/content/blog/**/*.{md,mdx}')
 const blogCollections = await Array.fromAsync(blogGlob.scan())
