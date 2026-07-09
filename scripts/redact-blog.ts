@@ -100,6 +100,10 @@ const createTimestamp = () =>
 
 let loadedModel: LLM | null = null
 
+const log = (message: unknown) => {
+  console.info(`(${createTimestamp()}):`, message)
+}
+
 for (const { inputPath, outputPath, model, parent } of aiGenerationData) {
   const article = articles.get(inputPath)
   if (!article) throw new Error(`No article found under ${inputPath}`)
@@ -122,10 +126,8 @@ for (const { inputPath, outputPath, model, parent } of aiGenerationData) {
     },
   ] satisfies ChatLike
 
-  const startDate = createTimestamp()
-
-  console.info(
-    `(${startDate}): Began generating redaction by '${model}' of '${parent}' to '${outputPath}'`,
+  log(
+    `Began generating redaction by '${model}' of '${parent}' to '${outputPath}'`,
   )
 
   const frontmatterWithAI = {
@@ -144,8 +146,14 @@ ${nonReasoningContent}
 `
   await output.write(template)
 
+  log(
+    `Finished generating redaction by '${model}' of '${parent}' to '${outputPath}'`,
+  )
+
   await loadedModel.unload()
   loadedModel = null
+
+  log(`Unloaded ${model}`)
 }
 
 exit(0)
