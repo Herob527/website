@@ -10,10 +10,9 @@ import fixer from './prompts/mdxFixer.md?raw'
 const client = new LMStudioClient()
 
 const models: Model[] = [
-  'qwen/qwen3.5-9b',
-  // 'zai-org/glm-4.7-flash',
-  // 'openai/gpt-oss-20b',
-  // 'google/gemma-4-26b-a4b-qat',
+  'zai-org/glm-4.7-flash',
+  'openai/gpt-oss-20b',
+  'google/gemma-4-26b-a4b-qat',
 ]
 
 const redactorPrompt = redactor
@@ -68,7 +67,9 @@ if (toGenerate.length === 0) {
 }
 
 const redactArticle = async (model: LLM, chat: ChatLike) => {
-  const prediction = model.respond(chat)
+  const prediction = model.respond(chat, {
+    maxTokens: 24000,
+  })
   for await (const { content } of prediction) {
     process.stdout.write(content)
   }
