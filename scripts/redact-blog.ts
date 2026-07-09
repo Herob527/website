@@ -2,6 +2,8 @@ import { LLM, LMStudioClient, type ChatLike } from '@lmstudio/sdk'
 import { exit } from 'process'
 import type { Model } from './models'
 import { Glob, YAML } from 'bun'
+import { mdxToJs } from 'satteri'
+import { z } from 'zod'
 // import { mdxToJs } from 'satteri'
 
 const client = new LMStudioClient()
@@ -36,6 +38,15 @@ Do not omit important technical details unless they are redundant or repeated el
 Output only the rewritten MDX content. Do not include explanations, notes, or markdown code fences.
 
 Skip the top frontmatter, it'll be later injected into script.
+`
+
+const fixMdxPrompt = `You are experienced fixer of mdx files. Your task is to search for unclosed tags or unescaped < >
+
+Tags are delimited by <name> like <p>. In this case, you add at the end of the string closing tag.
+
+Unescaped < are like <| |>. In this case, you add backslash to < or >. Ex. \\<| 
+
+You shall output only string, nothing more.
 `
 
 const blogGlob = new Glob('src/content/blog/**/*.{md,mdx}')
@@ -98,11 +109,62 @@ const createTimestamp = () =>
     timeStyle: 'medium',
   }).format(new Date())
 
-let loadedModel: LLM | null = null
-
 const log = (message: unknown) => {
   console.info(`(${createTimestamp()}):`, message)
 }
+
+const validateMdx = (mdx: string) => {
+  try {
+    mdxToJs(mdx)
+    return { isValid: true, error: undefined } as const
+  } catch (e) {
+    if (e instanceof Error) {
+      return { isValid: false, error: e.message } as const
+    }
+    return { isValid: false, error: 'Unknown error' } as const
+  }
+}
+
+const fixupMdx = async (model: LLM, mdx: string, error: string) => {
+  let latestError: string | null = null
+  const chat = () =>
+    [
+      {
+        role: 'system',
+        content: fixMdxPrompt,
+      },
+      {
+        role: 'user',
+        content: `Can you fix this mdx string? 
+>>>
+${mdx}
+>>>
+
+I get error: 
+
+>>>
+${latestError ?? error}
+>>>
+`,
+      },
+    ] satisfies ChatLike
+
+  while (true) {
+    const schema = z.object({ fixed: z.string() })
+    const data = await model.respond(chat(), {
+      structured: { type: 'json', jsonSchema: schema.toJSONSchema() },
+    })
+    const { error } = validateMdx(data.nonReasoningContent)
+    if (error) {
+      latestError = error
+      continue
+    }
+    const parsed = schema.parse(JSON.parse(data.content))
+    return parsed.fixed
+  }
+}
+
+let loadedModel: LLM | null = null
 
 for (const { inputPath, outputPath, model, parent } of aiGenerationData) {
   const article = articles.get(inputPath)
@@ -135,7 +197,15 @@ for (const { inputPath, outputPath, model, parent } of aiGenerationData) {
     written_by: model,
   } satisfies AiBlog
 
-  const { nonReasoningContent } = await redactArticle(loadedModel, chat)
+  let { nonReasoningContent } = await redactArticle(loadedModel, chat)
+  const { error } = validateMdx('<Test>')
+  if (error) {
+    nonReasoningContent = await fixupMdx(
+      loadedModel,
+      nonReasoningContent,
+      error,
+    )
+  }
 
   const output = Bun.file(outputPath)
   const template = `
