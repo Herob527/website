@@ -15,8 +15,6 @@ const models: Model[] = [
   'google/gemma-4-26b-a4b-qat',
 ]
 
-// const fixingArticleModel: Model = 'qwen/qwen3.5-9b'
-
 const redactorPrompt = redactor
 
 const fixMdxPrompt = fixer
@@ -125,6 +123,7 @@ ${latestError ?? error}
 
   const schema = z.object({ fixed: z.string() })
   // It's assumed it'll eventually fix mdx... hopefully
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   while (true) {
     log(`Fixing mdx, iteration ${index.toString()}`)
     const data = model.respond(chat(), {
