@@ -59,7 +59,9 @@ const toGenerate = (
       return { ...item, exists }
     }),
   )
-).filter((item) => !item.exists)
+)
+  .filter((item) => !item.exists)
+  .sort((a, b) => a.model.localeCompare(b.model))
 
 if (toGenerate.length === 0) {
   throw new Error('Nothing new to generate')
