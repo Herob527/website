@@ -54,7 +54,7 @@ describe('DateUtils', () => {
         dateUtils.parse('2024-01-01'),
         dateUtils.parse('2024-12-31'),
       ]
-      const sorted = dates.sort(dateUtils.compare)
+      const sorted = dates.sort((a, b) => dateUtils.compare(a, b))
       expect(sorted[0].month).toBe(1)
       expect(sorted[1].month).toBe(3)
       expect(sorted[2].month).toBe(12)
