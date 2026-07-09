@@ -17,7 +17,7 @@ const models: Model[] = [
 
 // const fixingArticleModel: Model = 'qwen/qwen3.5-9b'
 
-const systemPrompt = redactor
+const redactorPrompt = redactor
 
 const fixMdxPrompt = fixer
 
@@ -165,7 +165,7 @@ for (const { inputPath, outputPath, model, parent } of toGenerate) {
   const chat = [
     {
       role: 'system',
-      content: systemPrompt,
+      content: redactorPrompt,
     },
     {
       role: 'user',
