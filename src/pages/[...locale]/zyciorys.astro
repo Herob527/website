@@ -5,6 +5,7 @@ import type { AstroComponentFactory } from 'astro/runtime/server/render/astro/fa
 import { geti18nStaticPaths } from '@root/src/i18n'
 import type { GetStaticPaths } from 'astro'
 import { DEFAULT_LANGUAGE } from '@root/src/constants'
+import { dateUtils } from '@root/src/date-utils'
 
 type LifeStageEntry = CollectionEntry<'lifeStages'>
 
@@ -60,11 +61,11 @@ const formatDate = (date: Temporal.PlainDate) => {
 const sorted = stagesWithContent
   .map((s: StageWithContent) => ({
     ...s,
-    startDate: Temporal.PlainDate.from(s.entry.data.startDate),
-    endDate: Temporal.PlainDate.from(s.entry.data.endDate),
+    startDate: dateUtils.parse(s.entry.data.startDate),
+    endDate: dateUtils.parse(s.entry.data.endDate),
     color: s.entry.data.color,
   }))
-  .sort((a, b) => Temporal.PlainDate.compare(a.startDate, b.startDate))
+  .sort((a, b) => dateUtils.compare(a.startDate, b.startDate))
 
 export const getStaticPaths = (() => {
   return geti18nStaticPaths()
