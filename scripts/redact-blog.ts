@@ -1,8 +1,8 @@
-import { LMStudioClient, type ChatLike } from '@lmstudio/sdk'
+import { LLM, LMStudioClient, type ChatLike } from '@lmstudio/sdk'
 import { exit } from 'process'
 import type { Model } from './models'
 import { Glob, YAML } from 'bun'
-import { mdxToJs } from 'satteri'
+// import { mdxToJs } from 'satteri'
 
 const client = new LMStudioClient()
 
@@ -11,6 +11,8 @@ const models: Model[] = [
   'openai/gpt-oss-20b',
   'google/gemma-4-26b-a4b-qat',
 ]
+
+// const fixingArticleModel: Model = 'qwen/qwen3.5-9b'
 
 const systemPrompt = `You are an experienced technical writer who specializes in explaining complex topics to beginners.
 
@@ -39,93 +41,98 @@ Skip the top frontmatter, it'll be later injected into script.
 const blogGlob = new Glob('src/content/blog/**/*.{md,mdx}')
 const blogCollections = await Array.fromAsync(blogGlob.scan())
 
-interface Frontmatter {
-  title: string
-  description: string
-  date: string
-  language: string
-}
-
 interface AiBlog {
   parentId: string
   written_by: string
 }
 
-const articles = await Promise.all(
-  blogCollections.map(async (blogPath) => {
-    const item = await Bun.file(blogPath).text()
-    const compiled = mdxToJs(item)
-
-    const { frontmatter } = compiled
-    if (!frontmatter?.value) {
-      throw new Error('No frontmatter')
-    }
-    const val = YAML.parse(frontmatter.value) as Frontmatter
-    return {
-      blogPath,
-      frontmatter: val,
-      content: item,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      name: blogPath.split('/').at(-1)!,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      language: blogPath.split('/').at(-2)!,
-    }
-  }),
+const articles = new Map(
+  await Promise.all(
+    blogCollections.map(async (blogPath) => {
+      const content = await Bun.file(blogPath).text()
+      return [blogPath, content] as const
+    }),
+  ),
 )
 
-for (const modelName of models) {
-  const model = await client.llm.model(modelName, {
+const aiGenerationData = models.flatMap((model) => {
+  return [...articles.keys()].map((blogPath) => {
+    const [fileName, locale] = blogPath.split('/').reverse()
+    const [name, ext] = fileName.split('.')
+    const generatedName = `${name}.${model.replace('/', '_')}.${ext}`
+    const path = ['src/content/blog-ai', locale, generatedName].join('/')
+    return {
+      parent: name,
+      inputPath: blogPath,
+      outputPath: path,
+      model: model,
+    }
+  })
+})
+
+const toGenerate = (
+  await Promise.all(
+    aiGenerationData.map(async (item) => {
+      const exists = await Bun.file(item.outputPath).exists()
+      return { ...item, exists }
+    }),
+  )
+).filter((item) => !item.exists)
+
+if (toGenerate.length === 0) {
+  throw new Error('Nothing new to generate')
+}
+
+const redactArticle = async (model: LLM, chat: ChatLike) => {
+  const prediction = model.respond(chat)
+  for await (const { content } of prediction) {
+    process.stdout.write(content)
+  }
+  const { stats, nonReasoningContent } = await prediction
+  return { stats, nonReasoningContent }
+}
+
+let loadedModel: LLM | null = null
+
+for (const { inputPath, outputPath, model, parent } of aiGenerationData) {
+  const article = articles.get(inputPath)
+  if (!article) throw new Error(`No article found under ${inputPath}`)
+
+  loadedModel ??= await client.llm.model(model, {
     config: {
       evalBatchSize: 4096,
       flashAttention: true,
     },
   })
 
-  for (const article of articles) {
-    const chat = [
-      {
-        role: 'system',
-        content: systemPrompt,
-      },
-      {
-        role: 'user',
-        content: article.content,
-      },
-    ] satisfies ChatLike
+  const chat = [
+    {
+      role: 'system',
+      content: systemPrompt,
+    },
+    {
+      role: 'user',
+      content: article,
+    },
+  ] satisfies ChatLike
 
-    const fileName = article.name.replace(
-      /\.(mdx?)$/,
-      `.${modelName.replaceAll('/', '_')}.$1`,
-    )
+  const frontmatterWithAI = {
+    parentId: parent,
+    written_by: model,
+  } satisfies AiBlog
+  const { nonReasoningContent } = await redactArticle(loadedModel, chat)
 
-    const filePath = `src/content/blog-ai/${article.language}/${fileName}`
-    const output = Bun.file(filePath)
-    if (await output.exists()) {
-      continue
-    }
-    const prediction = model.respond(chat)
-    for await (const { content } of prediction) {
-      process.stdout.write(content)
-    }
-    const { stats, nonReasoningContent } = await prediction
-    const frontmatterWithAI = {
-      parentId: fileName.split('.')[0],
-      written_by: modelName,
-    } satisfies AiBlog
-    const template = `
+  const output = Bun.file(outputPath)
+  const template = `
 ---
 ${YAML.stringify(frontmatterWithAI, null, 2)}
 ---
-${nonReasoningContent}  
+${nonReasoningContent}
 `
-    await output.write(template)
+  await output.write(template)
 
-    console.log(
-      `\nRedacted ${article.name} successfully with model: ${modelName}. Speed: ${stats.tokensPerSecond ? stats.tokensPerSecond.toString() : 'undefined'}`,
-    )
-  }
-
-  await model.unload()
+  await loadedModel.unload()
+  loadedModel = null
 }
 
 exit(0)
