@@ -176,15 +176,11 @@ const withRetry = async <T>(fn: () => Promise<T>) => {
   throw new Error(`Max retries exceeded: ${String(lastError)}`)
 }
 
-let loadedModel: LLM | null = null
-
-for (let i = 0; i < toGenerate.length; i++) {
-  const { inputPath, outputPath, model, parent } = toGenerate[i]
-  const ahead: (typeof toGenerate)[number] | undefined = toGenerate[i + 1]
+for (const { inputPath, outputPath, model, parent } of toGenerate) {
   const article = articles.get(inputPath)
   if (!article) throw new Error(`No article found under ${inputPath}`)
 
-  loadedModel ??= await client.llm.model(model, {
+  const loadedModel = await client.llm.model(model, {
     config: {
       evalBatchSize: 4096,
       flashAttention: true,
@@ -212,8 +208,7 @@ for (let i = 0; i < toGenerate.length; i++) {
   } satisfies AiBlog
 
   let { nonReasoningContent } = await withRetry(() =>
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    redactArticle(loadedModel!, chat),
+    redactArticle(loadedModel, chat),
   )
   const { error } = validateMdx(nonReasoningContent)
   if (error) {
@@ -236,13 +231,6 @@ ${nonReasoningContent}
   log(
     `Finished generating redaction by '${model}' of '${parent}' to '${outputPath}'`,
   )
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (model !== ahead?.model) {
-    await loadedModel.unload()
-    loadedModel = null
-
-    log(`Unloaded ${model}`)
-  }
 }
 
 exit(0)
