@@ -11,6 +11,8 @@ const client = new LMStudioClient()
 
 const MAX_TOKENS = 24000
 
+const MAX_RETRY_ATTEMPTS = 5
+
 const models: Model[] = [
   'zai-org/glm-4.7-flash',
   'openai/gpt-oss-20b',
@@ -127,13 +129,11 @@ ${latestError ?? error}
     ] satisfies ChatLike
   let index = 0
 
-  const maxAttempts = 5
-
   const schema = z.object({ fixed: z.string() })
   // It's assumed it'll eventually fix mdx... hopefully
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   while (true) {
-    if (index >= maxAttempts) {
+    if (index >= MAX_RETRY_ATTEMPTS) {
       log(`Fixing mdx failed after ${index.toString()} attempts`)
       return mdx
     }
