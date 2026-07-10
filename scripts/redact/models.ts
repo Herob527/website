@@ -1,4 +1,5 @@
 export type Model =
+  | 'zai-org/glm-4.6v-flash'
   | 'liquid/lfm2.5-1.2b'
   | 'microsoft/phi-4-reasoning-plus'
   | 'qwen/qwen3.6-27b'

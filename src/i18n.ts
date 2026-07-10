@@ -9,7 +9,7 @@ const translations = import.meta.glob('./locales/*.yaml', {
 
 const transformed = Object.fromEntries(
   Object.entries(translations).map(([key, val]) => {
-    const locale = /\/(.{2,4})\.yaml/.exec(key)?.at(1)
+    const locale = /\/(.{2,4})\.yaml/.exec(key)?.[1]
     if (!locale) throw new Error('Invalid locale')
     return [locale, { translation: val }]
   }),
