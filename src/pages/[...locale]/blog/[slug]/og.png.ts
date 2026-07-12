@@ -7,6 +7,10 @@ import { getCollection } from 'astro:content'
 
 const OUTPUT_TYPE: ImageResponseOptions['format'] = 'png'
 
+export type BlogPost = Awaited<
+  ReturnType<typeof getCollection<'blog'>>
+>[number]['data']
+
 const DIMENSIONS = {
   width: 1200,
   height: 630,
@@ -14,7 +18,7 @@ const DIMENSIONS = {
 
 export const GET: APIRoute = async ({ params, props }) => {
   const { post } = props as Props
-  const toRender = await ogMarkup()
+  const toRender = await ogMarkup(post)
 
   const image = await new ImageResponse(toRender.node, {
     format: OUTPUT_TYPE,
@@ -66,8 +70,6 @@ export async function getStaticPaths() {
     }))
 }
 
-type BlogPost = Awaited<ReturnType<typeof getCollection<'blog'>>>[number]
-
 interface Props {
-  post: BlogPost['data']
+  post: BlogPost
 }
