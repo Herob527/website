@@ -8,49 +8,87 @@ export const ogMarkup = async (post: BlogPost, locale: string) => {
 
   const data = await fromJsx(
     <div
-      tw="flex flex-col w-full h-full p-12 justify-between"
+      tw="flex w-full h-full"
       style={{
         background: '#ffffff',
         fontFamily: 'Inter, system-ui, sans-serif',
       }}
     >
-      <div tw="flex flex-col flex-1 justify-center">
-        <h1
-          tw="text-gray-900 font-bold leading-tight m-0 pt-6"
-          style={{
-            fontSize: '64px',
-            letterSpacing: '-0.02em',
-            borderTop: '4px solid #e5e7eb',
-          }}
-        >
-          {post.title}
-        </h1>
-        <p
-          tw="text-gray-500 mt-6 m-0 pb-6 leading-relaxed"
-          style={{
-            fontSize: '28px',
-            borderBottom: '4px solid #e5e7eb',
-          }}
-        >
-          {post.description}
-        </p>
-      </div>
+      {/* Accent sidebar */}
+      <div
+        tw="flex flex-col justify-between h-full"
+        style={{
+          width: '24px',
+          background: 'linear-gradient(180deg, #0A66C2 0%, #0044cc 100%)',
+        }}
+      />
 
-      <div tw="flex items-center justify-between">
+      <div tw="flex flex-col flex-1 h-full p-16 justify-between">
+        {/* Brand row */}
+        <div tw="flex items-center justify-between">
+          <div tw="flex items-center gap-3">
+            <div
+              tw="flex items-center justify-center rounded-lg"
+              style={{
+                width: '44px',
+                height: '44px',
+                background: '#0A66C2',
+              }}
+            >
+              <span tw="text-white font-bold" style={{ fontSize: '22px' }}>
+                S
+              </span>
+            </div>
+            <span
+              tw="text-gray-900 font-semibold"
+              style={{ fontSize: '22px', letterSpacing: '-0.01em' }}
+            >
+              Szymon Wrzos
+            </span>
+          </div>
+          <span tw="text-gray-400" style={{ fontSize: '20px' }}>
+            {dateUtils.format(date, locale)}
+          </span>
+        </div>
+
+        {/* Main content */}
+        <div tw="flex flex-col" style={{ maxWidth: '880px' }}>
+          <h1
+            tw="text-gray-900 font-bold leading-tight m-0"
+            style={{
+              fontSize: '58px',
+              letterSpacing: '-0.025em',
+              lineHeight: 1.1,
+            }}
+          >
+            {post.title}
+          </h1>
+          <p
+            tw="text-gray-500 mt-4 leading-relaxed"
+            style={{
+              fontSize: '26px',
+              lineHeight: 1.4,
+            }}
+          >
+            {post.description}
+          </p>
+        </div>
+
+        {/* Tags row */}
         <div tw="flex items-center gap-3">
           {tags.map((tag) => (
             <span
-              tw="bg-gray-100 text-gray-600 rounded-full px-4 py-2 font-medium"
-              style={{ fontSize: '20px' }}
+              tw="flex items-center rounded-full px-5 py-2 font-medium"
+              style={{
+                fontSize: '19px',
+                background: '#EAF3FC',
+                color: '#0A66C2',
+              }}
             >
               {tag}
             </span>
           ))}
         </div>
-
-        <span tw="text-gray-400" style={{ fontSize: '22px' }}>
-          {dateUtils.format(date, locale)}
-        </span>
       </div>
     </div>,
   )
