@@ -4,7 +4,6 @@ import tailwindcss from '@tailwindcss/vite'
 import mdx from '@astrojs/mdx'
 
 import sitemap from '@astrojs/sitemap'
-import yaml from '@rollup/plugin-yaml'
 import { DEFAULT_LANGUAGE } from './src/constants'
 
 // https://astro.build/config
@@ -24,6 +23,6 @@ export default defineConfig({
   },
   integrations: [mdx(), sitemap()],
   vite: {
-    plugins: [tailwindcss(), yaml()],
+    plugins: [tailwindcss()],
   },
 })

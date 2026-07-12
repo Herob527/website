@@ -32,6 +32,7 @@
     "satteri": "^0.9.5",
     "tailwindcss": "^4.3.2",
     "takumi-js": "^2.1.1",
+    "yaml": "^2.9.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -39,7 +40,6 @@
     "@iconify-json/flag": "^1.2.12",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify/tailwind4": "^1.2.3",
-    "@rollup/plugin-yaml": "^5.0.0",
     "@tailwindcss/vite": "^4.3.2",
     "eslint": "^10.7.0",
     "eslint-plugin-astro": "^3.0.0",
