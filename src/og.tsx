@@ -1,9 +1,7 @@
 import { fromJsx } from 'takumi-js/helpers/jsx'
 import type { BlogPost } from './pages/[...locale]/blog/[slug]/og.png'
-import { dateUtils } from './date-utils'
 
-export const ogMarkup = async (post: BlogPost, locale: string) => {
-  const date = dateUtils.parse(post.date)
+export const ogMarkup = async (post: BlogPost) => {
   const tags = post.tags ?? []
 
   const data = await fromJsx(
@@ -25,31 +23,7 @@ export const ogMarkup = async (post: BlogPost, locale: string) => {
 
       <div tw="flex flex-col flex-1 h-full p-16 justify-between">
         {/* Brand row */}
-        <div tw="flex items-center justify-between">
-          <div tw="flex items-center gap-3">
-            <div
-              tw="flex items-center justify-center rounded-lg"
-              style={{
-                width: '44px',
-                height: '44px',
-                background: '#0A66C2',
-              }}
-            >
-              <span tw="text-white font-bold" style={{ fontSize: '22px' }}>
-                S
-              </span>
-            </div>
-            <span
-              tw="text-gray-900 font-semibold"
-              style={{ fontSize: '22px', letterSpacing: '-0.01em' }}
-            >
-              Szymon Wrzos
-            </span>
-          </div>
-          <span tw="text-gray-400" style={{ fontSize: '20px' }}>
-            {dateUtils.format(date, locale)}
-          </span>
-        </div>
+        <div tw="flex items-center justify-between"></div>
 
         {/* Main content */}
         <div tw="flex flex-col" style={{ maxWidth: '880px' }}>

@@ -4,7 +4,6 @@ import ImageResponse, { type ImageResponseOptions } from 'takumi-js/response'
 import { locales } from '@root/src/i18n'
 import { getCollection } from 'astro:content'
 import { googleFonts } from 'takumi-js/helpers'
-import { DEFAULT_LANGUAGE } from '@root/src/constants'
 
 const OUTPUT_TYPE: ImageResponseOptions['format'] = 'png'
 
@@ -17,9 +16,9 @@ const DIMENSIONS = {
   height: 630,
 }
 
-export const GET: APIRoute = async ({ currentLocale, props }) => {
+export const GET: APIRoute = async ({ props }) => {
   const { post } = props as Props
-  const toRender = await ogMarkup(post, currentLocale ?? DEFAULT_LANGUAGE)
+  const toRender = await ogMarkup(post)
 
   const image = await new ImageResponse(toRender.node, {
     format: OUTPUT_TYPE,
