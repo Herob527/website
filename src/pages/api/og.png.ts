@@ -1,4 +1,4 @@
-import { test } from '@root/src/og'
+import { ogMarkup } from '@root/src/og'
 import type { APIRoute } from 'astro'
 import ImageResponse, { type ImageResponseOptions } from 'takumi-js/response'
 
@@ -10,7 +10,8 @@ const DIMENSIONS = {
 }
 
 export const GET: APIRoute = async ({ params }) => {
-  const toRender = await test()
+  const toRender = await ogMarkup()
+
   const image = await new ImageResponse(toRender.node, {
     format: OUTPUT_TYPE,
     stylesheets: toRender.stylesheets,
