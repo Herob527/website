@@ -59,6 +59,7 @@ cvPage:
 blogPage:
   title: Blog
   empty: Nic tu jeszcze nie ma
+  minRead: "{{minutes}} min. czytania"
   me: Ja
   human: Człowiek 
   clankers: Lokalny LLM 

@@ -1,7 +1,8 @@
 ---
 title: 'ComfyUI - Instalacja'
-description: 'Instrukcje instalacji i hostowania ComfyUI lokalnie - Linux'
+description: 'Zapoznaj się z instalacją ComfyUI oraz hostowaniem na Linuxie lokalnie.'
 date: '2026-06-29'
+tags: ['ComfyUI']
 ---
 
 ## Wstęp

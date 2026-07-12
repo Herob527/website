@@ -63,9 +63,25 @@ if (blogItem === undefined) {
 
 const { Content } = await render(blogItem)
 const { t } = Astro.locals
+
+const ogUrl = new URL(Astro.url.pathname, Astro.site).href
+const ogImage = new URL(
+  `${Astro.url.pathname}og.png`,
+  Astro.site,
+).href
 ---
 
-<Layout parentHref="/blog" title={`Blog - ${blogItem.data.title}`}>
+<Layout
+  parentHref="/blog"
+  title={`Blog - ${blogItem.data.title}`}
+  og={{
+    title: blogItem.data.title,
+    type: 'article',
+    url: ogUrl,
+    image: ogImage,
+    description: blogItem.data.description,
+  }}
+>
   <section>
     <header class="mb-6 text-4xl font-semibold text-center">
       <h1>{blogItem.data.title}</h1>

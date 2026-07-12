@@ -4,6 +4,7 @@ import Logo from '@assets/logo.svg'
 import Link from '@components/Link.astro'
 import LanguageSwitcher from '@components/LanguageSwitcher.astro'
 import '../styles/global.css'
+import OgTags, { type OpenGraph } from '@components/OgTags.astro'
 const { t } = Astro.locals
 
 interface LinkItem {
@@ -35,9 +36,10 @@ type hrefs = (typeof links)[number]['href']
 interface Props {
   parentHref?: hrefs
   title?: string
+  og?: OpenGraph
 }
 
-const { parentHref, title } = Astro.props
+const { og, parentHref, title } = Astro.props
 ---
 
 <html lang={Astro.currentLocale}>
@@ -57,6 +59,7 @@ const { parentHref, title } = Astro.props
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <ClientRouter />
+    {og && <OgTags og={og} />}
   </head>
   <body class="flex flex-col min-h-screen">
     <nav
