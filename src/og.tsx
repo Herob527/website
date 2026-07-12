@@ -16,14 +16,21 @@ export const ogMarkup = async (post: BlogPost, locale: string) => {
     >
       <div tw="flex flex-col flex-1 justify-center">
         <h1
-          tw="text-gray-900 font-bold leading-tight m-0"
-          style={{ fontSize: '64px', letterSpacing: '-0.02em' }}
+          tw="text-gray-900 font-bold leading-tight m-0 pt-6"
+          style={{
+            fontSize: '64px',
+            letterSpacing: '-0.02em',
+            borderTop: '4px solid #e5e7eb',
+          }}
         >
           {post.title}
         </h1>
         <p
-          tw="text-gray-500 mt-6 m-0 leading-relaxed"
-          style={{ fontSize: '28px', maxWidth: '900px' }}
+          tw="text-gray-500 mt-6 m-0 pb-6 leading-relaxed"
+          style={{
+            fontSize: '28px',
+            borderBottom: '4px solid #e5e7eb',
+          }}
         >
           {post.description}
         </p>
