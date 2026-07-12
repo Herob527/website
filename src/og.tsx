@@ -1,7 +1,7 @@
 import { fromJsx } from 'takumi-js/helpers/jsx'
 import type { BlogPost } from './pages/[...locale]/blog/[slug]/og.png'
 
-export const ogMarkup = async (post: BlogPost) => {
+export const ogMarkup = async (post: BlogPost, minutesRead: number) => {
   const tags = post.tags ?? []
 
   const data = await fromJsx(

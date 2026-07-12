@@ -5,6 +5,8 @@ import { locales } from '@root/src/i18n'
 import { getCollection } from 'astro:content'
 import { googleFonts } from 'takumi-js/helpers'
 
+import getReadingTime from 'reading-time'
+
 const OUTPUT_TYPE: ImageResponseOptions['format'] = 'png'
 
 export type BlogPost = Awaited<
@@ -17,8 +19,8 @@ const DIMENSIONS = {
 }
 
 export const GET: APIRoute = async ({ props }) => {
-  const { post } = props as Props
-  const toRender = await ogMarkup(post)
+  const { post, minutesRead } = props as Props
+  const toRender = await ogMarkup(post, minutesRead)
 
   const image = await new ImageResponse(toRender.node, {
     format: OUTPUT_TYPE,
@@ -30,7 +32,7 @@ export const GET: APIRoute = async ({ props }) => {
   return new Response(image, {
     headers: {
       'Content-Type': `image/${OUTPUT_TYPE}`,
-      'Cache-Control': 'public, max-age=31536000, immutable',
+      'Cache-Control': 'public, max-age=1, immutable',
     },
   })
 }
@@ -49,7 +51,15 @@ export async function getStaticPaths() {
             const parts = el.id.split('/')
             const slug = parts.length > 1 ? parts.slice(1).join('/') : el.id
             const postLocale = parts[0]
-            return { slug, locale: locale, postLocale, postData: el.data }
+            if (!el.body) throw Error('No body')
+            const { minutes } = getReadingTime(el.body)
+            return {
+              slug,
+              locale: locale,
+              postLocale,
+              postData: el.data,
+              minutesRead: minutes,
+            }
           })
       }),
     )
@@ -67,10 +77,12 @@ export async function getStaticPaths() {
       },
       props: {
         post: entry.postData,
+        minutesRead: entry.minutesRead,
       },
     }))
 }
 
 interface Props {
   post: BlogPost
+  minutesRead: number
 }
