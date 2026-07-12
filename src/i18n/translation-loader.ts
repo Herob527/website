@@ -13,12 +13,12 @@ export class TranslationLoader {
   }
 
   getLocales(): string[] {
-    return this.getYamlFiles().map((f) => f.replace(LOCALE_FILE_EXT, ''))
+    return this.getTranslationFiles().map((f) => f.replace(LOCALE_FILE_EXT, ''))
   }
 
   loadTranslations(): Resource {
     return Object.fromEntries(
-      this.getYamlFiles().map((file) => {
+      this.getTranslationFiles().map((file) => {
         const locale = file.replace(LOCALE_FILE_EXT, '')
         const content = fs.readFileSync(
           path.join(this.localesDir, file),
@@ -32,7 +32,7 @@ export class TranslationLoader {
     )
   }
 
-  private getYamlFiles(): string[] {
+  private getTranslationFiles(): string[] {
     return fs
       .readdirSync(this.localesDir)
       .filter((f) => f.endsWith(LOCALE_FILE_EXT))
