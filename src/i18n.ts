@@ -1,26 +1,14 @@
 import type { GetStaticPathsItem } from 'astro'
 import i18next from 'i18next'
 import { DEFAULT_LANGUAGE } from './constants'
+import { translationLoader } from './i18n/translation-loader'
 
-const translations = import.meta.glob('./locales/*.yaml', {
-  eager: true,
-  import: 'default',
-})
-
-const transformed = Object.fromEntries(
-  Object.entries(translations).map(([key, val]) => {
-    const locale = /\/(.{2,4})\.yaml/.exec(key)?.[1]
-    if (!locale) throw new Error('Invalid locale')
-    return [locale, { translation: val }]
-  }),
-) as Record<string, Record<string, string>>
-
-export const locales = Object.keys(transformed)
+export const locales = translationLoader.getLocales()
 
 export const initI18n = async () =>
   i18next.init({
     lng: DEFAULT_LANGUAGE,
-    resources: transformed,
+    resources: translationLoader.loadTranslations(),
   })
 
 export const geti18nStaticPaths = () => {
