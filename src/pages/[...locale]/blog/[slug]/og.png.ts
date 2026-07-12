@@ -2,8 +2,11 @@ import { ogMarkup } from '@root/src/og'
 import type { APIRoute } from 'astro'
 import ImageResponse, { type ImageResponseOptions } from 'takumi-js/response'
 
+import { fontData } from 'astro:assets'
+
 import { locales } from '@root/src/i18n'
 import { getCollection } from 'astro:content'
+import { googleFonts } from 'takumi-js/helpers'
 
 const OUTPUT_TYPE: ImageResponseOptions['format'] = 'png'
 
@@ -24,6 +27,7 @@ export const GET: APIRoute = async ({ params, props }) => {
     format: OUTPUT_TYPE,
     stylesheets: toRender.stylesheets,
     ...DIMENSIONS,
+    fonts: googleFonts(['Montserrat']),
   }).arrayBuffer()
 
   return new Response(image, {
