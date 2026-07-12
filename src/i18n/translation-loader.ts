@@ -24,10 +24,7 @@ export class TranslationLoader {
           path.join(this.localesDir, file),
           'utf-8',
         )
-        return [
-          locale,
-          { translation: yaml.parse(content) as Record<string, unknown> },
-        ]
+        return [locale, { translation: this.parseTranslationFile(content) }]
       }),
     )
   }
@@ -36,6 +33,9 @@ export class TranslationLoader {
     return fs
       .readdirSync(this.localesDir)
       .filter((f) => f.endsWith(LOCALE_FILE_EXT))
+  }
+  private parseTranslationFile(content: string): Record<string, unknown> {
+    return yaml.parse(content) as Record<string, unknown>
   }
 }
 
