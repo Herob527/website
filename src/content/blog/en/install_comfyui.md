@@ -1,6 +1,6 @@
 ---
 title: 'ComfyUI - installation'
-description: 'Instructions for installing and hosting ComfyUI locally - Linux'
+description: 'Learn how to install ComfyUI and host it on Linux locally'
 date: '2026-06-29'
 ---
 
