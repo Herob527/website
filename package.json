@@ -28,7 +28,7 @@
     "i18next": "^26.3.6",
     "satteri": "^0.9.5",
     "tailwindcss": "^4.3.2",
-    "takumi-js": "^2.0.2",
+    "takumi-js": "^2.1.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "@iconify/tailwind4": "^1.2.3",
     "@rollup/plugin-yaml": "^5.0.0",
     "@tailwindcss/vite": "^4.3.2",
-    "eslint": "^10.6.0",
+    "eslint": "^10.7.0",
     "eslint-plugin-astro": "^2.1.1",
     "prettier": "^3.9.5",
     "prettier-plugin-astro": "^0.14.1",
