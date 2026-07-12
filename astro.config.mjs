@@ -2,7 +2,6 @@
 import { defineConfig, svgoOptimizer } from 'astro/config'
 import tailwindcss from '@tailwindcss/vite'
 import mdx from '@astrojs/mdx'
-
 import sitemap from '@astrojs/sitemap'
 import { DEFAULT_LANGUAGE } from './src/constants'
 
