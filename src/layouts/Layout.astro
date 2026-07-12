@@ -55,22 +55,23 @@ const { og, parentHref, title } = Astro.props
       rel="icon"
       href={`${import.meta.env.BASE_URL}/favicon.ico`.replace('//', '/')}
     />
+    {og?.description && <meta name="description" content={og?.description} />}
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <ClientRouter />
     {og && <OgTags og={og} />}
   </head>
-  <body class="flex flex-col min-h-screen">
+  <body class="flex min-h-screen flex-col">
     <nav
-      class="py-4 px-4 bg-white border-b border-solid md:py-4 md:px-16 border-[#ccc]"
+      class="border-b border-solid border-[#ccc] bg-white px-4 py-4 md:px-16 md:py-4"
     >
-      <div class="flex flex-row gap-2 justify-between items-center">
+      <div class="flex flex-row items-center justify-between gap-2">
         <Link href="/">
           <Logo height={40} />
         </Link>
 
-        <div class="hidden flex-row gap-8 items-center md:flex">
+        <div class="hidden flex-row items-center gap-8 md:flex">
           {
             links.map((el) => (
               <Link
@@ -99,28 +100,28 @@ const { og, parentHref, title } = Astro.props
           class="flex flex-col gap-1.5 p-2 md:hidden"
           aria-label="Menu"
         >
-          <span class="block w-6 h-0.5 bg-black"></span>
-          <span class="block w-6 h-0.5 bg-black"></span>
-          <span class="block w-6 h-0.5 bg-black"></span>
+          <span class="block h-0.5 w-6 bg-black"></span>
+          <span class="block h-0.5 w-6 bg-black"></span>
+          <span class="block h-0.5 w-6 bg-black"></span>
         </button>
       </div>
     </nav>
 
     <div
       id="menu-overlay"
-      class="fixed inset-0 z-40 opacity-0 transition-opacity duration-300 pointer-events-none bg-black/50 data-open:opacity-100 data-open:pointer-events-auto ease"
+      class="ease pointer-events-none fixed inset-0 z-40 bg-black/50 opacity-0 transition-opacity duration-300 data-open:pointer-events-auto data-open:opacity-100"
     >
     </div>
     <div
       id="mobile-menu"
-      class="fixed top-0 right-0 z-50 p-6 w-64 h-full bg-white shadow-lg transition-transform duration-300 translate-x-full data-open:translate-x-0 ease"
+      class="ease fixed top-0 right-0 z-50 h-full w-64 translate-x-full bg-white p-6 shadow-lg transition-transform duration-300 data-open:translate-x-0"
     >
       <button
         id="menu-close"
         class="absolute top-4 right-4 text-2xl"
         aria-label="Close menu">&times;</button
       >
-      <nav class="flex flex-col gap-6 mt-8">
+      <nav class="mt-8 flex flex-col gap-6">
         {
           links.map((el) => (
             <Link
@@ -179,16 +180,16 @@ const { og, parentHref, title } = Astro.props
     </script>
 
     <main
-      class="container flex-1 px-4 mx-auto mt-12 mb-4"
+      class="container mx-auto mt-12 mb-4 flex-1 px-4"
       transition:animate={slide({ duration: '0.5s' })}
     >
       <slot />
     </main>
-    <footer class="py-2 px-4 w-full text-sm border-t border-black border-solid">
+    <footer class="w-full border-t border-solid border-black px-4 py-2 text-sm">
       © {new Date().getFullYear()} Szymon Wrzos • {t('footer.builtIn')}
       {' '}
       <Link
-        class="text-blue-500 border-b-2 border-transparent border-solid visited:text-purple-500 hover:border-b-2 hover:border-blue-500 hover:border-solid hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500"
+        class="border-b-2 border-solid border-transparent text-blue-500 visited:text-purple-500 hover:border-b-2 hover:border-solid hover:border-blue-500 hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500"
         href="/o-witrynie"
       >
         {t('footer.here')}
