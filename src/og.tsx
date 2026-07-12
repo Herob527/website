@@ -1,7 +1,12 @@
 import { fromJsx } from 'takumi-js/helpers/jsx'
 import type { BlogPost } from './pages/[...locale]/blog/[slug]/og.png'
+import type { TFunction } from 'i18next'
 
-export const ogMarkup = async (post: BlogPost, minutesRead: number) => {
+export const ogMarkup = async (
+  post: BlogPost,
+  minutesRead: number,
+  tFunc: TFunction,
+) => {
   const tags = post.tags ?? []
 
   const data = await fromJsx(
@@ -45,6 +50,14 @@ export const ogMarkup = async (post: BlogPost, minutesRead: number) => {
             }}
           >
             {post.description}
+          </p>
+          <p
+            tw="text-gray-500 mt-3 font-medium"
+            style={{
+              fontSize: '20px',
+            }}
+          >
+            {tFunc('blogPage.minRead', { minutes: Math.ceil(minutesRead) })}
           </p>
         </div>
 

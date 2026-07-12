@@ -18,9 +18,10 @@ const DIMENSIONS = {
   height: 630,
 }
 
-export const GET: APIRoute = async ({ props }) => {
+export const GET: APIRoute = async ({ props, locals }) => {
   const { post, minutesRead } = props as Props
-  const toRender = await ogMarkup(post, minutesRead)
+  const { t } = locals
+  const toRender = await ogMarkup(post, minutesRead, t)
 
   const image = await new ImageResponse(toRender.node, {
     format: OUTPUT_TYPE,

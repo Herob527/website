@@ -57,6 +57,7 @@ cvPage:
 blogPage:
   title: Blog
   empty: Nothing here yet
+  minRead: "{minutes} min read"
   me: Me
   human: Human
   clankers: Local LLM 
