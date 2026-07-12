@@ -1,12 +1,10 @@
 import { ogMarkup } from '@root/src/og'
 import type { APIRoute } from 'astro'
 import ImageResponse, { type ImageResponseOptions } from 'takumi-js/response'
-
-import { fontData } from 'astro:assets'
-
 import { locales } from '@root/src/i18n'
 import { getCollection } from 'astro:content'
 import { googleFonts } from 'takumi-js/helpers'
+import { DEFAULT_LANGUAGE } from '@root/src/constants'
 
 const OUTPUT_TYPE: ImageResponseOptions['format'] = 'png'
 
@@ -19,9 +17,9 @@ const DIMENSIONS = {
   height: 630,
 }
 
-export const GET: APIRoute = async ({ params, props }) => {
+export const GET: APIRoute = async ({ currentLocale, props }) => {
   const { post } = props as Props
-  const toRender = await ogMarkup(post)
+  const toRender = await ogMarkup(post, currentLocale ?? DEFAULT_LANGUAGE)
 
   const image = await new ImageResponse(toRender.node, {
     format: OUTPUT_TYPE,
