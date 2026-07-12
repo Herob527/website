@@ -4,7 +4,7 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["ESNext.Temporal"],
+    "lib": ["ESNext.Temporal", "ES2022.Array"],
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "baseUrl": ".",
