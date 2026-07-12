@@ -78,14 +78,14 @@ export const ogMarkup = async (post: BlogPost, locale: string) => {
         <div tw="flex items-center gap-3">
           {tags.map((tag) => (
             <span
-              tw="flex items-center rounded-full px-5 py-2 font-medium"
+              tw="flex items-center rounded-full px-4 justify-center flex-row py-2 font-medium"
               style={{
                 fontSize: '19px',
                 background: '#EAF3FC',
                 color: '#0A66C2',
               }}
             >
-              {tag}
+              #{tag}
             </span>
           ))}
         </div>
