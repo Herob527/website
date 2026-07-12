@@ -4,24 +4,25 @@ import { dateUtils } from './date-utils'
 
 export const ogMarkup = async (post: BlogPost, locale: string) => {
   const date = dateUtils.parse(post.date)
+  const tags = post.tags ?? []
+
   const data = await fromJsx(
     <div
       tw="flex flex-col w-full h-full p-12 justify-between"
       style={{
-        background:
-          'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+        background: '#ffffff',
         fontFamily: 'Inter, system-ui, sans-serif',
       }}
     >
       <div tw="flex flex-col flex-1 justify-center">
         <h1
-          tw="text-white font-bold leading-tight m-0"
+          tw="text-gray-900 font-bold leading-tight m-0"
           style={{ fontSize: '64px', letterSpacing: '-0.02em' }}
         >
           {post.title}
         </h1>
         <p
-          tw="text-gray-400 mt-6 m-0 leading-relaxed"
+          tw="text-gray-500 mt-6 m-0 leading-relaxed"
           style={{ fontSize: '28px', maxWidth: '900px' }}
         >
           {post.description}
@@ -29,7 +30,18 @@ export const ogMarkup = async (post: BlogPost, locale: string) => {
       </div>
 
       <div tw="flex items-center justify-between">
-        <span tw="text-gray-500" style={{ fontSize: '22px' }}>
+        <div tw="flex items-center gap-3">
+          {tags.map((tag) => (
+            <span
+              tw="bg-gray-100 text-gray-600 rounded-full px-4 py-2 font-medium"
+              style={{ fontSize: '20px' }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <span tw="text-gray-400" style={{ fontSize: '22px' }}>
           {dateUtils.format(date, locale)}
         </span>
       </div>
