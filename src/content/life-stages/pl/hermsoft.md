@@ -10,16 +10,15 @@ order: 6
 
 To był mały software house, który tworzył aplikacje webowe i mobilne na zlecenie klientów.
 
-<br />
-Na wstępie zajmowałem się frontendem w React, ale z czasem nauczyłem się Darta i Fluttera, więc doszły również zadania mobilne.
-<br/>
+Na wstępie zajmowałem się frontendem w React czy NextJS, ale też pojawiły się zadania z mobilki, więc dostałem czas, by nauczyć się Dart i Fluttera, by móc podejmować się zadań związanych z tworzeniem aplikacji mobilnych.
 
 Też podchwyciłem .NETa i dokonywałem poprawek czy dodawałem potrzebne rzeczy.
 
-<br />
+Wprowadzałem też docker compose, by łatwiej było testować backend lokalnie oraz Astro do nowych projektów.
 
-Wprowadzałem też docker compose, by łatwiej było testować backend lokalnie oraz Astro do nowych projektów
+Jednym z większych wewnętrznych projektów było jednak opracowanie szablonu do aplikacji fullstackowych, gdzie backend był oparty na .NET a frontend na Astro SSR.
+Dodatkowo frontend miał integrację ze strapi, dzięki czemu była gotowa baza na bloga czy inne potrzeby klienta.
 
-<br />
+Opracowałem tutaj rozwiązanie wielojęzyczności, które działało na bazie i18next, dzięki czemu można było wykorzystać sprawdzone rozwiązanie to obsługi wielu języków.
 
 Ostatecznie przyszło się rozstać przez to, że było za dużo ogarniania jak na skalę firmy
