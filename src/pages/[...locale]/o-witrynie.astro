@@ -20,7 +20,11 @@ interface StackItem {
 }
 
 const stack = [
-  { type: t('aboutPage.stack.framework'), name: 'Astro (SSG)', href: 'https://astro.build/' },
+  {
+    type: t('aboutPage.stack.framework'),
+    name: 'Astro (SSG)',
+    href: 'https://astro.build/',
+  },
   {
     type: t('aboutPage.stack.styleEngine'),
     name: 'Tailwind CSS',
@@ -31,9 +35,21 @@ const stack = [
     name: 'TypeScript',
     href: 'https://www.typescriptlang.org/',
   },
-  { type: t('aboutPage.stack.packageManager'), name: 'Bun', href: 'https://bun.com/' },
-  { type: t('aboutPage.stack.linter'), name: 'ESLint', href: 'https://eslint.org/' },
-  { type: t('aboutPage.stack.formatter'), name: 'Prettier', href: 'https://prettier.io/' },
+  {
+    type: t('aboutPage.stack.packageManager'),
+    name: 'Bun',
+    href: 'https://bun.com/',
+  },
+  {
+    type: t('aboutPage.stack.linter'),
+    name: 'ESLint',
+    href: 'https://eslint.org/',
+  },
+  {
+    type: t('aboutPage.stack.formatter'),
+    name: 'Prettier',
+    href: 'https://prettier.io/',
+  },
   {
     type: t('aboutPage.stack.aiEditor'),
     name: 'Opencode (MiMo V2.5 Free)',
@@ -92,7 +108,7 @@ export const getStaticPaths = (() => {
 
 <Layout parentHref="/o-witrynie" title={t('aboutPage.title')}>
   <section>
-    <header class="mb-6 text-4xl font-semibold text-center">
+    <header class="mb-6 text-center text-4xl font-semibold">
       <h1>{t('aboutPage.title')}</h1>
     </header>
     <article>
@@ -106,7 +122,7 @@ export const getStaticPaths = (() => {
               <td class="py-1 pr-4">{item.type}:</td>
               <td>
                 <a
-                  class="text-blue-500 border-b-2 border-transparent border-solid visited:text-purple-500 hover:border-b-2 hover:border-blue-500 hover:border-solid hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500"
+                  class="border-b-2 border-solid border-transparent text-blue-500 visited:text-purple-500 hover:border-b-2 hover:border-solid hover:border-blue-500 hover:visited:border-b-2 hover:visited:border-solid hover:visited:border-purple-500"
                   href={item.href}
                   target="_blank"
                 >
@@ -125,7 +141,7 @@ export const getStaticPaths = (() => {
       <div class="flex flex-col gap-2">
         {
           configs.map((item) => (
-            <div class="overflow-hidden min-h-0">
+            <div class="min-h-0 overflow-hidden">
               <input
                 type="checkbox"
                 id={`toggle-${item.name}`}
@@ -136,13 +152,13 @@ export const getStaticPaths = (() => {
                 for={`toggle-${item.name}`}
                 class="flex flex-row items-center border-2 border-black"
               >
-                <p class="flex-1 p-2 border-r-2 border-black">{item.name}</p>
-                <span class="p-2 px-4 transition-transform rotate-90">
+                <p class="flex-1 border-r-2 border-black p-2">{item.name}</p>
+                <span class="rotate-90 p-2 px-4 transition-transform">
                   &rangle;
                 </span>
               </label>
 
-              <div class="grid overflow-hidden ease-in-out duration-400 grid-rows-[0fr] transition-[grid-template-rows] peer-checked:grid-rows-[1fr]">
+              <div class="grid grid-rows-[0fr] overflow-y-hidden transition-[grid-template-rows] duration-400 ease-in-out peer-checked:grid-rows-[1fr]">
                 <div class="min-h-0">
                   <Code
                     class="p-4"
