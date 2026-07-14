@@ -1,0 +1,49 @@
+---
+title: 'Dubbingowanie modów do Skyrima'
+description: 'Zapoznaj się z dubbingowaniem modyfikacji do Skyrima od spolszczenia tekstowego do dubbingowego krok po kroku'
+date: '2026-07-15'
+tags: ['Dubbing']
+---
+
+## Wstęp
+
+W tym poście omówię od początku do końca, na bazie doświadczeń z dubbingiem modyfikacji do Skyrima [Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) oraz [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701).
+
+Ze względu na osobistę preferencję terminalową, będzie dużo wykorzystania terminala, jednak omówię tutaj komendy jakie wykorzystuję.
+
+## O audio w Skyrimie
+
+### Rozpakowanie bsa i fuz
+Zanim zacznę wymieniać kroki czy narzędzia, należałoby powiedzieć conieco o tym, jak działają głosy w Skyrimie.
+
+`.bsa` to archiwum na dane jak tekstury czy głosy odczytywane przez silnik gry Bethesdy.
+
+Jak pobierzemy Skyrima z polskim dubbingiem, to polskie głosy są w pliku `Skyrim - Voices_pl0.bsa` zaś angielskie - `Skyrim - Voices_en0.bsa`.
+Ciekawostka, że głosy w Enderalu są w pliku `L - Voices.bsa`.
+
+Ścieżka do głosów to będzie `sound/voice/plugin.esp/[voice_type]`.
+*voice_type* to kategoria głosów przypisana dla NPC z poziomu Creation Kit.
+
+Można wykorzystać `BSArch.exe` do rozpakowania rzeczonych bsa.
+
+Można rozpakować za pomocą `YakitoriAudioConverter` na `.wav` i, opcjonalnie, `.lip`.
+Samo `YakitoriAudioConverter` potrafi też spakować z powrotem `.wav` i `.lip` do `.fuz`.
+
+Plik `.wav` to kontener na audio a plik `.lip` - przechowuje dane o tym, jak postać ma ruszać ustami.
+
+### Przykłady modyfikacji
+
+[Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701) ma od razu lip i wav bez pakowania w fuz i to działa.
+
+[Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) ma pliki fuz, ale ma jedno audio jako efekt i dlatego jest w folderze `fx` a nie `voice` jako `.xwm`.
+
+To, co je łączy to to, że są spakowane do bsa ostatecznie jak wydaje się moda.
+
+## Linux
+
+Jak testowałem, to BSArch.exe, YakitoriAudioConverter działają pod wine, ale wymagają zaintalowanego
+
+## Wykorzystane narzędzia
+
+- 
+
