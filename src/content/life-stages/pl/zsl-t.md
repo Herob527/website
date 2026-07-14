@@ -10,13 +10,13 @@ order: 1
 
 Programowanie miałem w programie od 3 klasy technikum.
 
-Na wstępie było kombinowanie z uniwersalnym schematem blokowym algorytmu (USB-A) a potem przeszliśmy do JavaScriptu.
+Na wstępie było kombinowanie z uniwersalnym schematem blokowym algorytmu (USB-A), a potem przeszliśmy do JavaScriptu.
 
 Osobno też mieliśmy zajęcia z CSS oraz HTML (formularze, stylowanie).
 
-Tutaj właśnie złapałem bakcyla programowanie i zacząłem też we własnym zakresie majstrować z językiem.
+Tutaj właśnie złapałem bakcyla programowania i zacząłem też we własnym zakresie majstrować z językiem.
 
-Też mieliśmy zagadnienia związane z MySQL a czwartej klasie PHP, w którym backend łączył się z bazą danych.
+Też mieliśmy zagadnienia związane z MySQL a czwartej klasie PHP, w którym pisaliśmy backend łączący stronę z bazą danych.
 
 <br />
 

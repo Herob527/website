@@ -7,13 +7,13 @@ order: 4
 parent: 'politechnika-poznanska'
 ---
 
-Praktyki studenckie w firmie zajmującą się wdrażaniem i utrzymywaniem rozwiązań Comarchu .
+Praktyki studenckie w firmie zajmującej się wdrażaniem i utrzymywaniem rozwiązań Comarchu.
 
-Zajmowałem się stronami e-sklepów klientów (CSS + Liquid) oraz stronami firmowymi opartymi na WordPressie.
+Zajmowałem się stronami e-sklepów klientów (CSS + Liquid) oraz stronami firmy opartymi na WordPressie.
 
 <br />
 
-Przydzielono mi też opracowanie konceptu responsywnej tabelki, gdyż klient chciał móc łatwo podejrzeć na smartfonie dane a nie tylko na komputerze.
+Przydzielono mi też opracowanie konceptu responsywnej tabelki, gdyż klient chciał móc łatwo podejrzeć na smartfonie dane, a nie tylko na komputerze.
 
 Ostatecznie miałem rezultat, ale przed realnym wdrożeniem zakończyły mi się praktyki.
 
