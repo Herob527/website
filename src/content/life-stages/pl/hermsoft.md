@@ -19,6 +19,6 @@ Wprowadzałem też docker compose, by łatwiej było testować backend lokalnie 
 Jednym z większych wewnętrznych projektów było jednak opracowanie szablonu do aplikacji fullstackowych, gdzie backend był oparty na .NET a frontend na Astro SSR.
 Dodatkowo frontend miał integrację ze strapi, dzięki czemu była gotowa baza na bloga czy inne potrzeby klienta.
 
-Opracowałem tutaj rozwiązanie wielojęzyczności, które działało na bazie i18next, dzięki czemu można było wykorzystać sprawdzone rozwiązanie to obsługi wielu języków.
+Wprowadziłem też obsługę wielojęzyczności, które działało na bazie i18next, dzięki czemu można było wykorzystać sprawdzone rozwiązanie do obsługi wielu języków.
 
 Ostatecznie przyszło się rozstać przez to, że było za dużo ogarniania jak na skalę firmy
