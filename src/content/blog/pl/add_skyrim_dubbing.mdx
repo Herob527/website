@@ -26,7 +26,7 @@ Ciekawostka, że głosy w Enderalu są w pliku `L - Voices.bsa`.
 
 Można wykorzystać `BSArch.exe` do rozpakowania rzeczonych bsa.
 
-Można rozpakować za pomocą `YakitoriAudioConverter` na `.wav` i, opcjonalnie, `.lip`.
+Można rozpakować `.fuz` za pomocą `YakitoriAudioConverter` na `.wav` i, opcjonalnie, `.lip`.
 Samo `YakitoriAudioConverter` potrafi też spakować z powrotem `.wav` i `.lip` do `.fuz`.
 
 Plik `.wav` to kontener na audio a plik `.lip` - przechowuje dane o tym, jak postać ma ruszać ustami.
@@ -35,13 +35,24 @@ Plik `.wav` to kontener na audio a plik `.lip` - przechowuje dane o tym, jak pos
 
 [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701) ma od razu lip i wav bez pakowania w fuz i to działa.
 
-[Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) ma pliki fuz, ale ma jedno audio jako efekt i dlatego jest w folderze `fx` a nie `voice` jako `.xwm`.
+[Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) ma pliki fuz, ale ma jedną kwestię głosów jako efekt i dlatego jest w folderze `fx` jako `.xwm` a nie `voice` .
+`YakitoriAudioConverter` jest w stanie konwertować `.xwm` do `.wav` i w drugą stronę.
 
 To, co je łączy to to, że są spakowane do bsa ostatecznie jak wydaje się moda.
 
 ## Linux
 
-Jak testowałem, to BSArch.exe, YakitoriAudioConverter działają pod wine, ale wymagają zaintalowanego
+Jak testowałem, to BSArch.exe, YakitoriAudioConverter działają pod wine, ale wymagają zaintalowanego dotneta 6 za pomocą `winetricks`
+
+Założę tutaj prefix `wine_dotnet` jako nazwę w dalszych skryptach, zatem ścieżka to będzie `$HOME/.local/share/wineprefixes/wine_dotnet`
+
+Ze względu na to, jak logi wine potrafią być spore, to póki nie ma błędów, sugeruję przekierować stderr do `/dev/null`
+
+Przykładowa komenda
+
+```bash
+WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet wine ./YakitoriAudioConverter.exe 2>/dev/null
+```
 
 ## Wykorzystane narzędzia
 
