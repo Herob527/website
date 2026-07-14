@@ -50,4 +50,4 @@ Dzięki wsparciu zespołu, po dwóch miesiącach, zacząłem podejmować zadania
 
 <br />
 
-Na skutek restrukturyzacji firma rozpoczęła likwidację działności, zatem po 2.5 roku musieliśmy się rozstać.
+Na skutek restrukturyzacji firma rozpoczęła likwidację działalności, zatem po 2.5 roku musieliśmy się rozstać.
