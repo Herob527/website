@@ -65,10 +65,7 @@ const { Content } = await render(blogItem)
 const { t } = Astro.locals
 
 const ogUrl = new URL(Astro.url.pathname, Astro.site).href
-const ogImage = new URL(
-  `${Astro.url.pathname}og.png`,
-  Astro.site,
-).href
+const ogImage = new URL(`${Astro.url.pathname}og.png`, Astro.site).href
 ---
 
 <Layout
@@ -83,22 +80,27 @@ const ogImage = new URL(
   }}
 >
   <section>
-    <header class="mb-6 text-4xl font-semibold text-center">
-      <h1>{blogItem.data.title}</h1>
+    <header class="mb-6 text-center">
+      <h1 class="mb-3 text-center text-4xl font-semibold">
+        {blogItem.data.title}
+      </h1>
+      <h2 class="text-center text-2xl font-semibold">
+        {blogItem.data.subtitle}
+      </h2>
     </header>
     {
       renderedAiItems.length > 0 && (
-        <div class="flex flex-col gap-2 justify-center items-center mb-4 md:flex-row md:gap-4 md:mb-2">
+        <div class="mb-4 flex flex-col items-center justify-center gap-2 md:mb-2 md:flex-row md:gap-4">
           <p
             id="article-write-label"
-            class="after:content-[':'] after:ml-0.5"
+            class="after:ml-0.5 after:content-[':']"
             data-redactor={t('blogPage.redactor')}
             data-author={t('blogPage.author')}
           >
             {t('blogPage.author')}
           </p>
           <select
-            class="py-2 px-4 bg-gray-100 border border-gray-300"
+            class="border border-gray-300 bg-gray-100 px-4 py-2"
             id="article-writer"
           >
             <optgroup label={t('blogPage.human')}>
@@ -124,7 +126,7 @@ const ogImage = new URL(
       renderedAiItems.map(({ data, Content }) => {
         return (
           <div
-            class="container hidden mx-auto prose ai-redacted data-[visible='true']:block"
+            class="ai-redacted container mx-auto hidden prose data-[visible='true']:block"
             data-redactor={data.written_by}
             data-visible="false"
           >

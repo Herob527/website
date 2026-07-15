@@ -1,0 +1,110 @@
+---
+title: 'Dubbingowanie Skyrima #1'
+subtitle: 'Pliki i narzędzia'
+description: 'Zapoznaj się z tym, jakie pliki są powiązane z audio oraz jakie narzędzia można wykorzystać w procesie dubbingowania'
+date: '2026-07-15'
+tags: ['Dubbing', 'Skyrim', 'Modding']
+---
+
+## Wstęp
+
+To będzie pierwszy wpis z serii postów o implementacji dubbingu do modów do Skyrima, na bazie doświadczeń z dubbingiem modyfikacji do Skyrima [Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) oraz [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701).
+
+Ten artykuł skupi się na plikach, strukturze archiwum, narzędziach modderskich oraz konfiguracji wine na Linuxie.
+
+Plan jest taki, że ta seria wpisów będzie służyć jako poradnik do dubbingowania modów do Skyrima od początku do końca.
+
+Praktyczne zastosowanie pokryję w kolejnych wpisach.
+
+## Formaty plików, jakie można napotkać w kontekście dubbingu 
+
+- `.bsa` - archiwum na dane jak tekstury czy głosy odczytywane przez silnik Skyrima
+- `.fuz` - kontener zawierający w sobie plik audio (Skyrim to `.wav` / `.xwm` a Oblivion to `.mp3`) oraz, opcjonalnie, `.lip`
+- `.lip` - plik zawierający informacje o tym, jak postać ma ruszać ustami
+- `.xwm` - format audio będącym wariantem Windows Media Audio
+- `.wav` - nieskompresowany format audio 
+- `.esp` / `.esm` / `.esl` -  pliki pluginów zawierających informacje o zasobach jak tekst, questy czy odniesienie do audio w modzie / grze / pluginie
+
+## Narzędzia modderskie
+
+### YakitoriAudioConverter
+
+Ten program umożliwia spakowanie i rozpakowanie pliku `.fuz` do pliku `.wav` oraz, opcjonalnie, `.lip` co jest istotne w kontekście dubbingu.
+
+Też umożliwia konwersję `.wav` na `.xwm` jeżeli jest taka potrzeba i nie tylko.
+
+Co lepsze, te zmiany mogą być wykonane en-masse na wielu wątkach, co przyspiesza pracę na sporych modach.
+
+Należy pamiętać, żeby zapodać mu `ffmpeg` w folderze z plikiem wykonywalnym, by mógł konwertować do większej ilości formatów.
+
+[Link](https://www.nexusmods.com/skyrimspecialedition/mods/17765)
+
+### BSArch
+
+Za pomocą tego narzędzia można spakować i rozpakować archiwa `bsa` do gier bethesdy tj. Morrowind, Oblivion, Skyrim (Oldrim, SE / AE), Fallout 3, Fallout: New Vegas, Fallout 4 oraz Starfield.
+
+Można znaleźć wariant CLI oraz GUI. Tutaj będę korzystać z wersji CLI, ale nic nie broni korzystać z GUI.
+
+[Link do CLI](https://www.nexusmods.com/newvegas/mods/64745)
+
+[Link do GUI](https://www.nexusmods.com/fallout4/mods/63243)
+
+### FaceFXWrapper
+
+To narzędzie CLI, które umożliwia generowanie plików `.lip` bez wchodzenia do CreationKit.
+
+Do działania wymaga FonixData.cdf.
+
+[Link do FaceFXWrapper](https://www.nexusmods.com/skyrimspecialedition/mods/20061?tab=files)
+
+[Link do FonixData.cdf](https://www.nexusmods.com/skyrimspecialedition/mods/40971?tab=files)
+
+### xWMAEncode
+
+To narzędzie CLI zdolne konwertować z `.wav` na `.xwm` i vice-versa.
+
+Dochodzi ono w pakiecie z `YakitoriAudioConverter`.
+
+Jak szukam, nie mogłem znaleźć pliku do pobrania standalone, jednak znalazłem minimalne narzędzie wrapujące xWMAEncode.
+
+[Link](https://www.nexusmods.com/skyrim/mods/32075)
+
+### xTranslator
+
+To program, który w gruncie rzeczy służy do tworzenia tłumaczeń do modyfikacji gier Bethesdy.
+
+Tutaj przyda się funkcjonalność eksportu do XML, który zawiera informacje o każdym wpisie w projekcie wraz z audio, w celu przyszłego przetwarzania audio i tworzenia pliku `.lip`, który wymaga tekstu źródłowego.
+
+[Link](https://www.nexusmods.com/starfield/mods/313)
+
+
+## Linux
+
+Jak testowałem, to BSArch.exe, YakitoriAudioConverter oraz xTranslator działają pod wine (testowane na wine-11.0 staging), ale wymagają zaintalowanego dotnet 6.
+
+Założę tutaj prefix `wine_dotnet` jako nazwę w dalszych skryptach, zatem ścieżka to będzie `$HOME/.local/share/wineprefixes/wine_dotnet`.
+
+Komenda tworząca prefix:
+
+```bash
+export WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet
+
+wineboot
+winetricks dotnet6
+```
+
+Ze względu na to, jak logi wine potrafią być spore, to póki nie ma błędów, sugeruję przekierować stderr do `/dev/null`.
+
+Przykładowa komenda uruchomienia programu:
+
+```bash
+WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet wine YakitoriAudioConverter.exe 2>/dev/null
+```
+
+## Podsumowanie
+
+Tak oto prezentują się wybór głównych narzędzi, które będą wykorzystywane w procesie wprowadzania dubbingu do modyfikacji do Skyrima.
+
+W przyszłości zamierzam o wykorzystaniu wspomnianych narzędzi w celu łatwego tworzenia i wprowadzaniu poprawek do finalnego rezultatu.
+
+Po drodzę wbije Python do automatyzacji procesów czy `yq` do przetworzenia XMLa z xTranslatora. Będę tłumaczył, co odpowiada za co, więc nie trzeba być programistą na starcie.
