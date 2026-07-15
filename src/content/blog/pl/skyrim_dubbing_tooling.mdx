@@ -31,7 +31,7 @@ Praktyczne zastosowanie pokryję w kolejnych wpisach.
 
 Ten program umożliwia spakowanie i rozpakowanie pliku `.fuz` do pliku `.wav` oraz, opcjonalnie, `.lip` co jest istotne w kontekście dubbingu.
 
-Też umożliwia konwersję `.wav` na `.xwm` jeżeli jest taka potrzeba i nie tylko.
+Też umożliwia konwersję `.wav` na `.xwm` i inne format.
 
 Co lepsze, te zmiany mogą być wykonane en-masse na wielu wątkach, co przyspiesza pracę na sporych modach.
 
@@ -84,7 +84,7 @@ Tutaj przyda się funkcjonalność eksportu do XML, który zawiera informacje o 
 
 ## Linux
 
-Jak testowałem, to BSArch.exe, YakitoriAudioConverter oraz xTranslator działają pod wine (testowane na wine-11.0 staging), ale wymagają zaintalowanego dotnet 6.
+Jak testowałem, to BSArch.exe, YakitoriAudioConverter oraz xTranslator działają pod wine (testowane na wine-11.0 staging), ale wymagają zainstalowanego dotnet 6.
 
 Założę tutaj prefix `wine_dotnet` jako nazwę w dalszych skryptach, zatem ścieżka to będzie `$HOME/.local/share/wineprefixes/wine_dotnet`.
 
@@ -107,8 +107,8 @@ WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet wine YakitoriAudioConvert
 
 ## Podsumowanie
 
-Tak oto prezentują się wybór głównych narzędzi, które będą wykorzystywane w procesie wprowadzania dubbingu do modyfikacji do Skyrima.
+Tak oto prezentuje się wybór głównych narzędzi, które będą wykorzystywane w procesie wprowadzania dubbingu do modyfikacji do Skyrima.
 
-W przyszłości zamierzam o wykorzystaniu wspomnianych narzędzi w celu łatwego tworzenia i wprowadzaniu poprawek do finalnego rezultatu.
+W przyszłości zamierzam zrobić wpisy o wykorzystaniu wspomnianych narzędzi w celu łatwego tworzenia i wprowadzaniu poprawek do finalnego rezultatu.
 
-Po drodzę wbije Python do automatyzacji procesów czy `yq` do przetworzenia XMLa z xTranslatora. Będę tłumaczył, co odpowiada za co, więc nie trzeba być programistą na starcie.
+Po drodze wbije Python do automatyzacji procesów czy `yq` do przetworzenia XMLa z xTranslatora. Będę tłumaczył, co odpowiada za co, więc nie trzeba być programistą na starcie.
