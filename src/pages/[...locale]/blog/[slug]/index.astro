@@ -72,7 +72,9 @@ const ogImage = new URL(`${Astro.url.pathname}og.png`, Astro.site).href
   parentHref="/blog"
   title={`Blog - ${blogItem.data.title}`}
   og={{
-    title: blogItem.data.title,
+    title: [blogItem.data.title, blogItem.data.subtitle]
+      .filter(Boolean)
+      .join(' - '),
     type: 'article',
     url: ogUrl,
     image: ogImage,
