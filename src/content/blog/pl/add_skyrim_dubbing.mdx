@@ -3,17 +3,58 @@ title: 'Dubbingowanie Skyrima #1'
 subtitle: 'Pliki, narzędzia oraz struktura plików'
 description: 'Zapoznaj się z tym, jakie pliki są powiązane z audio oraz jakie narzędzia można wykorzystać w procesie dubbingowania'
 date: '2026-07-15'
-tags: ['Dubbing']
+tags: ['Dubbing', 'Skyrim', 'Modding']
 ---
-
-TODO:
-Spis treści, narzędzia, spis plików oraz sam pipeline a nie obecna proza
 
 ## Wstęp
 
-W tym poście omówię od początku do końca, na bazie doświadczeń z dubbingiem modyfikacji do Skyrima [Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) oraz [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701).
+To będzie pierwszy wpis z serii postów o implementacji dubbingu do modów do Skyrima, na bazie doświadczeń z dubbingiem modyfikacji do Skyrima [Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) oraz [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701).
 
-Ze względu na osobistę preferencję terminalową, będzie dużo wykorzystania terminala, jednak omówię tutaj komendy jakie wykorzystuję.
+Ten artykuł skupi się na plikach, strukturze archiwum, narzędziach modderskich oraz konfiguracji wine na Linuxie.
+
+Plan jest taki, że ta seria wpisów będzie służyć jako poradnik do dubbingowania modów do Skyrima od początku do końca.
+
+## Formaty plików, jakie można napotkać w kontekście dubbingu 
+
+- `.bsa` - archiwum na dane jak tesktury czy głosy odczytywane przez silnik Skyrima
+- `.fuz` - plik posiadających w sobie plik audio (Skyrim to `.wav` a Oblivion to `.mp3`) oraz `.lip`
+- `.lip` - plik zawierający informacje o tym, jak postać ma ruszać ustami
+- `.xwm` - kontener na audio 
+- `.wav` - kontener na audio 
+
+## Narzędzia modderskie
+
+### YakitoriAudioConverter
+
+Ten program umożliwia spakowanie i rozpakowanie pliku `.fuz` do pliku `.wav` oraz `.lip` co jest istotne w kontekście dubbingu.
+
+Też umożliwia konwersję `.wav` na `.xwm` jeżeli jest taka potrzeba i nie tylko.
+
+Co lepsze, te zmiany mogą być en-masse, dzięki czemu nie straszne mu ogromne ilości.
+
+Należy pamiętać, żeby zapodać mu `ffmpeg` w folderze z plikiem wykonywalnym, by mógł konwertować do większej ilości formatów.
+
+[Link](https://www.nexusmods.com/skyrimspecialedition/mods/17765)
+
+### BSArch
+
+Za pomocą tego narzędzia można spakować i rozpakować archiwa `bsa` do gier bethesdy tj. Morrowind, Oblivion, Skyrim, Fallout 3, Fallout: New Vegas, Fallout 4 oraz Starfield.
+
+Można znaleźć wariant CLI oraz GUI. Tutaj będę korzystać z wersji CLI, ale nic nie broni korzystać z GUI.
+
+[Link do CLI](https://www.nexusmods.com/newvegas/mods/64745)
+
+[Link do GUI](https://www.nexusmods.com/fallout4/mods/63243)
+
+### FaceFXWrapper
+
+To narzędzie CLI, które umożliwia generowanie plików `.lip` bez wchodzenia do CreationKit.
+
+Do działania wymaga FonixData.cdf
+
+[Link do FaceFXWrapper](https://www.nexusmods.com/skyrimspecialedition/mods/20061?tab=files)
+
+[Link do FonixData.cdf](https://www.nexusmods.com/skyrimspecialedition/mods/40971?tab=files)
 
 ## O audio w Skyrimie
 
