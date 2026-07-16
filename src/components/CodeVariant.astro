@@ -1,0 +1,79 @@
+---
+import type { CodeLanguage } from 'astro'
+import { Code } from 'astro:components'
+
+interface Variant {
+  code: string
+  lang: CodeLanguage
+  name: string
+}
+
+interface Props {
+  items: Variant[]
+}
+const { items } = Astro.props
+---
+
+<div class="flex flex-col gap-2 rounded-xl border-2 border-gray-200 p-2">
+  <div>
+    {
+      items.map((item, index) => (
+        <button
+          data-name={item.name}
+          data-selected={(index === 0).toString()}
+          type="button"
+          class:list={[
+            'data-[selected="true"]:bg-gray-200',
+            'px-4 py-2 rounded-xl',
+          ]}
+        >
+          {item.name}
+        </button>
+      ))
+    }
+  </div>
+  <div>
+    {
+      items.map((item, index) => (
+        <Code
+          data-name={item.name}
+          data-selected={(index === 0).toString()}
+          class:list={['data-[selected="false"]:hidden', 'my-0!']}
+          code={item.code.trim()}
+          lang={item.lang}
+        />
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  import { viewTransitionCallback } from '../utils'
+  viewTransitionCallback(() => {
+    const items =
+      document.querySelectorAll<HTMLButtonElement>('button[data-name]')
+    const codes = document.querySelectorAll<HTMLPreElement>('pre[data-name]')
+    items.forEach((item) => {
+      const { dataset } = item
+
+      item.addEventListener('click', (ev) => {
+        const matchingCode = [...codes.values()].find(
+          (item) => item.dataset.name === dataset.name,
+        )
+        if (matchingCode === undefined) return
+        item.dataset.selected = 'true'
+        matchingCode.dataset.selected = 'true'
+        items.forEach((item) => {
+          if (item.dataset.name === dataset.name) return
+          item.dataset.selected = 'false'
+        })
+
+        codes.forEach((code) => {
+          if (code.dataset.name === dataset.name) return
+          code.dataset.selected = 'false'
+        })
+      })
+    })
+    console.log(items)
+  })
+</script>

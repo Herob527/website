@@ -5,6 +5,7 @@ description: 'Zapoznaj się z tym, jak spakować i rozpakować pliki bsa za pomo
 date: '2026-07-17'
 tags: ['Dubbing', 'Skyrim', 'Modding']
 ---
+import CodeVariant from "@components/CodeVariant.astro";
 
 ## Wstęp
 
@@ -20,10 +21,28 @@ Zacznę od pakowania i rozpakowania plików bsa.
 
 By rozpakować, należy najpierw stworzyć folder docelowy a potem dopiero uruchomić bsarch
 
-```bash
+<CodeVariant items={[
+{
+code: 
+`
 mkdir output
 BSArch.exe unpack ./Gifts\ Of\ The\ Outsider.bsa output
-```
+`,
+lang: 'bash',
+name: "Windows"
+},
+{
+code: 
+`
+export WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet
+mkdir output
+wine BSArch.exe unpack ./Gifts\ Of\ The\ Outsider.bsa output 2>>/dev/null
+`,
+lang: 'bash',
+name: "Linux"
+}
+
+]} />
 
 Pozamienialiśmy pewne pliki to czas spakować z powrotem do bsa
 
