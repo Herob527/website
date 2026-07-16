@@ -63,17 +63,10 @@ const { items } = Astro.props
             (code) => code.dataset.name === dataset.name,
           )
           if (matchingCode === undefined) return
+          items.forEach((i) => (i.dataset.selected = 'false'))
+          codes.forEach((c) => (c.dataset.selected = 'false'))
           item.dataset.selected = 'true'
           matchingCode.dataset.selected = 'true'
-          items.forEach((otherItem) => {
-            if (otherItem.dataset.name === dataset.name) return
-            otherItem.dataset.selected = 'false'
-          })
-
-          codes.forEach((code) => {
-            if (code.dataset.name === dataset.name) return
-            code.dataset.selected = 'false'
-          })
         })
       })
     }
@@ -96,17 +89,10 @@ const { items } = Astro.props
             (code) => code.dataset.name === dataset.name,
           )
           if (matchingCode === undefined) return
+          items.forEach((i) => (i.dataset.selected = 'false'))
+          codes.forEach((c) => (c.dataset.selected = 'false'))
           item.dataset.selected = 'true'
           matchingCode.dataset.selected = 'true'
-          items.forEach((otherItem) => {
-            if (otherItem.dataset.name === dataset.name) return
-            otherItem.dataset.selected = 'false'
-          })
-
-          codes.forEach((code) => {
-            if (code.dataset.name === dataset.name) return
-            code.dataset.selected = 'false'
-          })
         })
       })
     })
