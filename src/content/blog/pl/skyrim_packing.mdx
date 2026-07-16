@@ -15,3 +15,32 @@ Ten artykuł skupi się na rozpakowaniu i spakowaniu plików bsa poprzez `BSArch
 Dodatkowo powiem co nieco o strukturze archiwum bsa z głosami oraz przegląd struktury paru modyfikacji, które zawierają dubbing (tu: [Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) i [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701)).
 
 ### BSArch
+
+Zacznę od pakowania i rozpakowania plików bsa.
+
+By rozpakować, należy najpierw stworzyć folder docelowy a potem dopiero uruchomić bsarch
+
+```bash
+mkdir output
+BSArch.exe unpack ./Gifts\ Of\ The\ Outsider.bsa output
+```
+
+Pozamienialiśmy pewne pliki to czas spakować z powrotem do bsa
+
+```bash
+# -sse - Pakuje dla Skyrim Special Edition
+BSArch.exe pack "output" "Gifts Of The Outsider.bsa" -sse
+```
+
+Poza `-sse` można pakować też dla Falloutów, Obliviona, Skyrima czy Starfielda
+
+Lista opcji ustalających format dla docelowej gry:
+
+- `-tes3` - Format archiwum Morrowinda
+- `-tes4` - Format archiwum Obliviona
+- `-fo3` - Format archiwum Fallout 3 
+- `-fnv`- Format archiwum Fallout New Vegas
+- `-tes5`- Format archiwum Skyrima LE (wersja przed SE)
+- `-sse`- Format archiwum Skyrim SE/AE
+- `-fo4`- Format archiwum Fallout 4
+- `-sf1`- Format archiwum Starfielda
