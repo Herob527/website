@@ -14,7 +14,7 @@ interface Props {
 const { items } = Astro.props
 ---
 
-<div class="flex flex-col gap-2 rounded-xl border-2 border-gray-200 p-2">
+<code-variant class="flex flex-col gap-2 rounded-xl border-2 border-gray-200 p-2">
   <div>
     {
       items.map((item, index) => (
@@ -45,35 +45,70 @@ const { items } = Astro.props
       ))
     }
   </div>
-</div>
+</code-variant>
 
 <script>
   import { viewTransitionCallback } from '../utils'
-  viewTransitionCallback(() => {
-    const items =
-      document.querySelectorAll<HTMLButtonElement>('button[data-name]')
-    const codes = document.querySelectorAll<HTMLPreElement>('pre[data-name]')
-    items.forEach((item) => {
-      const { dataset } = item
 
-      item.addEventListener('click', (ev) => {
-        const matchingCode = [...codes.values()].find(
-          (item) => item.dataset.name === dataset.name,
-        )
-        if (matchingCode === undefined) return
-        item.dataset.selected = 'true'
-        matchingCode.dataset.selected = 'true'
-        items.forEach((item) => {
-          if (item.dataset.name === dataset.name) return
-          item.dataset.selected = 'false'
+  class CodeVariant extends HTMLElement {
+    connectedCallback() {
+      const items = this.querySelectorAll<HTMLButtonElement>('button[data-name]')
+      const codes = this.querySelectorAll<HTMLPreElement>('pre[data-name]')
+
+      items.forEach((item) => {
+        const { dataset } = item
+
+        item.addEventListener('click', () => {
+          const matchingCode = [...codes.values()].find(
+            (code) => code.dataset.name === dataset.name,
+          )
+          if (matchingCode === undefined) return
+          item.dataset.selected = 'true'
+          matchingCode.dataset.selected = 'true'
+          items.forEach((otherItem) => {
+            if (otherItem.dataset.name === dataset.name) return
+            otherItem.dataset.selected = 'false'
+          })
+
+          codes.forEach((code) => {
+            if (code.dataset.name === dataset.name) return
+            code.dataset.selected = 'false'
+          })
         })
+      })
+    }
+  }
 
-        codes.forEach((code) => {
-          if (code.dataset.name === dataset.name) return
-          code.dataset.selected = 'false'
+  if (!customElements.get('code-variant')) {
+    customElements.define('code-variant', CodeVariant)
+  }
+
+  viewTransitionCallback(() => {
+    document.querySelectorAll('code-variant').forEach((el) => {
+      if (!el.isConnected) return
+      const items = el.querySelectorAll<HTMLButtonElement>('button[data-name]')
+      const codes = el.querySelectorAll<HTMLPreElement>('pre[data-name]')
+      items.forEach((item) => {
+        const { dataset } = item
+
+        item.addEventListener('click', () => {
+          const matchingCode = [...codes.values()].find(
+            (code) => code.dataset.name === dataset.name,
+          )
+          if (matchingCode === undefined) return
+          item.dataset.selected = 'true'
+          matchingCode.dataset.selected = 'true'
+          items.forEach((otherItem) => {
+            if (otherItem.dataset.name === dataset.name) return
+            otherItem.dataset.selected = 'false'
+          })
+
+          codes.forEach((code) => {
+            if (code.dataset.name === dataset.name) return
+            code.dataset.selected = 'false'
+          })
         })
       })
     })
-    console.log(items)
   })
 </script>
