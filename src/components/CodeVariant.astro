@@ -50,51 +50,25 @@ const { items } = Astro.props
 <script>
   import { viewTransitionCallback } from '../utils'
 
-  class CodeVariant extends HTMLElement {
-    connectedCallback() {
-      const items = this.querySelectorAll<HTMLButtonElement>('button[data-name]')
-      const codes = this.querySelectorAll<HTMLPreElement>('pre[data-name]')
-
-      items.forEach((item) => {
-        const { dataset } = item
-
-        item.addEventListener('click', () => {
-          const matchingCode = [...codes.values()].find(
-            (code) => code.dataset.name === dataset.name,
-          )
-          if (matchingCode === undefined) return
-          items.forEach((i) => (i.dataset.selected = 'false'))
-          codes.forEach((c) => (c.dataset.selected = 'false'))
-          item.dataset.selected = 'true'
-          matchingCode.dataset.selected = 'true'
-        })
-      })
-    }
-  }
-
-  if (!customElements.get('code-variant')) {
-    customElements.define('code-variant', CodeVariant)
-  }
-
-  viewTransitionCallback(() => {
-    document.querySelectorAll('code-variant').forEach((el) => {
-      if (!el.isConnected) return
-      const items = el.querySelectorAll<HTMLButtonElement>('button[data-name]')
-      const codes = el.querySelectorAll<HTMLPreElement>('pre[data-name]')
-      items.forEach((item) => {
-        const { dataset } = item
-
-        item.addEventListener('click', () => {
-          const matchingCode = [...codes.values()].find(
-            (code) => code.dataset.name === dataset.name,
-          )
-          if (matchingCode === undefined) return
-          items.forEach((i) => (i.dataset.selected = 'false'))
-          codes.forEach((c) => (c.dataset.selected = 'false'))
-          item.dataset.selected = 'true'
-          matchingCode.dataset.selected = 'true'
+  function setup() {
+    const allVariants = document.querySelectorAll<HTMLElement>('code-variant')
+    allVariants.forEach((variant) => {
+      const buttons = variant.querySelectorAll<HTMLButtonElement>('button[data-name]')
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const { name } = button.dataset
+          allVariants.forEach((v) => {
+            v.querySelectorAll<HTMLButtonElement>('button[data-name]').forEach((b) => {
+              b.dataset.selected = (b.dataset.name === name).toString()
+            })
+            v.querySelectorAll<HTMLPreElement>('pre[data-name]').forEach((c) => {
+              c.dataset.selected = (c.dataset.name === name).toString()
+            })
+          })
         })
       })
     })
-  })
+  }
+
+  viewTransitionCallback(setup)
 </script>
