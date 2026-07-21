@@ -6,7 +6,11 @@ date: '2026-07-19'
 tags: ['Dubbing', 'Skyrim', 'Modding']
 ---
 
+import { Picture } from 'astro:assets'
+import Directory from '@components/DirectoryView/Directory.astro'
 import CodeVariant from '@components/CodeVariant.astro'
+import gotoStructure from '@assets/goto-structure.webp'
+import lalStructure from '@assets/lal-structure.webp'
 
 ## Wstęp
 
@@ -91,7 +95,23 @@ Lista opcji ustalających format dla docelowej gry:
 
 Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, skrypty, pliki głosów przypisane dla danego _voice type_ i inne potrzebne modowi pliki.
 
-<pre>
-  ├── meshes │   ├── goto │   └── vw ├── scripts │   └── source ├── seq └──
-  sound └── voice └── gifts of the outsider.esp └── maleuniqueoutsider
-</pre>
+<Directory name="." items={[{
+name: "meshes",
+items: [{name: "goto"}, {name: "vw"}]
+}, {
+name: "scripts",
+items: [{name: "source"}]
+}, {
+name: "sound",
+items: [{name: "voice", items: [{name: "gifts of the outsider.esp", items: [{name: "maleuniqueoutsider"}]}]}]
+}]} />
+
+<Picture
+  src={gotoStructure}
+  alt="Struktura bsa z głosami dla Gifts of the Outsider"
+/>
+
+<Picture
+  src={lalStructure}
+  alt="Struktura bsa z głosami dla Gifts of the Outsider"
+/>

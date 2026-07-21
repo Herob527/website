@@ -1,0 +1,45 @@
+---
+import File from '@components/DirectoryView/File.astro'
+interface DirItem {
+  type: 'dir' | undefined
+  name: string
+  items: Item[] | undefined
+}
+
+interface FileItem {
+  type: 'file'
+  name: string
+}
+
+type Item = FileItem | DirItem
+
+interface Props {
+  name: string
+  items: Item[]
+  depth?: number
+}
+const { name, items, depth = 0 } = Astro.props
+---
+
+<div class="flex flex-col">
+  <div class="flex items-center justify-start" style={`padding-left:`}>
+    <span
+      class="mt-1 w-[data-width] border-b"
+      style=`width:${Math.max(depth - 1, 0) * 8}px;`></span>
+
+    <span>{name} </span>
+  </div>
+  {
+    items.map((item) =>
+      item.type && item.type === 'file' ? (
+        <File name={item.name} />
+      ) : (
+        <Astro.self
+          name={item.name}
+          items={item.items || []}
+          depth={depth + 1}
+        />
+      ),
+    )
+  }
+</div>
