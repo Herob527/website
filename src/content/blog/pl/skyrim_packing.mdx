@@ -5,7 +5,8 @@ description: 'Zapoznaj się z tym, jak spakować i rozpakować pliki bsa za pomo
 date: '2026-07-17'
 tags: ['Dubbing', 'Skyrim', 'Modding']
 ---
-import CodeVariant from "@components/CodeVariant.astro";
+
+import CodeVariant from '@components/CodeVariant.astro'
 
 ## Wstęp
 
@@ -17,13 +18,13 @@ Dodatkowo powiem co nieco o strukturze archiwum bsa z głosami oraz przegląd st
 
 ### BSArch
 
-Zacznę od pakowania i rozpakowania plików bsa.
+#### Rozpakowywanie i pakowanie bsa
 
 By rozpakować, należy najpierw stworzyć folder docelowy a potem dopiero uruchomić bsarch
 
 <CodeVariant items={[
 {
-code: 
+code:
 `
 mkdir output
 BSArch.exe unpack ./Gifts\ Of\ The\ Outsider.bsa output
@@ -32,7 +33,7 @@ lang: 'bash',
 name: "Windows"
 },
 {
-code: 
+code:
 `
 export WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet
 mkdir output
@@ -46,23 +47,25 @@ name: "Linux"
 
 Pozamienialiśmy pewne pliki to czas spakować z powrotem do bsa
 
-
 <CodeVariant items={[
 {
-code: 
+code:
 `
+
 # -sse - Pakuje dla Skyrim Special Edition
+
 BSArch.exe pack "output" "Gifts Of The Outsider.bsa" -sse
 `,
 lang: 'bash',
 name: "Windows"
 },
 {
-code: 
+code:
 `
 export WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet
 
 # -sse - Pakuje dla Skyrim Special Edition
+
 wine BSArch.exe pack "output" "Gifts Of The Outsider.bsa" -sse 2>>/dev/null
 `,
 lang: 'bash',
@@ -77,9 +80,18 @@ Lista opcji ustalających format dla docelowej gry:
 
 - `-tes3` - Format archiwum Morrowinda
 - `-tes4` - Format archiwum Obliviona
-- `-fo3` - Format archiwum Fallout 3 
+- `-fo3` - Format archiwum Fallout 3
 - `-fnv`- Format archiwum Fallout New Vegas
 - `-tes5`- Format archiwum Skyrima LE (wersja przed SE)
 - `-sse`- Format archiwum Skyrim SE/AE
 - `-fo4`- Format archiwum Fallout 4
 - `-sf1`- Format archiwum Starfielda
+
+#### Struktura bsa z głosami
+
+Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, skrypty, pliki głosów przypisane dla danego _voice type_ i inne potrzebne modowi pliki.
+
+<pre>
+  ├── meshes │   ├── goto │   └── vw ├── scripts │   └── source ├── seq └──
+  sound └── voice └── gifts of the outsider.esp └── maleuniqueoutsider
+</pre>
