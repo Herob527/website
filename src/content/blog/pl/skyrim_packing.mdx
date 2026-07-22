@@ -95,16 +95,51 @@ Lista opcji ustalających format dla docelowej gry:
 
 Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, skrypty, pliki głosów przypisane dla danego _voice type_ i inne potrzebne modowi pliki.
 
-<Directory name="." items={[{
-name: "meshes",
-items: [{name: "goto"}, {name: "vw"}]
-}, {
-name: "scripts",
-items: [{name: "source"}]
-}, {
-name: "sound",
-items: [{name: "voice", items: [{name: "gifts of the outsider.esp", items: [{name: "maleuniqueoutsider"}]}]}]
-}]} />
+<Directory
+  name="."
+  items={[
+    {
+      name: 'meshes',
+      items: [{ name: 'goto' }, { name: 'vw' }],
+    },
+    {
+      name: 'scripts',
+      items: [{ name: 'source' }],
+    },
+    {
+      name: 'sound',
+      items: [
+        {
+          name: 'voice',
+          items: [
+            {
+              name: 'gifts of the outsider.esp',
+              items: [
+                {
+                  name: 'maleuniqueoutsider',
+                  items: [
+                    {
+                      name: 'file_1.lip',
+                      type: 'file',
+                    },
+                    {
+                      name: 'file_1.wav',
+                      type: 'file',
+                    },
+                    {
+                      name: '<...reszta...>',
+                      type: 'file',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
 
 <Picture
   src={gotoStructure}

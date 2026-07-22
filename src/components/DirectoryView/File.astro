@@ -6,6 +6,16 @@ interface Props {
 const { name, depth } = Astro.props
 ---
 
-<span class="block whitespace-nowrap leading-5" style={`padding-left: ${depth * 1.25}rem`}>
+<span
+  class:list={[
+    'flex items-center gap-1 text-base leading-5 whitespace-nowrap',
+    'pl-[calc(var(--depth)*1rem)]',
+    'sm:pl-[calc(var(--depth)*1.4rem)]',
+    'md:pl-[calc(var(--depth)*2rem)]',
+  ]}
+  style={`--depth: ${Math.max(depth - 1, 0)}`}
+>
+  <span class="icon-[mdi--file] align-middle text-sky-600"></span>
+
   <span>{name}</span>
 </span>
