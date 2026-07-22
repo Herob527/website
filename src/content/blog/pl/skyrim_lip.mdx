@@ -1,7 +1,7 @@
 ---
 title: 'Dubbingowanie Skyrima #3'
 subtitle: 'Generowanie plików lip'
-description: 'Zapoznaj się z tym, jak stworzyć plik lip poza Creation Kit za pomocą FaceFXWrapper i Pythona'
+description: 'Zapoznaj się z tym, jak stworzyć plik lip poza Creation Kit za pomocą FaceFXWrapper, FFmpega i Pythona'
 date: '2026-07-30'
 tags: ['Dubbing', 'Skyrim', 'Modding']
 ---
@@ -16,6 +16,8 @@ Co prawda Python jest opcjonalny, ale jest przydatny zwłaszcza jak mamy do czyn
 
 Tutaj, poza FaceFXWrapperem, wleci też FFmpeg do wstępnego przetwarzania audio do generowania pliku lip.
 
+## Narzędzia
+
 ### FFmpeg
 
 **FFmpeg** jest potężnym narzędziem CLI, które umożliwia przetwarzanie i konwersję pliku audio i wideo.
@@ -29,3 +31,19 @@ Na Windowsie jest to bardziej skomplikowane, stąd zamieszczam [link do stackexc
 ### FaceFXWrapper
 
 **FaceFXWrapper** to narzędzie CLI, które umożliwia generowanie plików `.lip` bez wchodzenia do CreationKit.
+
+Do działania wymaga FonixData.cdf.
+
+Teoretycznie umożliwia resampling, ale wykrzacza się, gdy dzwięk jego wielokanałowy, stąd preferuję FFmpega zastosować przetworzenia audio.
+
+[Link do FaceFXWrapper](https://www.nexusmods.com/skyrimspecialedition/mods/20061?tab=files)
+
+[Link do FonixData.cdf](https://www.nexusmods.com/skyrimspecialedition/mods/40971?tab=files)
+
+### Python
+
+**Python** to popularny język skryptowy nazwany po brytyjskiej grupie komików `Monty Python`.
+
+Jest popularny w zastosowaniach AI dzięki możliwości jego integracji z wysoko wydajnym kodem w C++.
+
+W naszym przypadku jednak będzie narzędziem integrującym plik z tekstami, FFmpeg oraz FaceFXWrapper.
