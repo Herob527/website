@@ -24,9 +24,30 @@ Tutaj, poza FaceFXWrapperem, wleci też FFmpeg do wstępnego przetwarzania audio
 
 W naszym przypadku będziemy konwertować pliki audio do jednokanałowego pliku wav, na podstawie którego potem stworzymy plik lip.
 
+#### Instalacja
+
 Na Linuxie można zainstalować FFmpeg poprzez instalator dystrybucji (tj. `dnf` czy `apt`).
 
 Na Windowsie jest to bardziej skomplikowane, stąd zamieszczam [link do stackexchange.com](https://video.stackexchange.com/questions/20495/how-do-i-set-up-and-use-ffmpeg-in-windows), w którym jest rozwiązanie.
+
+#### Wykorzystanie
+
+W obecnym przypadku będziemy chcieli przekonwertować plik audio na 16-bitowy PCM, jednokanałowy plik wav o częstotliwości 16 kHz.
+
+W trakcie prac nad dubbingiem do `Gifts of the Outsider` wyszło, że wyższa częstotliwość audio używanego do generowania pliku lip powoduje desynchronizację ruchu ust z mową a rozwiązaniem jest stworzenie tymczasowego pliku o niższej częstotliwości.
+
+#### Komenda
+
+```bash
+ffmpeg
+  -y # Zezwól na nadpisanie pliku
+  -i source # ścieżka do pliku wejściowego
+  -ac 1 # ilość kanałów audio pliku wyjściowego
+  -ar 16000 # częstotliwość pliku wyjsciowego
+  -c:a pcm_s16le # format pliku wyjsciowego [znakowany 16-bitowy PCM Little Endian]
+  temp_path # ścieżka do pliku wyjsciowego
+
+```
 
 ### FaceFXWrapper
 
@@ -38,7 +59,11 @@ Teoretycznie umożliwia resampling, ale wykrzacza się, gdy dzwięk jego wieloka
 
 [Link do FaceFXWrapper](https://www.nexusmods.com/skyrimspecialedition/mods/20061?tab=files)
 
+[Repozytorium FaceFXWrapper](https://github.com/Nukem9/FaceFXWrapper)
+
 [Link do FonixData.cdf](https://www.nexusmods.com/skyrimspecialedition/mods/40971?tab=files)
+
+#### Komenda
 
 ### Python
 
@@ -47,3 +72,7 @@ Teoretycznie umożliwia resampling, ale wykrzacza się, gdy dzwięk jego wieloka
 Jest popularny w zastosowaniach AI dzięki możliwości jego integracji z wysoko wydajnym kodem w C++.
 
 W naszym przypadku jednak będzie narzędziem integrującym plik z tekstami, FFmpeg oraz FaceFXWrapper.
+
+```
+
+```
