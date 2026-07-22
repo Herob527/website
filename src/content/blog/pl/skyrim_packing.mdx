@@ -90,9 +90,11 @@ Lista opcji ustalających format dla docelowej gry:
 
 #### Struktura bsa z głosami
 
-Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, skrypty, pliki głosów przypisane dla danego _voice type_ i reszta potrzebne modowi pliki.
+Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, skrypty, pliki głosów przypisane dla danego _voice type_ i inne potrzebne modowi pliki.
 
 Oto parę przykładów struktury bsa dla modów Gifts of the Outsider i Alternate Start.
+
+Pozwoliłem sobie uciąć nazwy czy je zmienić, że realnie będą dłuższe. Nazwy są tutaj poglądowe.
 
 <Directory
   name="Gifts of the Outsider"
@@ -120,11 +122,11 @@ Oto parę przykładów struktury bsa dla modów Gifts of the Outsider i Alternat
           name: 'source',
           items: [
             { name: 'goto_q00.psc', type: 'file' },
-            { name: '<...reszta pex...>', type: 'file' },
+            { name: '<...pliki pex...>', type: 'file' },
           ],
         },
         { name: 'goto_q00.pex', type: 'file' },
-        { name: '<...reszta pex...>', type: 'file' },
+        { name: '<...pliki pex...>', type: 'file' },
       ],
     },
     {
@@ -148,7 +150,7 @@ Oto parę przykładów struktury bsa dla modów Gifts of the Outsider i Alternat
                       type: 'file',
                     },
                     {
-                      name: '<...reszta...>',
+                      name: '<...pliki wav i lip...>',
                       type: 'file',
                     },
                   ],
@@ -186,7 +188,7 @@ _Można zauważyć, że autor Gifts of the Outsider nie składał plików audio 
                           name: 'alternate [...].esp',
                           items: [
                             { name: '0003136c.nif', type: 'file' },
-                            { name: '<...reszta nif...>', type: 'file' },
+                            { name: '<...pliki nif...>', type: 'file' },
                           ],
                         },
                       ],
@@ -217,7 +219,7 @@ _Można zauważyć, że autor Gifts of the Outsider nie składał plików audio 
       name: 'scripts',
       items: [
         { name: 'skrypt_1.pex', type: 'file' },
-        { name: '<...reszta pex...>', type: 'file' },
+        { name: '<...pliki pex...>', type: 'file' },
       ],
     },
     {
@@ -227,7 +229,7 @@ _Można zauważyć, że autor Gifts of the Outsider nie składał plików audio 
           name: 'scripts',
           items: [
             { name: 'skrypt_1.psc', type: 'file' },
-            { name: '<...reszta psc...>', type: 'file' },
+            { name: '<...pliki psc...>', type: 'file' },
           ],
         },
       ],
@@ -257,6 +259,10 @@ _Można zauważyć, że autor Gifts of the Outsider nie składał plików audio 
                       name: 'mara_audio_1.fuz',
                       type: 'file',
                     },
+                    {
+                      name: '<...pliki fuz...>',
+                      type: 'file',
+                    },
                   ],
                 },
 
@@ -267,12 +273,21 @@ _Można zauważyć, że autor Gifts of the Outsider nie składał plików audio 
                       name: 'kobieta_audio_1.fuz',
                       type: 'file',
                     },
+                    {
+                      name: '<...pliki fuz...>',
+                      type: 'file',
+                    },
                   ],
                 },
 
                 {
-                  name: '<...reszta vt oraz fuz...>',
-                  items: [],
+                  name: '<...pliki vt...>',
+                  items: [
+                    {
+                      name: '<...pliki fuz...>',
+                      type: 'file',
+                    },
+                  ],
                 },
               ],
             },
@@ -285,9 +300,11 @@ _Można zauważyć, że autor Gifts of the Outsider nie składał plików audio 
 
 _W Alternate Start złożono lip i wav do pliku fuz oraz zastosowano audio do fx (format xwm), stąc trzeba też sprawdzać efekty w poszukaniu głosów_
 
-Można zadać pytanie, czemu zatem pakować do fuz, skoro działa bez pakowania.
+Można zadać pytanie, czemu zatem pakować do fuz, skoro działa bez pakowania, wystarczy, by nazwa się zgadzała.
 
 To kwestia kompresji, że w fuz jest plik xwm (skompresowane audio) i opcjonalnie lip, dzięki czemu szybciej się pobiera co ma znaczenie zwłaszcza dla większych modlist czy modów.
+
+Dodatkowo, jak robi się poza Creation Kit, to jest mniejsza szansa literówki przy jednym pliku
 
 Przykład z pliku z Alternate Start:
 
