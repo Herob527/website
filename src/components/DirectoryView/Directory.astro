@@ -37,7 +37,7 @@ const hasChildren = items.length > 0
     {
       hasChildren ? (
         <button
-          class="directory-toggle cursor-pointer border-none bg-transparent p-0 leading-5 text-inherit"
+          class="directory-toggle flex cursor-pointer items-center gap-1 border-none bg-transparent p-0 leading-5 text-inherit"
           aria-label={name}
         >
           <span
@@ -48,15 +48,17 @@ const hasChildren = items.length > 0
             ]}
             aria-hidden="true"
           />
+          <span>{name}</span>
         </button>
       ) : (
         <span
           class="icon-[mdi--folder-outline] text-[18px] text-sky-600"
           aria-hidden="true"
-        />
+        >
+          {name}
+        </span>
       )
     }
-    <span>{name}</span>
   </div>
   <div class="group-data-[collapsed=true]:hidden">
     {
