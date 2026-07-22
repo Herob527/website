@@ -1,8 +1,11 @@
 ---
 interface Props {
   name: string
+  depth: number
 }
-const { name } = Astro.props
+const { name, depth } = Astro.props
 ---
 
-<span>{name}</span>
+<span class="block whitespace-nowrap leading-5" style={`padding-left: ${depth * 1.25}rem`}>
+  <span>{name}</span>
+</span>

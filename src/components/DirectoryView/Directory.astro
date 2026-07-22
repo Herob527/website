@@ -1,9 +1,10 @@
 ---
 import File from '@components/DirectoryView/File.astro'
+
 interface DirItem {
-  type: 'dir' | undefined
+  type?: 'dir'
   name: string
-  items: Item[] | undefined
+  items: Item[]
 }
 
 interface FileItem {
@@ -17,34 +18,89 @@ interface Props {
   name: string
   items: Item[]
   depth?: number
-  isLast?: boolean
 }
-const { name, items, depth = 0, isLast = false } = Astro.props
-const dirDirection = isLast ? '└ ' : '├'
+const { name, items, depth = 0 } = Astro.props
+const hasChildren = items.length > 0
 ---
 
-<div>
-  <div>
-    <span class="leading-0" style=`margin-left:${depth * 4}px;`
-      >{dirDirection}</span
-    >
-
-    <span class="leading-0">{name}</span>
-  </div>
-  {
-    items.map((item, itemIndex) =>
-      item.type && item.type === 'file' ? (
-        <div>
-          <File name={item.name} />
-        </div>
+<div class="not-prose font-mono text-sm leading-5">
+  <div
+    class="flex items-center gap-1 leading-5 whitespace-nowrap"
+    style={`padding-left: ${depth * 2}rem`}
+  >
+    {
+      hasChildren ? (
+        <button
+          class="directory-toggle cursor-pointer border-none bg-transparent p-0 leading-5 text-inherit"
+          aria-label={name}
+        >
+          <span
+            class="icon-[mdi--chevron-down] align-middle transition-transform"
+            aria-hidden="true"
+          />
+        </button>
       ) : (
-        <Astro.self
-          name={item.name}
-          items={item.items || []}
-          depth={depth + 1}
-          isLast={itemIndex === items.length - 1}
+        <span
+          class:list={[
+            {
+              'icon-[mdi--folder]': hasChildren,
+              'icon-[mdi--folder-outline]': !hasChildren,
+            },
+            'text-sky-600',
+          ]}
+          aria-hidden="true"
         />
-      ),
-    )
-  }
+      )
+    }
+    {
+      hasChildren && (
+        <span class="icon-[mdi--folder] text-sky-600" aria-hidden="true" />
+      )
+    }
+    <span>{name}</span>
+  </div>
+
+  <div class="tree-children">
+    {
+      items.map((item) =>
+        item.type === 'file' ? (
+          <File name={item.name} depth={depth + 1} />
+        ) : (
+          <Astro.self
+            name={item.name}
+            items={item.items || []}
+            depth={depth + 1}
+          />
+        ),
+      )
+    }
+  </div>
 </div>
+
+<script>
+  document
+    .querySelectorAll('.directory-toggle:not([data-listener])')
+    .forEach((btn) => {
+      btn.setAttribute('data-listener', '')
+      btn.addEventListener('click', () => {
+        const children = btn
+          .closest('.not-prose')
+          ?.querySelector(':scope > .tree-children')
+        if (!children) return
+        const isCollapsed = children.hasAttribute('hidden')
+        if (isCollapsed) {
+          children.removeAttribute('hidden')
+          btn
+            .querySelector('span')
+            ?.classList.remove('icon-[mdi--chevron-right]')
+          btn.querySelector('span')?.classList.add('icon-[mdi--chevron-down]')
+        } else {
+          children.setAttribute('hidden', '')
+          btn
+            .querySelector('span')
+            ?.classList.remove('icon-[mdi--chevron-down]')
+          btn.querySelector('span')?.classList.add('icon-[mdi--chevron-right]')
+        }
+      })
+    })
+</script>
