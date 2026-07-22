@@ -30,7 +30,6 @@ const hasChildren = items.length > 0
 
       'pl-[calc(var(--depth)*1rem)]',
       'sm:pl-[calc(var(--depth)*1.4rem)]',
-      'md:pl-[calc(var(--depth)*2rem)]',
     ]}
     style={`--depth: ${Math.max(depth - 1, 0)}`}
     data-first-depth={depth === 0}
