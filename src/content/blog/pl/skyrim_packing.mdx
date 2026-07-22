@@ -95,9 +95,7 @@ Lista opcji ustalających format dla docelowej gry:
 
 Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, skrypty, pliki głosów przypisane dla danego _voice type_ i reszta potrzebne modowi pliki.
 
-Podam parę przykładów, jak wygląda struktura ze skupieniem się na pliku audio.
-
-Nazwy będą odpowiednio skrócone, by mieściły się zwłaszcza na mniejszych urządzeniach, bo realne będą o wiele dłuższe.
+Oto parę przykładów struktury bsa dla modów Gifts of the Outsider i Alternate Start.
 
 <Directory
   name="Gifts of the Outsider"
@@ -167,7 +165,8 @@ Nazwy będą odpowiednio skrócone, by mieściły się zwłaszcza na mniejszych 
   ]}
 />
 
-<p class="mt-4"> </p>
+_Można zauważyć, że autor Gifts of the Outsider nie składał plików audio do fuz, tylko zostawił wav i lip i to działało_
+
 <Directory
   name="Alternate Start"
   items={[
@@ -286,3 +285,17 @@ Nazwy będą odpowiednio skrócone, by mieściły się zwłaszcza na mniejszych 
     },
   ]}
 />
+
+_W Alternate Start złożono lip i wav do pliku fuz oraz zastosowano audio do fx, stąd zaleca się testować i sprawdzać też efekty w poszukaniu głosów_
+
+Można zadać pytanie, czemu zatem pakować, skoro działa.
+
+Otóż, to kwestia kompresji, że w fuz jest plik xwm (skompresowane audio) i opcjonalnie lip, dzięki czemu szybciej się pobiera co ma znaczenie zwłaszcza dla większych modlist czy modów.
+
+Przykład z pliku z Alternate Start:
+
+|Plik|Rozmiar|
+|---|---|
+|arthlalrum_arthlalstartque_0001fb15_1.wav|103 kB|
+|arthlalrum_arthlalstartque_0001fb15_1.lip|0.9 kB|
+|arthlalrum_arthlalstartque_0001fb15_1.fuz|**20 kB**|
