@@ -43,7 +43,7 @@ const hasChildren = items.length > 0
         >
           <span
             class:list={[
-              'align-middle text-sky-600',
+              'align-middle text-sky-600 text-[18px] ',
               'icon-[mdi--folder-open]',
               'group-data-[collapsed=true]:icon-[mdi--folder]',
             ]}
@@ -52,14 +52,14 @@ const hasChildren = items.length > 0
         </button>
       ) : (
         <span
-          class="icon-[mdi--folder-outline] text-sky-600"
+          class="icon-[mdi--folder-outline] text-[18px] text-sky-600"
           aria-hidden="true"
         />
       )
     }
     <span>{name}</span>
   </div>
-  <div class="tree-children group-data-[collapsed=true]:hidden">
+  <div class="group-data-[collapsed=true]:hidden">
     {
       items.map((item) =>
         item.type === 'file' ? (

@@ -8,14 +8,15 @@ const { name, depth } = Astro.props
 
 <span
   class:list={[
-    'flex items-center gap-1 text-base leading-5 whitespace-nowrap',
+    'flex items-center gap-1 leading-5 whitespace-nowrap',
     'pl-[calc(var(--depth)*1rem)]',
     'sm:pl-[calc(var(--depth)*1.4rem)]',
     'md:pl-[calc(var(--depth)*2rem)]',
   ]}
   style={`--depth: ${Math.max(depth - 1, 0)}`}
 >
-  <span class="icon-[mdi--file] align-middle text-sky-600"></span>
+  <span class="icon-[mdi--file-outline] align-middle text-[18px] text-sky-600"
+  ></span>
 
   <span>{name}</span>
 </span>
