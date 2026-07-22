@@ -78,29 +78,35 @@ const hasChildren = items.length > 0
 </div>
 
 <script>
-  document
-    .querySelectorAll('.directory-toggle:not([data-listener])')
-    .forEach((btn) => {
-      btn.setAttribute('data-listener', '')
-      btn.addEventListener('click', () => {
-        const children = btn
-          .closest('.not-prose')
-          ?.querySelector(':scope > .tree-children')
-        if (!children) return
-        const isCollapsed = children.hasAttribute('hidden')
-        if (isCollapsed) {
-          children.removeAttribute('hidden')
-          btn
-            .querySelector('span')
-            ?.classList.remove('icon-[mdi--chevron-right]')
-          btn.querySelector('span')?.classList.add('icon-[mdi--chevron-down]')
-        } else {
-          children.setAttribute('hidden', '')
-          btn
-            .querySelector('span')
-            ?.classList.remove('icon-[mdi--chevron-down]')
-          btn.querySelector('span')?.classList.add('icon-[mdi--chevron-right]')
-        }
+  import { viewTransitionCallback } from '@root/src/utils'
+
+  viewTransitionCallback(() => {
+    document
+      .querySelectorAll('.directory-toggle:not([data-listener])')
+      .forEach((btn) => {
+        btn.setAttribute('data-listener', '')
+        btn.addEventListener('click', () => {
+          const children = btn
+            .closest('.not-prose')
+            ?.querySelector(':scope > .tree-children')
+          if (!children) return
+          const isCollapsed = children.hasAttribute('hidden')
+          if (isCollapsed) {
+            children.removeAttribute('hidden')
+            btn
+              .querySelector('span')
+              ?.classList.remove('icon-[mdi--chevron-right]')
+            btn.querySelector('span')?.classList.add('icon-[mdi--chevron-down]')
+          } else {
+            children.setAttribute('hidden', '')
+            btn
+              .querySelector('span')
+              ?.classList.remove('icon-[mdi--chevron-down]')
+            btn
+              .querySelector('span')
+              ?.classList.add('icon-[mdi--chevron-right]')
+          }
+        })
       })
-    })
+  })
 </script>
