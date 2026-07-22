@@ -1,0 +1,74 @@
+---
+import type { CodeLanguage } from 'astro'
+import { Code } from 'astro:components'
+
+interface Variant {
+  code: string
+  lang: CodeLanguage
+  name: string
+}
+
+interface Props {
+  items: Variant[]
+}
+const { items } = Astro.props
+---
+
+<code-variant class="flex flex-col gap-2 rounded-xl border-2 border-gray-200 p-2">
+  <div>
+    {
+      items.map((item, index) => (
+        <button
+          data-name={item.name}
+          data-selected={(index === 0).toString()}
+          type="button"
+          class:list={[
+            'data-[selected="true"]:bg-gray-200',
+            'px-4 py-2 rounded-xl',
+          ]}
+        >
+          {item.name}
+        </button>
+      ))
+    }
+  </div>
+  <div>
+    {
+      items.map((item, index) => (
+        <Code
+          data-name={item.name}
+          data-selected={(index === 0).toString()}
+          class:list={['data-[selected="false"]:hidden', 'my-0!']}
+          code={item.code.trim()}
+          lang={item.lang}
+        />
+      ))
+    }
+  </div>
+</code-variant>
+
+<script>
+  import { viewTransitionCallback } from '../utils'
+
+  function setup() {
+    const allVariants = document.querySelectorAll<HTMLElement>('code-variant')
+    allVariants.forEach((variant) => {
+      const buttons = variant.querySelectorAll<HTMLButtonElement>('button[data-name]')
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const { name } = button.dataset
+          allVariants.forEach((v) => {
+            v.querySelectorAll<HTMLButtonElement>('button[data-name]').forEach((b) => {
+              b.dataset.selected = (b.dataset.name === name).toString()
+            })
+            v.querySelectorAll<HTMLPreElement>('pre[data-name]').forEach((c) => {
+              c.dataset.selected = (c.dataset.name === name).toString()
+            })
+          })
+        })
+      })
+    })
+  }
+
+  viewTransitionCallback(setup)
+</script>

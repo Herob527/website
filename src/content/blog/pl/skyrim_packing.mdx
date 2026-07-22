@@ -1,0 +1,315 @@
+---
+title: 'Dubbingowanie Skyrima #2'
+subtitle: 'Obsługa plików bsa'
+description: 'Zapoznaj się z tym, jak spakować i rozpakować pliki bsa za pomocą BSArch'
+date: '2026-07-19'
+tags: ['Dubbing', 'Skyrim', 'Modding']
+---
+
+import { Picture } from 'astro:assets'
+import Directory from '@components/DirectoryView/Directory.astro'
+import CodeVariant from '@components/CodeVariant.astro'
+import gotoStructure from '@assets/goto-structure.webp'
+import lalStructure from '@assets/lal-structure.webp'
+
+## Wstęp
+
+Witam w drugim wpisie, w którym pokrywam temat dubbingowania modyfikacji do Skyrima.
+
+Ten artykuł skupi się na rozpakowaniu i spakowaniu plików bsa poprzez `BSArch`.
+
+Dodatkowo powiem co nieco o strukturze archiwum bsa z głosami oraz przegląd struktury paru modyfikacji, które zawierają dubbing (tu: [Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) i [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701)).
+
+### BSArch
+
+#### Rozpakowywanie i pakowanie bsa
+
+By rozpakować, należy najpierw stworzyć folder docelowy a potem dopiero uruchomić bsarch
+
+<CodeVariant items={[
+{
+code:
+`
+mkdir output
+BSArch.exe unpack ./Gifts\ Of\ The\ Outsider.bsa output
+`,
+lang: 'bash',
+name: "Windows"
+},
+{
+code:
+`
+export WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet
+mkdir output
+wine BSArch.exe unpack ./Gifts\ Of\ The\ Outsider.bsa output 2>>/dev/null
+`,
+lang: 'bash',
+name: "Linux"
+}
+
+]} />
+
+Pozamienialiśmy pewne pliki to czas spakować z powrotem do bsa
+
+<CodeVariant items={[
+{
+code:
+`
+# -sse - Pakuje dla Skyrim Special Edition
+BSArch.exe pack "output" "Gifts Of The Outsider.bsa" -sse
+`,
+lang: 'bash',
+name: "Windows"
+},
+{
+code:
+`
+export WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet
+
+# -sse - Pakuje dla Skyrim Special Edition
+wine BSArch.exe pack "output" "Gifts Of The Outsider.bsa" -sse 2>>/dev/null
+`,
+lang: 'bash',
+name: "Linux"
+}
+
+]} />
+
+Poza `-sse` można pakować też dla Falloutów, Obliviona, Skyrima czy Starfielda
+
+Lista opcji ustalających format dla docelowej gry:
+
+- `-tes3` - Format archiwum Morrowinda
+- `-tes4` - Format archiwum Obliviona
+- `-fo3` - Format archiwum Fallout 3
+- `-fnv`- Format archiwum Fallout New Vegas
+- `-tes5`- Format archiwum Skyrima LE (wersja przed SE)
+- `-sse`- Format archiwum Skyrim SE/AE
+- `-fo4`- Format archiwum Fallout 4
+- `-sf1`- Format archiwum Starfielda
+
+#### Struktura bsa z głosami
+
+Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, skrypty, pliki głosów przypisane dla danego _voice type_ i inne potrzebne modowi pliki.
+
+Oto parę przykładów struktury bsa dla modów Gifts of the Outsider i Alternate Start.
+
+Pozwoliłem sobie uciąć nazwy czy je zmienić, że realnie będą dłuższe. Nazwy są tutaj poglądowe.
+
+<Directory
+  name="Gifts of the Outsider"
+  items={[
+    {
+      name: 'meshes',
+      items: [
+        {
+          name: 'goto',
+          items: [
+            { name: 'bonecharm.nif', type: 'file' },
+            { name: 'rune.nif', type: 'file' },
+          ],
+        },
+        {
+          name: 'vw',
+          items: [{ name: 'invisibleactivator01.nif', type: 'file' }],
+        },
+      ],
+    },
+    {
+      name: 'scripts',
+      items: [
+        {
+          name: 'source',
+          items: [
+            { name: 'goto_q00.psc', type: 'file' },
+            { name: '<...pliki pex...>', type: 'file' },
+          ],
+        },
+        { name: 'goto_q00.pex', type: 'file' },
+        { name: '<...pliki pex...>', type: 'file' },
+      ],
+    },
+    {
+      name: 'sound',
+      items: [
+        {
+          name: 'voice',
+          items: [
+            {
+              name: 'gifts of the outsider.esp',
+              items: [
+                {
+                  name: 'maleuniqueoutsider',
+                  items: [
+                    {
+                      name: 'file_1.lip',
+                      type: 'file',
+                    },
+                    {
+                      name: 'file_1.wav',
+                      type: 'file',
+                    },
+                    {
+                      name: '<...pliki wav i lip...>',
+                      type: 'file',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+_Można zauważyć, że autor Gifts of the Outsider nie składał plików audio do fuz, tylko zostawił wav i lip i to działało_
+
+<Directory
+  name="Alternate Start"
+  items={[
+    {
+      name: 'meshes',
+      items: [
+        {
+          name: 'actors',
+          items: [
+            {
+              name: 'character',
+              items: [
+                {
+                  name: 'facegendata',
+                  items: [
+                    {
+                      name: 'facegeom',
+                      items: [
+                        {
+                          name: 'alternate [...].esp',
+                          items: [
+                            { name: '0003136c.nif', type: 'file' },
+                            { name: '<...pliki nif...>', type: 'file' },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'arthmoor',
+          items: [
+            {
+              name: 'live another life',
+              items: [
+                {
+                  name: 'lalfarmintcorner02v2.nif',
+                  type: 'file',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'scripts',
+      items: [
+        { name: 'skrypt_1.pex', type: 'file' },
+        { name: '<...pliki pex...>', type: 'file' },
+      ],
+    },
+    {
+      name: 'source',
+      items: [
+        {
+          name: 'scripts',
+          items: [
+            { name: 'skrypt_1.psc', type: 'file' },
+            { name: '<...pliki psc...>', type: 'file' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'sound',
+      items: [
+        {
+          name: 'fx',
+          items: [
+            {
+              name: 'liveanotherlife',
+              items: [{ name: 'mara_powitanie.xwm', type: 'file' }],
+            },
+          ],
+        },
+        {
+          name: 'voice',
+          items: [
+            {
+              name: 'alternate [...].esp',
+              items: [
+                {
+                  name: 'femaleuniqueazura',
+                  items: [
+                    {
+                      name: 'mara_audio_1.fuz',
+                      type: 'file',
+                    },
+                    {
+                      name: '<...pliki fuz...>',
+                      type: 'file',
+                    },
+                  ],
+                },
+
+                {
+                  name: 'femaleshrill',
+                  items: [
+                    {
+                      name: 'kobieta_audio_1.fuz',
+                      type: 'file',
+                    },
+                    {
+                      name: '<...pliki fuz...>',
+                      type: 'file',
+                    },
+                  ],
+                },
+
+                {
+                  name: '<...pliki vt...>',
+                  items: [
+                    {
+                      name: '<...pliki fuz...>',
+                      type: 'file',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+_W Alternate Start złożono lip i wav do pliku fuz oraz zastosowano audio do fx (format xwm), stąc trzeba też sprawdzać efekty w poszukaniu głosów_
+
+Można zadać pytanie, czemu zatem pakować do fuz, skoro działa bez pakowania, wystarczy, by nazwa się zgadzała.
+
+To kwestia kompresji, że w fuz jest plik xwm (skompresowane audio) i opcjonalnie lip, dzięki czemu szybciej się pobiera co ma znaczenie zwłaszcza dla większych modlist czy modów.
+
+Dodatkowo, jak robi się poza Creation Kit, to jest mniejsza szansa literówki przy jednym pliku
+
+Przykład z pliku z Alternate Start:
+
+|Plik|Rozmiar|
+|---|---|
+|arthlalrum_[...]_0001fb15_1.wav|103 kB|
+|arthlalrum_[...]_0001fb15_1.lip|0.9 kB|
+|arthlalrum_[...]_0001fb15_1.fuz|**20 kB**|

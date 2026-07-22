@@ -1,0 +1,99 @@
+---
+import File from '@components/DirectoryView/File.astro'
+
+interface DirItem {
+  type?: 'dir'
+  name: string
+  items: Item[]
+}
+
+interface FileItem {
+  type: 'file'
+  name: string
+}
+
+type Item = FileItem | DirItem
+
+interface Props {
+  name: string
+  items: Item[]
+  depth?: number
+}
+const { name, items, depth = 0 } = Astro.props
+const hasChildren = items.length > 0
+---
+
+<div class="not-prose group font-mono leading-5" data-collapsed="false">
+  <div
+    class:list={[
+      'flex items-center gap-1 text-base leading-5 whitespace-nowrap data-[first-depth=true]:font-bold',
+
+      'pl-[calc(var(--depth)*1rem)]',
+      'sm:pl-[calc(var(--depth)*1.4rem)]',
+    ]}
+    style={`--depth: ${Math.max(depth - 1, 0)}`}
+    data-first-depth={depth === 0}
+  >
+    {
+      hasChildren ? (
+        <button
+          class="directory-toggle flex cursor-pointer items-center gap-1 border-none bg-transparent p-0 leading-5 text-inherit"
+          aria-label={name}
+        >
+          <span
+            class:list={[
+              'align-middle text-sky-600 text-[18px] ',
+              'icon-[mdi--folder-open]',
+              'group-data-[collapsed=true]:icon-[mdi--folder]',
+            ]}
+            aria-hidden="true"
+          />
+          <span>{name}</span>
+        </button>
+      ) : (
+        <span
+          class="icon-[mdi--folder-outline] text-[18px] text-sky-600"
+          aria-hidden="true"
+        >
+          {name}
+        </span>
+      )
+    }
+  </div>
+  <div class="group-data-[collapsed=true]:hidden">
+    {
+      items.map((item) =>
+        item.type === 'file' ? (
+          <File name={item.name} depth={depth + 1} />
+        ) : (
+          <Astro.self
+            name={item.name}
+            items={item.items || []}
+            depth={depth + 1}
+          />
+        ),
+      )
+    }
+  </div>
+</div>
+
+<script>
+  import { viewTransitionCallback } from '@root/src/utils'
+
+  viewTransitionCallback(() => {
+    const toggleButtons = document.querySelectorAll<HTMLButtonElement>(
+      '.directory-toggle:not([data-listener])',
+    )
+
+    toggleButtons.forEach((btn) => {
+      btn.dataset.listener = 'true'
+      btn.addEventListener('click', () => {
+        const group = btn.closest<HTMLElement>('.not-prose')
+        if (!group) return
+
+        const isCollapsed = group.dataset.collapsed === 'true'
+        group.dataset.collapsed = String(!isCollapsed)
+      })
+    })
+  })
+</script>
