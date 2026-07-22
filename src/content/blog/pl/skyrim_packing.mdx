@@ -1,7 +1,7 @@
 ---
 title: 'Dubbingowanie Skyrima #2'
-subtitle: 'Obsługa plików bsa oraz fuz'
-description: 'Zapoznaj się z tym, jak spakować i rozpakować pliki bsa za pomocą BSArch oraz fuz za pomocą YakitoriAudioConverter.'
+subtitle: 'Obsługa plików bsa'
+description: 'Zapoznaj się z tym, jak spakować i rozpakować pliki bsa za pomocą BSArch'
 date: '2026-07-19'
 tags: ['Dubbing', 'Skyrim', 'Modding']
 ---
@@ -16,7 +16,7 @@ import lalStructure from '@assets/lal-structure.webp'
 
 Witam w drugim wpisie, w którym pokrywam temat dubbingowania modyfikacji do Skyrima.
 
-Ten artykuł skupi się na rozpakowaniu i spakowaniu plików bsa poprzez `BSArch` oraz rozbijaniu i składaniu pliku `.fuz` poprzez `YakitoriAudioConverter`.
+Ten artykuł skupi się na rozpakowaniu i spakowaniu plików bsa poprzez `BSArch`.
 
 Dodatkowo powiem co nieco o strukturze archiwum bsa z głosami oraz przegląd struktury paru modyfikacji, które zawierają dubbing (tu: [Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) i [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701)).
 
@@ -286,16 +286,16 @@ _Można zauważyć, że autor Gifts of the Outsider nie składał plików audio 
   ]}
 />
 
-_W Alternate Start złożono lip i wav do pliku fuz oraz zastosowano audio do fx, stąd zaleca się testować i sprawdzać też efekty w poszukaniu głosów_
+_W Alternate Start złożono lip i wav do pliku fuz oraz zastosowano audio do fx (format xwm), stąc trzeba też sprawdzać efekty w poszukaniu głosów_
 
-Można zadać pytanie, czemu zatem pakować, skoro działa.
+Można zadać pytanie, czemu zatem pakować do fuz, skoro działa bez pakowania.
 
-Otóż, to kwestia kompresji, że w fuz jest plik xwm (skompresowane audio) i opcjonalnie lip, dzięki czemu szybciej się pobiera co ma znaczenie zwłaszcza dla większych modlist czy modów.
+To kwestia kompresji, że w fuz jest plik xwm (skompresowane audio) i opcjonalnie lip, dzięki czemu szybciej się pobiera co ma znaczenie zwłaszcza dla większych modlist czy modów.
 
 Przykład z pliku z Alternate Start:
 
 |Plik|Rozmiar|
 |---|---|
-|arthlalrum_arthlalstartque_0001fb15_1.wav|103 kB|
-|arthlalrum_arthlalstartque_0001fb15_1.lip|0.9 kB|
-|arthlalrum_arthlalstartque_0001fb15_1.fuz|**20 kB**|
+|arthlalrum_[...]_0001fb15_1.wav|103 kB|
+|arthlalrum_[...]_0001fb15_1.lip|0.9 kB|
+|arthlalrum_[...]_0001fb15_1.fuz|**20 kB**|
