@@ -82,11 +82,10 @@ const hasChildren = items.length > 0
 
   viewTransitionCallback(() => {
     const toggleButtons = document.querySelectorAll<HTMLButtonElement>(
-      '.directory-toggle:not([data-listener])',
+      '.directory-toggle',
     )
 
     toggleButtons.forEach((btn) => {
-      btn.dataset.listener = 'true'
       btn.addEventListener('click', () => {
         const group = btn.closest<HTMLElement>('.not-prose')
         if (!group) return
