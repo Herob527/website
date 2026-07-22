@@ -93,18 +93,46 @@ Lista opcji ustalających format dla docelowej gry:
 
 #### Struktura bsa z głosami
 
-Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, skrypty, pliki głosów przypisane dla danego _voice type_ i inne potrzebne modowi pliki.
+Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, skrypty, pliki głosów przypisane dla danego _voice type_ i reszta potrzebne modowi pliki.
+
+Podam parę przykładów, jak wygląda struktura ze skupieniem się na pliku audio.
+
+Nazwy będą odpowiednio skrócone, że realne będą o wiele dłuższe.
+
+**Gifts of the Outsider**
 
 <Directory
   name="."
   items={[
     {
       name: 'meshes',
-      items: [{ name: 'goto' }, { name: 'vw' }],
+      items: [
+        {
+          name: 'goto',
+          items: [
+            { name: 'bonecharm.nif', type: 'file' },
+            { name: 'rune.nif', type: 'file' },
+          ],
+        },
+        {
+          name: 'vw',
+          items: [{ name: 'invisibleactivator01.nif', type: 'file' }],
+        },
+      ],
     },
     {
       name: 'scripts',
-      items: [{ name: 'source' }],
+      items: [
+        {
+          name: 'source',
+          items: [
+            { name: 'goto_q00.psc', type: 'file' },
+            { name: '<...reszta pex...>', type: 'file' },
+          ],
+        },
+        { name: 'goto_q00.pex', type: 'file' },
+        { name: '<...reszta pex...>', type: 'file' },
+      ],
     },
     {
       name: 'sound',
@@ -141,12 +169,123 @@ Archiwum bsa może zawierać w sobie dźwięki efektów specjalnych, tekstury, s
   ]}
 />
 
-<Picture
-  src={gotoStructure}
-  alt="Struktura bsa z głosami dla Gifts of the Outsider"
-/>
+**Alternate Start - Live Another Life**
 
-<Picture
-  src={lalStructure}
-  alt="Struktura bsa z głosami dla Gifts of the Outsider"
+<Directory
+  name="."
+  items={[
+    {
+      name: 'meshes',
+      items: [
+        {
+          name: 'actors',
+          items: [
+            {
+              name: 'character',
+              items: [
+                {
+                  name: 'facegendata',
+                  items: [
+                    {
+                      name: 'facegeom',
+                      items: [
+                        {
+                          name: 'alternate start - live another life.esp',
+                          items: [
+                            { name: '0003136c.nif', type: 'file' },
+                            { name: '<...reszta nif...>', type: 'file' },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'arthmoor',
+          items: [
+            {
+              name: 'live another life',
+              items: [
+                {
+                  name: 'lalfarmintcorner02v2.nif',
+                  type: 'file',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'scripts',
+      items: [
+        { name: 'skrypt_1.pex', type: 'file' },
+        { name: '<...reszta pex...>', type: 'file' },
+      ],
+    },
+    {
+      name: 'source',
+      items: [
+        {
+          name: 'scripts',
+          items: [
+            { name: 'skrypt_1.psc', type: 'file' },
+            { name: '<...reszta psc...>', type: 'file' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'sound',
+      items: [
+        {
+          name: 'fx',
+          items: [
+            {
+              name: 'liveanotherlife',
+              items: [{ name: 'mara_powitanie.xwm', type: 'file' }],
+            },
+          ],
+        },
+        {
+          name: 'voice',
+          items: [
+            {
+              name: 'alternate start - live another life.esp',
+              items: [
+                {
+                  name: 'femaleuniqueazura',
+                  items: [
+                    {
+                      name: 'mara_audio_1.fuz',
+                      type: 'file',
+                    },
+                  ],
+                },
+
+                {
+                  name: 'femaleshrill',
+                  items: [
+                    {
+                      name: 'kobieta_audio_1.fuz',
+                      type: 'file',
+                    },
+                  ],
+                },
+
+                {
+                  name: '<...reszta vt oraz fuz...>',
+                  items: [],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
 />
