@@ -1,0 +1,31 @@
+---
+title: 'Dubbingowanie Skyrima #3'
+subtitle: 'Generowanie plików lip'
+description: 'Zapoznaj się z tym, jak stworzyć plik lip poza Creation Kit za pomocą FaceFXWrapper i Pythona'
+date: '2026-07-30'
+tags: ['Dubbing', 'Skyrim', 'Modding']
+---
+
+## Wstęp
+
+Witam w trzecim wpisie, w którym pokrywam temat dubbingowania modyfikacji do Skyrima.
+
+Tutaj skupię się na tym, jak stworzyć plik lip poza Creation Kit za pomocą FaceFXWrapper i Pythona.
+
+Co prawda Python jest opcjonalny, ale jest przydatny zwłaszcza jak mamy do czynienia z większą ilością plików lip.
+
+Tutaj, poza FaceFXWrapperem, wleci też FFmpeg do wstępnego przetwarzania audio do generowania pliku lip.
+
+### FFmpeg
+
+**FFmpeg** jest potężnym narzędziem CLI, które umożliwia przetwarzanie i konwersję pliku audio i wideo.
+
+W naszym przypadku będziemy konwertować pliki audio do jednokanałowego pliku wav, na podstawie którego potem stworzymy plik lip.
+
+Na Linuxie można zainstalować FFmpeg poprzez instalator dystrybucji (tj. `dnf` czy `apt`).
+
+Na Windowsie jest to bardziej skomplikowane, stąd zamieszczam [link do stackexchange.com](https://video.stackexchange.com/questions/20495/how-do-i-set-up-and-use-ffmpeg-in-windows), w którym jest rozwiązanie.
+
+### FaceFXWrapper
+
+**FaceFXWrapper** to narzędzie CLI, które umożliwia generowanie plików `.lip` bez wchodzenia do CreationKit.
