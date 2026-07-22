@@ -22,7 +22,9 @@ Dodatkowo powiem co nieco o strukturze archiwum bsa z głosami oraz przegląd st
 
 #### Rozpakowywanie i pakowanie bsa
 
-By rozpakować, należy najpierw stworzyć folder docelowy a potem dopiero uruchomić bsarch
+By rozpakować, należy najpierw stworzyć folder docelowy a potem dopiero uruchomić BSArch
+
+**Ważne! Zakładam, że BSArch.exe jest w aktywnym folderze!**
 
 <CodeVariant items={[
 {
@@ -53,7 +55,9 @@ Pozamienialiśmy pewne pliki to czas spakować z powrotem do bsa
 {
 code:
 `
+
 # -sse - Pakuje dla Skyrim Special Edition
+
 BSArch.exe pack "output" "Gifts Of The Outsider.bsa" -sse
 `,
 lang: 'bash',
@@ -65,6 +69,7 @@ code:
 export WINEPREFIX=$HOME/.local/share/wineprefixes/wine_dotnet
 
 # -sse - Pakuje dla Skyrim Special Edition
+
 wine BSArch.exe pack "output" "Gifts Of The Outsider.bsa" -sse 2>>/dev/null
 `,
 lang: 'bash',
@@ -293,7 +298,8 @@ _Można zauważyć, że autor Gifts of the Outsider nie składał plików audio 
         },
       ],
     },
-  ]}
+
+]}
 />
 
 _W Alternate Start spakowano lip i wav do pliku fuz oraz zastosowano audio do fx (format xwm), stąc trzeba też sprawdzać efekty w poszukaniu głosów_
@@ -306,8 +312,8 @@ Dodatkowo, jak robi się poza Creation Kit, to jest mniejsza szansa literówki p
 
 Przykład z pliku z Alternate Start:
 
-|Plik|Rozmiar|
-|---|---|
-|arthlalrum_[...]_0001fb15_1.wav|103 kB|
-|arthlalrum_[...]_0001fb15_1.lip|0.9 kB|
-|arthlalrum_[...]_0001fb15_1.fuz|**20 kB**|
+| Plik                              | Rozmiar   |
+| --------------------------------- | --------- |
+| arthlalrum\_[...]\_0001fb15_1.wav | 103 kB    |
+| arthlalrum\_[...]\_0001fb15_1.lip | 0.9 kB    |
+| arthlalrum\_[...]\_0001fb15_1.fuz | **20 kB** |
