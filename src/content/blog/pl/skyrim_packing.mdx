@@ -16,7 +16,7 @@ Witam w drugim wpisie, w którym pokrywam temat dubbingowania modyfikacji do Sky
 
 Ten artykuł skupi się na rozpakowaniu i spakowaniu plików bsa poprzez `BSArch`.
 
-Dodatkowo powiem co nieco o strukturze archiwum bsa z głosami oraz przegląd struktury paru modyfikacji, które zawierają dubbing (tu: [Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) i [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701)).
+Dodatkowo powiem co nieco o strukturze archiwum `.bsa` z głosami oraz przegląd struktury paru modyfikacji, które zawierają dubbing (tu: [Alternate Start](https://www.nexusmods.com/skyrimspecialedition/mods/182007) i [Gifts of the Outsider](https://www.nexusmods.com/skyrimspecialedition/mods/182701)).
 
 ### BSArch
 
@@ -304,9 +304,9 @@ _Można zauważyć, że autor Gifts of the Outsider nie składał plików audio 
 
 _W Alternate Start spakowano lip i wav do pliku fuz oraz zastosowano audio do fx (format xwm), stąc trzeba też sprawdzać efekty w poszukaniu głosów_
 
-Można zadać pytanie, czemu zatem pakować do fuz, skoro działa bez pakowania, wystarczy, by nazwa się zgadzała.
+Można zadać pytanie, czemu zatem pakować do `.fuz`, skoro działa bez pakowania, wystarczy, by nazwa się zgadzała.
 
-To kwestia kompresji, że w fuz jest plik xwm (skompresowane audio) i opcjonalnie lip, dzięki czemu szybciej się pobiera co ma znaczenie zwłaszcza dla większych modlist czy modów.
+To kwestia kompresji, że w `.fuz` jest plik `.xwm` (skompresowane audio) i opcjonalnie `.lip`, dzięki czemu szybciej się pobiera co ma znaczenie zwłaszcza dla większych modlist czy modów.
 
 Dodatkowo, jak robi się poza Creation Kit, to jest mniejsza szansa literówki przy jednym pliku
 
@@ -317,3 +317,13 @@ Przykład z pliku z Alternate Start:
 | arthlalrum\_[...]\_0001fb15_1.wav | 103 kB    |
 | arthlalrum\_[...]\_0001fb15_1.lip | 0.9 kB    |
 | arthlalrum\_[...]\_0001fb15_1.fuz | **20 kB** |
+
+## Słowa końcowe
+
+To jest jeden ze sposobów na rozpakowanie i spakowanie plików do/z `.bsa` skierowane ku wykorzystaniu w CLI i, w konsekwencji, w skryptach bat, powershell czy bash.
+
+Nic nie broni użyć działających rozwiązań GUI, które może nie pozwalają na taką automatyzację, ale są wygodniejsze w użyciu.
+
+Planuję napisać o generowaniu plików `.lip` oraz pakowaniu audio do `.fuz` przez Yakitori Audio Converter.
+
+Jak zapoznam się konkretne z rozwiązaniem CLI, to zaktualizuję pierwszy wpis o narzędziach i będzie w poście o tworzeniu i rozpakowaniu plików `.fuz`.
