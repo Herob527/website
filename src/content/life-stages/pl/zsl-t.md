@@ -14,9 +14,11 @@ Na wstępie było kombinowanie z uniwersalnym schematem blokowym algorytmu (USB-
 
 Osobno też mieliśmy zajęcia z CSS oraz HTML (formularze, stylowanie).
 
-Tutaj właśnie złapałem bakcyla programowania i zacząłem też we własnym zakresie majstrować z językiem.
+W tym okresie też zaczęła się konkretnie pasja do programowania trochę dzięki nauczycielce, która jak zauważyła, że już zrobiłem zadanie, to dawała kolejne wyzwania.
 
-Też mieliśmy zagadnienia związane z MySQL a czwartej klasie PHP, w którym pisaliśmy backend łączący stronę z bazą danych.
+Też wspierałem kolegów, którzy nie radzili sobie najlepiej z programowaniem, zwłaszcza, że technik informatyk to był / jest zróżnicowany kierunek, gdzie jedni odnajdywali się w sieciach, inni w sprzęcie, jeszcze inni w programowaniu.
+
+Weszły zagadnienia związane z MySQL a czwartej klasie PHP, w którym pisaliśmy backend łączący stronę z bazą danych.
 
 <br />
 
