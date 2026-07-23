@@ -16,6 +16,8 @@ We also had separate classes for CSS and HTML (forms, styling).
 
 And this is when my journey with programming started. I was also tinkering with the language on my own as well.
 
+I was also helping other collegues who were struggling with programming since IT-technician course is quite diverse to the point some were better at networks, some at handling devices and others in coding-related subjects.
+
 We also covered MySQL, and in the fourth year PHP, where the backend connected to the database.
 
 <br />
