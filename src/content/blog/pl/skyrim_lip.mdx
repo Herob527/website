@@ -65,6 +65,17 @@ Teoretycznie umożliwia resampling, ale wykrzacza się, gdy dzwięk jego wieloka
 
 #### Komenda
 
+```bash
+FaceFXWrapper [Type] [Lang] [FonixDataPath] [WavPath] [LipPath] [Text]
+```
+
+- **Type** - Fallout4, Skyrim
+- **Lang** - USEnglish
+- **FonixDataPath** - sciezka do FonixData.cdf
+- **WavPath** - ścieżka do przetworzonego pliku `.wav`
+- **LipPath** - sciezka do wyjściowego pliku `.lip`
+- **Text** - tekst bazowy
+
 ### Python
 
 **Python** to popularny język skryptowy nazwany po brytyjskiej grupie komików `Monty Python`.
@@ -73,6 +84,16 @@ Jest popularny w zastosowaniach AI dzięki możliwości jego integracji z wysoko
 
 W naszym przypadku jednak będzie narzędziem integrującym plik z tekstami, FFmpeg oraz FaceFXWrapper.
 
-```
+Na Linuxie przeważnie dochodzi preinstalowany.
 
+Na Windowsie trzeba go pobrać czy to przez `mise` lub przez instalator dostępny na [Python.org](https://www.python.org/downloads/) (sugeruję pobrać najnowszę dostępną).
+
+Tutaj wykorzystam wersję 3.14.6, jednak nowsze czy nieco starsze (weźmy 3.10 i nowsze) powinny też działać.
+
+#### Komendy
+
+Uruchomienie skryptu
+
+```bash
+python main.py
 ```
