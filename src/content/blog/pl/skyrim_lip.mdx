@@ -6,23 +6,21 @@ date: '2026-07-30'
 tags: ['Dubbing', 'Skyrim', 'Modding']
 ---
 
+import Directory from '@components/DirectoryView/Directory.astro'
+
 ## Wstęp
 
 Witam w trzecim wpisie, w którym pokrywam temat dubbingowania modyfikacji do Skyrima.
 
-Tutaj skupię się na tym, jak stworzyć plik lip poza Creation Kit za pomocą FaceFXWrapper i Pythona.
+Tutaj skupię się na tym, jak stworzyć plik `.lip` poza Creation Kit za pomocą FaceFXWrapper i Pythona.
 
-Co prawda Python jest opcjonalny, ale jest przydatny zwłaszcza jak mamy do czynienia z większą ilością plików lip.
-
-Tutaj, poza FaceFXWrapperem, wleci też FFmpeg do wstępnego przetwarzania audio do generowania pliku lip.
+Tutaj, poza FaceFXWrapperem, wykorzystany będzie też FFmpeg do wstępnego przetwarzania audio do generowania pliku `.lip`.
 
 ## Narzędzia
 
 ### FFmpeg
 
 **FFmpeg** jest potężnym narzędziem CLI, które umożliwia przetwarzanie i konwersję pliku audio i wideo.
-
-W naszym przypadku będziemy konwertować pliki audio do jednokanałowego pliku wav, na podstawie którego potem stworzymy plik lip.
 
 #### Instalacja
 
@@ -32,20 +30,20 @@ Na Windowsie jest to bardziej skomplikowane, stąd zamieszczam [link do stackexc
 
 #### Wykorzystanie
 
-W obecnym przypadku będziemy chcieli przekonwertować plik audio na 16-bitowy PCM, jednokanałowy plik wav o częstotliwości 16 kHz.
+W obecnym przypadku będziemy chcieli przekonwertować plik audio na 16-bitowy PCM, jednokanałowy plik `.wav` o częstotliwości 16 kHz.
 
-W trakcie prac nad dubbingiem do `Gifts of the Outsider` wyszło, że wyższa częstotliwość audio używanego do generowania pliku lip powoduje desynchronizację ruchu ust z mową a rozwiązaniem jest stworzenie tymczasowego pliku o niższej częstotliwości.
+W trakcie prac nad dubbingiem do `Gifts of the Outsider` wyszło, że wyższa częstotliwość audio używanego do generowania pliku `.lip` powoduje desynchronizację ruchu ust z mową a rozwiązaniem jest stworzenie tymczasowego pliku o niższej częstotliwości.
 
 #### Komenda
 
 ```bash
 ffmpeg
-  -y # Zezwól na nadpisanie pliku
-  -i source # ścieżka do pliku wejściowego
-  -ac 1 # ilość kanałów audio pliku wyjściowego
-  -ar 16000 # częstotliwość pliku wyjsciowego
-  -c:a pcm_s16le # format pliku wyjsciowego [znakowany 16-bitowy PCM Little Endian]
-  temp_path # ścieżka do pliku wyjsciowego
+  -y              # Zezwól na nadpisanie pliku
+  -i source       # ścieżka do pliku wejściowego
+  -ac 1           # ilość kanałów audio pliku wyjściowego
+  -ar 16000       # częstotliwość pliku wyjściowego
+  -c:a pcm_s16le  # format pliku wyjściowego [znakowany 16-bitowy PCM Little Endian]
+  temp_path       # ścieżka do pliku wyjściowego
 
 ```
 
@@ -57,9 +55,9 @@ Do działania wymaga FonixData.cdf.
 
 Teoretycznie umożliwia resampling, ale wykrzacza się, gdy dzwięk jego wielokanałowy, stąd preferuję FFmpega zastosować przetworzenia audio.
 
-[Link do FaceFXWrapper](https://www.nexusmods.com/skyrimspecialedition/mods/20061?tab=files)
+[FaceFXWrapper (Nexus Mods)](https://www.nexusmods.com/skyrimspecialedition/mods/20061?tab=files)
 
-[Repozytorium FaceFXWrapper](https://github.com/Nukem9/FaceFXWrapper)
+[FaceFXWrapper (GitHub)](https://github.com/Nukem9/FaceFXWrapper)
 
 [Link do FonixData.cdf](https://www.nexusmods.com/skyrimspecialedition/mods/40971?tab=files)
 
@@ -80,13 +78,11 @@ FaceFXWrapper [Type] [Lang] [FonixDataPath] [WavPath] [LipPath] [Text]
 
 **Python** to popularny język skryptowy nazwany po brytyjskiej grupie komików `Monty Python`.
 
-Jest popularny w zastosowaniach AI dzięki możliwości jego integracji z wysoko wydajnym kodem w C++.
+W naszym przypadku będzie narzędziem integrującym plik z tekstami, FFmpeg oraz FaceFXWrapper.
 
-W naszym przypadku jednak będzie narzędziem integrującym plik z tekstami, FFmpeg oraz FaceFXWrapper.
+Na Linuxie przeważnie dochodzi preinstalowany lub jest dostępny w menedżerze pakietów dystrybucji (ostatecznie zostaje instalacja poprzez `uv` czy `mise`).
 
-Na Linuxie przeważnie dochodzi preinstalowany lub jest dostępny w menadżerze pakietów dystrybucji (ostatecznie zostaje instalacja poprzez `uv` czy `mise`).
-
-Na Windowsie trzeba go pobrać przez instalator dostępny na [Python.org](https://www.python.org/downloads/) (sugeruję pobrać najnowszę dostępną).
+Na Windowsie trzeba go pobrać przez instalator dostępny na [Python.org](https://www.python.org/downloads/) (sugeruję pobrać najnowszą dostępną).
 
 Tutaj wykorzystam wersję 3.14.6, jednak nowsze czy nieco starsze (weźmy 3.10 i nowsze) powinny też działać.
 
@@ -100,4 +96,77 @@ python main.py
 
 ## Zakładana struktura plików
 
-Taką będę zakładać strukturę plików, by skrypt i jego wykorzystanie się spinały
+Folder `bsa-output` to wynik rozpakowania pliku `.bsa`, który zawiera pliki `.wav`.
+
+Plik `texts.csv` będzie zawierać informacje o tym, jaki tekst jest przypisany do pliku audio, by potem odczytać ze skryptu co trzeba.
+
+<Directory
+  name="."
+  items={[
+    {
+      name: 'tools',
+      items: [
+        {
+          name: 'FaceFXWrapper.exe',
+          type: 'file',
+        },
+
+        {
+          name: 'FonixData.cdf',
+          type: 'file',
+        },
+      ],
+    },
+    {
+      name: 'bsa-output',
+      items: [
+        {
+          name: 'voice',
+          items: [
+            {
+              name: '<nazwa-pluginu>',
+              items: [
+                {
+                  name: '<nazwa-voice-type>',
+                  items: [
+                    {
+                      name: 'file_1.wav',
+                      type: 'file',
+                    },
+                    {
+                      name: '<...pliki wav...>',
+                      type: 'file',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'gen_lips.py',
+      type: 'file',
+    },
+    {
+      name: 'texts.csv',
+      type: 'file',
+    },
+
+]}
+/>
+
+### texts.csv
+
+**csv** - Jest to plik, który zawiera informacje tabelaryczne rozdzielane przecinkiem, który można otwierać w Excelu czy LibreOffice Calc.
+
+Praktycznie może to być dowolny separator (zastosuję tutaj średnik).
+
+#### Zakładana zawartość
+
+```csv
+text;audio
+"Ala ma kota";"plik1.wav"
+"Kot ma alę";"plik2.wav"
+```
