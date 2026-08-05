@@ -177,7 +177,7 @@ text;audio
 ## Skrypty i funkcje
 
 <div class="space-y-2">
-<Spoiler name="Deklaracja ścieżek">
+  <Spoiler name="Deklaracja ścieżek">
 
 ```py
 # pathlib znacząca ułatwia pracę ze ścieżkami
@@ -186,8 +186,6 @@ from pathlib import Path
 """
 Tutaj rglob szuka w folderze "bsa-output"
 wszystkich plików z rozszerzeniem ".wav"
-
-Sugeruję dopasować do swojej struktury
 """
 wavs_path = Path("bsa-output").rglob("*.wav")
 facefx_wrapper = Path("tools", "FaceFXWrapper.exe")
@@ -195,9 +193,9 @@ fonix_data = Path("tools", "FonixData.cdf")
 source_csv = Path("texts.csv")
 ```
 
-</Spoiler>
+  </Spoiler>
 
-<Spoiler name="Funkcja szykująca plik do lip">
+  <Spoiler name="Funkcja szykująca plik do lip">
 
 ```py
 from subprocess import run, DEVNULL
@@ -227,5 +225,5 @@ def prepare_wav(source: Path) -> Path:
     return temp_path
 ```
 
-</Spoiler>
+  </Spoiler>
 </div>
