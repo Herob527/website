@@ -7,6 +7,7 @@ tags: ['Dubbing', 'Skyrim', 'Modding']
 ---
 
 import Directory from '@components/DirectoryView/Directory.astro'
+import Spoiler from '@components/Spoiler.astro'
 
 ## Wstęp
 
@@ -175,39 +176,56 @@ text;audio
 
 ## Skrypty i funkcje
 
-### Skrypt szykujący plik do lip
+<div class="space-y-2">
+<Spoiler name="Deklaracja ścieżek">
 
-````py
+```py
+# pathlib znacząca ułatwia pracę ze ścieżkami
+from pathlib import Path
 
-import subprocess
-from subprocess import run
+"""
+Tutaj rglob szuka w folderze "bsa-output"
+wszystkich plików z rozszerzeniem ".wav"
+
+Sugeruję dopasować do swojej struktury
+"""
+wavs_path = Path("bsa-output").rglob("*.wav")
+facefx_wrapper = Path("tools", "FaceFXWrapper.exe")
+fonix_data = Path("tools", "FonixData.cdf")
+source_csv = Path("texts.csv")
+```
+
+</Spoiler>
+
+<Spoiler name="Funkcja szykująca plik do lip">
+
+```py
+from subprocess import run, DEVNULL
 
 def prepare_wav(source: Path) -> Path:
     temp_path = source.with_name(f"{source.stem}.temp.wav")
 
-    cmd = [
-        "ffmpeg",
-        "-y",
-        "-i",
-        str(source),
-        "-ac",
-        "1",
-        "-ar",
-        "16000",
-        "-c:a",
-        "pcm_s16le",
-        str(temp_path),
-    ]
+    cmd = f"ffmpeg -y -i {source} -ac 1 -ar 16000 -c:a pcm_s16le {temp_path}"
 
     result = run(
         cmd,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
+        # Umozliwia wklejenie całej komendy w formie tekstu
+        # bez bawienia się w tablice argumentów
+        shell=True,
+        # Jak działa, to nie interesuje
+        # nas co wypluje ffmpeg,
+        # stąd wyjście jest wysyłane do otchłani
+        # (tj. /dev/null)
+        stdout=DEVNULL,
+        stderr=DEVNULL,
     )
 
     if result.returncode != 0:
         raise Exception(f"Failed to convert {source}")
 
+    # Będziemy tego potrzebować w trakcie generowania pliku lip
     return temp_path
-  ```
-````
+```
+
+</Spoiler>
+</div>
