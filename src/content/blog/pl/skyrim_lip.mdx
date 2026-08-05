@@ -1,5 +1,5 @@
 ---
-title: 'Dubbingowanie Skyrima #3'
+title: 'Dubbingowanie Skyrima #4'
 subtitle: 'Generowanie plików lip'
 description: 'Zapoznaj się z tym, jak stworzyć plik lip poza Creation Kit za pomocą FaceFXWrapper, FFmpega i Pythona'
 date: '2026-08-15'
@@ -241,7 +241,7 @@ def prepare_wav(source: Path) -> Path:
 
 </Spoiler>
 
-<Spoiler name="Klasa umożliwiająca odczyt i wyszukiwanie potrzebnego audio">
+<Spoiler name="Klasa umożliwiająca odczyt pliku CSV z funkcją szukania potrzebnych danych">
 
 ```py
 from csv import DictReader
@@ -297,6 +297,7 @@ def main():
         lip_path = wav.with_name(f"{wav.stem}.lip")
         generate_lip(temp_wav, lip_path, item["text"])
         print("Finished generating lip for", wav)
+        # Usuwa plik, tutaj ten pod temp_wav
         temp_wav.unlink()
         print("Removed temp wav", temp_wav, end="\n"*2)
 
@@ -316,3 +317,9 @@ main()
 
 </Spoiler>
 </div>
+
+## Podsumowanie
+
+W tym wpisie pokryłem temat generowania samego pliku `.lip`, jednak to nie koniec jego przetwarzania, gdyż jeszcze trzeba go spakować do `.fuz`.
+
+W następny wpisie zamierzam pokryć użytkowanie YakitoAudioConverter oraz fuz_extractor jako specjalizowane narzędzie do obsługi pliku `.fuz`, które można zintegrować z powyższym skryptem.
