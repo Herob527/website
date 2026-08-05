@@ -8,6 +8,7 @@ tags: ['Dubbing', 'Skyrim', 'Modding']
 
 import Directory from '@components/DirectoryView/Directory.astro'
 import Spoiler from '@components/Spoiler.astro'
+import CodeVariant from '@components/CodeVariant.astro'
 
 ## Wstęp
 
@@ -226,4 +227,55 @@ def prepare_wav(source: Path) -> Path:
 ```
 
   </Spoiler>
+  <Spoiler name="Funkcja generująca plik lip">
+
+<CodeVariant items={[
+{
+code:
+`
+from subprocess import run, DEVNULL
+
+def generate_lip(wav: Path, lip_dest: Path, text: str):
+\tlip_cmd = f'env WINEPREFIX=~/.wine-eet4 wine {facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
+
+\tresult = run(
+\t\tlip_cmd,
+\t\tshell=True,
+\t\tstdout=DEVNULL,
+\t\tstderr=DEVNULL,
+\t)
+
+\tif result.returncode != 0:
+\t\traise Exception(f"Failed to generate lip for {wav}")
+
+`,
+lang: "py",
+name: "Linux"
+
+}, {
+
+code:
+`
+from subprocess import run, DEVNULL
+
+def generate_lip(wav: Path, lip_dest: Path, text: str):
+\tlip_cmd = f'{facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
+
+\tresult = run(
+\t\tlip_cmd,
+\t\tshell=True,
+\t\tstdout=DEVNULL,
+\t\tstderr=DEVNULL,
+\t)
+
+\tif result.returncode != 0:
+\t\traise Exception(f"Failed to generate lip for {wav}")
+
+`,
+lang: "py",
+"name": "Windows"
+}
+]} />
+
+</Spoiler>
 </div>
