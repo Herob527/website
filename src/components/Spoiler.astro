@@ -1,0 +1,31 @@
+---
+interface Props {
+  name: string
+}
+const { name } = Astro.props
+---
+
+<div class="not-prose min-h-0 overflow-hidden">
+  <input type="checkbox" id={`toggle-${name}`} hidden class="peer" />
+  <label
+    for={`toggle-${name}`}
+    class="flex flex-row items-center border-2 border-black"
+  >
+    <p class="m-0! flex-1 border-r-2 border-black p-2">{name}</p>
+    <span class="rotate-90 p-2 px-4 transition-transform"> &rangle; </span>
+  </label>
+
+  <div
+    class="grid grid-rows-[0fr] overflow-y-hidden transition-[grid-template-rows] duration-400 ease-in-out peer-checked:grid-rows-[1fr]"
+  >
+    <div class="min-h-0">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  input.peer:checked + label > span {
+    scale: -1 -1;
+  }
+</style>
