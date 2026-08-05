@@ -60,7 +60,7 @@ def prepare_wav(source: Path) -> Path:
 
 
 def generate_lip(wav: Path, lip_dest: Path, text: str):
-    lip_cmd = f'env WINEPREFIX=~/.wine-eet4 wine {facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
+    lip_cmd = f'env WINEPREFIX=~/.wine-dotnet wine {facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
 
     result = run(
         lip_cmd,
