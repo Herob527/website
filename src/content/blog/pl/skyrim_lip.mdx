@@ -231,10 +231,7 @@ def prepare_wav(source: Path) -> Path:
 <CodeVariant
   items={[
     {
-      component:
-
-```py
-from subprocess import run, DEVNULL
+      code: `from subprocess import run, DEVNULL
 
 def generate_lip(wav: Path, lip_dest: Path, text: str):
     lip_cmd = f'env WINEPREFIX=~/.wine-eet4 wine {facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
@@ -249,16 +246,12 @@ def generate_lip(wav: Path, lip_dest: Path, text: str):
     )
 
     if result.returncode != 0:
-        raise Exception(f"Failed to generate lip for {wav}")
-
-```,
-
+        raise Exception(f"Failed to generate lip for {wav}")`,
+      lang: 'py',
       name: 'Linux',
     },
     {
-      component:
-```py
-from subprocess import run, DEVNULL
+      code: `from subprocess import run, DEVNULL
 
 def generate_lip(wav: Path, lip_dest: Path, text: str):
     lip_cmd = f'{facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
@@ -271,9 +264,8 @@ def generate_lip(wav: Path, lip_dest: Path, text: str):
     )
 
     if result.returncode != 0:
-        raise Exception(f"Failed to generate lip for {wav}")
-```,
-
+        raise Exception(f"Failed to generate lip for {wav}")`,
+      lang: 'py',
       name: 'Windows',
     },
   ]}
