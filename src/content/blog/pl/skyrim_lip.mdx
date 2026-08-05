@@ -228,56 +228,56 @@ def prepare_wav(source: Path) -> Path:
   </Spoiler>
   <Spoiler name="Funkcja generująca plik lip">
 
-<CodeVariant items={[
-{
-code:
-`
+<CodeVariant
+  items={[
+    {
+      component:
+
+```py
 from subprocess import run, DEVNULL
 
 def generate_lip(wav: Path, lip_dest: Path, text: str):
-\tlip_cmd = f'env WINEPREFIX=~/.wine-eet4 wine {facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
+    lip_cmd = f'env WINEPREFIX=~/.wine-eet4 wine {facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
+    result = run(
+        lip_cmd,
+        shell=True,
 
-\tresult = run(
-\t\tlip_cmd,
-\t\tshell=True,
+        # Usuwa komunikaty z ffmpega
+        # Jak coś nie działa, to usunąć parametry stdout i stderr
+        stdout=DEVNULL,
+        stderr=DEVNULL,
+    )
 
-\t\t# Usuwa komunikaty z ffmpega
-\t\t# Jak coś nie działa, to usunąć parametry stdout i stderr
-\t\tstdout=DEVNULL,
-\t\tstderr=DEVNULL,
-\t)
+    if result.returncode != 0:
+        raise Exception(f"Failed to generate lip for {wav}")
 
-\tif result.returncode != 0:
-\t\traise Exception(f"Failed to generate lip for {wav}")
+```,
 
-`,
-lang: "py",
-name: "Linux"
-
-}, {
-
-code:
-`
+      name: 'Linux',
+    },
+    {
+      component:
+```py
 from subprocess import run, DEVNULL
 
 def generate_lip(wav: Path, lip_dest: Path, text: str):
-\tlip_cmd = f'{facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
+    lip_cmd = f'{facefx_wrapper} "Skyrim" "USEnglish" "{fonix_data}" "{wav}" "{lip_dest}" "{text}"'
 
-\tresult = run(
-\t\tlip_cmd,
-\t\tshell=True,
-\t\tstdout=DEVNULL,
-\t\tstderr=DEVNULL,
-\t)
+    result = run(
+        lip_cmd,
+        shell=True,
+        stdout=DEVNULL,
+        stderr=DEVNULL,
+    )
 
-\tif result.returncode != 0:
-\t\traise Exception(f"Failed to generate lip for {wav}")
+    if result.returncode != 0:
+        raise Exception(f"Failed to generate lip for {wav}")
+```,
 
-`,
-lang: "py",
-"name": "Windows"
-}
-]} />
+      name: 'Windows',
+    },
+  ]}
+/>
 
 </Spoiler>
 
