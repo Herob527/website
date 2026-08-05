@@ -14,7 +14,9 @@ interface Props {
 const { items } = Astro.props
 ---
 
-<code-variant class="flex flex-col gap-2 rounded-xl border-2 border-gray-200 p-2">
+<code-variant
+  class="flex flex-col gap-2 rounded-xl border-2 border-gray-200 p-2"
+>
   <div>
     {
       items.map((item, index) => (
@@ -53,17 +55,22 @@ const { items } = Astro.props
   function setup() {
     const allVariants = document.querySelectorAll<HTMLElement>('code-variant')
     allVariants.forEach((variant) => {
-      const buttons = variant.querySelectorAll<HTMLButtonElement>('button[data-name]')
+      const buttons =
+        variant.querySelectorAll<HTMLButtonElement>('button[data-name]')
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
           const { name } = button.dataset
           allVariants.forEach((v) => {
-            v.querySelectorAll<HTMLButtonElement>('button[data-name]').forEach((b) => {
-              b.dataset.selected = (b.dataset.name === name).toString()
-            })
-            v.querySelectorAll<HTMLPreElement>('pre[data-name]').forEach((c) => {
-              c.dataset.selected = (c.dataset.name === name).toString()
-            })
+            v.querySelectorAll<HTMLButtonElement>('button[data-name]').forEach(
+              (b) => {
+                b.dataset.selected = (b.dataset.name === name).toString()
+              },
+            )
+            v.querySelectorAll<HTMLPreElement>('pre[data-name]').forEach(
+              (c) => {
+                c.dataset.selected = (c.dataset.name === name).toString()
+              },
+            )
           })
         })
       })
