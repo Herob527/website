@@ -26,6 +26,7 @@ aboutPage:
   title: About this site
   techStack: Technology stack
   configs: Configurations
+  repoLink: Repository link
   stack:
     framework: Framework
     styleEngine: Style engine
