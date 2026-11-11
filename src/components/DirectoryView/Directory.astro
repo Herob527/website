@@ -1,26 +1,26 @@
 ---
-import File from '@components/DirectoryView/File.astro'
+import File from "@components/DirectoryView/File.astro";
 
 interface DirItem {
-  type?: 'dir'
-  name: string
-  items: Item[]
+	type?: "dir";
+	name: string;
+	items: Item[];
 }
 
 interface FileItem {
-  type: 'file'
-  name: string
+	type: "file";
+	name: string;
 }
 
-type Item = FileItem | DirItem
+type Item = FileItem | DirItem;
 
 interface Props {
-  name: string
-  items: Item[]
-  depth?: number
+	name: string;
+	items: Item[];
+	depth?: number;
 }
-const { name, items, depth = 0 } = Astro.props
-const hasChildren = items.length > 0
+const { name, items, depth = 0 } = Astro.props;
+const hasChildren = items.length > 0;
 ---
 
 <div class="not-prose group font-mono leading-5" data-collapsed="false">

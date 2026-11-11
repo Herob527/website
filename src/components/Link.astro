@@ -1,21 +1,21 @@
 ---
-import { DEFAULT_LANGUAGE } from '../constants'
+import { DEFAULT_LANGUAGE } from "../constants";
 
 interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
-  href: string
+	href: string;
 }
 
-const { href, ...rest } = Astro.props
-const base = import.meta.env.BASE_URL
-const currentLocale = Astro.currentLocale
+const { href, ...rest } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const currentLocale = Astro.currentLocale;
 
 const localizedHref =
-  currentLocale === DEFAULT_LANGUAGE ? href : `/${currentLocale}${href}`
+	currentLocale === DEFAULT_LANGUAGE ? href : `/${currentLocale}${href}`;
 
 const finalHref =
-  href.startsWith('/') && base !== '/'
-    ? `${base}${localizedHref}`
-    : localizedHref
+	href.startsWith("/") && base !== "/"
+		? `${base}${localizedHref}`
+		: localizedHref;
 ---
 
 <a href={finalHref} {...rest}>

@@ -1,44 +1,44 @@
 ---
-import Layout from '@layouts/Layout.astro'
-import { geti18nStaticPaths } from '@root/src/i18n'
-import type { GetStaticPaths } from 'astro'
+import Layout from "@layouts/Layout.astro";
+import { geti18nStaticPaths } from "@root/src/i18n";
+import type { GetStaticPaths } from "astro";
 
-const { t } = Astro.locals
+const { t } = Astro.locals;
 
 interface ContactItem {
-  icon: string
-  label: string
-  href: string
-  name: string
-  external?: boolean
+	icon: string;
+	label: string;
+	href: string;
+	name: string;
+	external?: boolean;
 }
 
 const contacts = [
-  {
-    icon: 'icon-[mdi--email-outline]',
-    label: 'E-mail',
-    href: 'mailto:szymon.wrzos@onet.pl',
-    name: 'szymon.wrzos@onet.pl',
-  },
-  {
-    icon: 'icon-[mdi--github]',
-    label: 'GitHub',
-    href: 'https://github.com/Herob527',
-    name: 'Herob527',
-    external: true,
-  },
-  {
-    icon: 'icon-[mdi--linkedin]',
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/szymon-wrzos-0646651b1/',
-    name: 'Szymon Wrzos',
-    external: true,
-  },
-] satisfies ContactItem[]
+	{
+		icon: "icon-[mdi--email-outline]",
+		label: "E-mail",
+		href: "mailto:szymon.wrzos@onet.pl",
+		name: "szymon.wrzos@onet.pl",
+	},
+	{
+		icon: "icon-[mdi--github]",
+		label: "GitHub",
+		href: "https://github.com/Herob527",
+		name: "Herob527",
+		external: true,
+	},
+	{
+		icon: "icon-[mdi--linkedin]",
+		label: "LinkedIn",
+		href: "https://www.linkedin.com/in/szymon-wrzos-0646651b1/",
+		name: "Szymon Wrzos",
+		external: true,
+	},
+] satisfies ContactItem[];
 
 export const getStaticPaths = (() => {
-  return geti18nStaticPaths()
-}) satisfies GetStaticPaths
+	return geti18nStaticPaths();
+}) satisfies GetStaticPaths;
 ---
 
 <Layout parentHref="/kontakt" title={t('contactPage.title')}>

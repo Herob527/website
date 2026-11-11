@@ -1,109 +1,109 @@
 ---
-import Layout from '@layouts/Layout.astro'
-import eslintConfig from '@root/eslint.config?raw'
-import prettierConfig from '@root/.prettierrc?raw'
-import tsconfig from '@root/tsconfig.json?raw'
-import packageJson from '@root/package.json?raw'
-import astroConfig from '@root/astro.config.mjs?raw'
-import mise from '@root/mise.toml?raw'
-import globalCss from '@root/src/styles/global.css?raw'
-import type { CodeLanguage, GetStaticPaths } from 'astro'
-import { Code } from 'astro:components'
-import { geti18nStaticPaths } from '@root/src/i18n'
+import { Code } from "astro:components";
+import Layout from "@layouts/Layout.astro";
+import prettierConfig from "@root/.prettierrc?raw";
+import astroConfig from "@root/astro.config.mjs?raw";
+import eslintConfig from "@root/eslint.config?raw";
+import mise from "@root/mise.toml?raw";
+import packageJson from "@root/package.json?raw";
+import { geti18nStaticPaths } from "@root/src/i18n";
+import globalCss from "@root/src/styles/global.css?raw";
+import tsconfig from "@root/tsconfig.json?raw";
+import type { CodeLanguage, GetStaticPaths } from "astro";
 
-const { t } = Astro.locals
+const { t } = Astro.locals;
 
 interface StackItem {
-  type: string
-  name: string
-  href: string
+	type: string;
+	name: string;
+	href: string;
 }
 
 const stack = [
-  {
-    type: t('aboutPage.stack.framework'),
-    name: 'Astro (SSG)',
-    href: 'https://astro.build/',
-  },
-  {
-    type: t('aboutPage.stack.styleEngine'),
-    name: 'Tailwind CSS',
-    href: 'https://tailwindcss.com/',
-  },
-  {
-    type: t('aboutPage.stack.scripts'),
-    name: 'TypeScript',
-    href: 'https://www.typescriptlang.org/',
-  },
-  {
-    type: t('aboutPage.stack.packageManager'),
-    name: 'Bun',
-    href: 'https://bun.com/',
-  },
-  {
-    type: t('aboutPage.stack.linter'),
-    name: 'ESLint',
-    href: 'https://eslint.org/',
-  },
-  {
-    type: t('aboutPage.stack.formatter'),
-    name: 'Prettier',
-    href: 'https://prettier.io/',
-  },
-  {
-    type: t('aboutPage.stack.aiEditor'),
-    name: 'Opencode (MiMo V2.5 Free)',
-    href: 'https://opencode.ai/',
-  },
-] as const satisfies StackItem[]
+	{
+		type: t("aboutPage.stack.framework"),
+		name: "Astro (SSG)",
+		href: "https://astro.build/",
+	},
+	{
+		type: t("aboutPage.stack.styleEngine"),
+		name: "Tailwind CSS",
+		href: "https://tailwindcss.com/",
+	},
+	{
+		type: t("aboutPage.stack.scripts"),
+		name: "TypeScript",
+		href: "https://www.typescriptlang.org/",
+	},
+	{
+		type: t("aboutPage.stack.packageManager"),
+		name: "Bun",
+		href: "https://bun.com/",
+	},
+	{
+		type: t("aboutPage.stack.linter"),
+		name: "ESLint",
+		href: "https://eslint.org/",
+	},
+	{
+		type: t("aboutPage.stack.formatter"),
+		name: "Prettier",
+		href: "https://prettier.io/",
+	},
+	{
+		type: t("aboutPage.stack.aiEditor"),
+		name: "Opencode (MiMo V2.5 Free)",
+		href: "https://opencode.ai/",
+	},
+] as const satisfies StackItem[];
 
 interface ConfigItem {
-  name: string
-  code: string
-  type: CodeLanguage
+	name: string;
+	code: string;
+	type: CodeLanguage;
 }
 
 const configs = [
-  {
-    name: 'astro.config.mjs',
-    code: astroConfig,
-    type: 'js',
-  },
-  {
-    name: 'eslint.config.js',
-    code: eslintConfig,
-    type: 'ts',
-  },
-  {
-    name: '.prettierrc',
-    code: prettierConfig,
-    type: 'json',
-  },
-  {
-    name: 'tsconfig.json',
-    code: tsconfig,
-    type: 'jsonc',
-  },
-  {
-    name: 'package.json',
-    code: packageJson,
-    type: 'json',
-  },
-  {
-    name: 'src/styles/global.css',
-    code: globalCss,
-    type: 'css',
-  },
-  {
-    name: 'mise.toml',
-    code: mise,
-    type: 'toml',
-  },
-] as const satisfies ConfigItem[]
+	{
+		name: "astro.config.mjs",
+		code: astroConfig,
+		type: "js",
+	},
+	{
+		name: "eslint.config.js",
+		code: eslintConfig,
+		type: "ts",
+	},
+	{
+		name: ".prettierrc",
+		code: prettierConfig,
+		type: "json",
+	},
+	{
+		name: "tsconfig.json",
+		code: tsconfig,
+		type: "jsonc",
+	},
+	{
+		name: "package.json",
+		code: packageJson,
+		type: "json",
+	},
+	{
+		name: "src/styles/global.css",
+		code: globalCss,
+		type: "css",
+	},
+	{
+		name: "mise.toml",
+		code: mise,
+		type: "toml",
+	},
+] as const satisfies ConfigItem[];
 
 export const getStaticPaths = (() => {
-  return geti18nStaticPaths()
-}) satisfies GetStaticPaths
+	return geti18nStaticPaths();
+}) satisfies GetStaticPaths;
 ---
 
 <Layout parentHref="/o-witrynie" title={t('aboutPage.title')}>
