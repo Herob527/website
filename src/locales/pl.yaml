@@ -28,6 +28,7 @@ aboutPage:
   title: O witrynie
   techStack: Stack technologiczny
   configs: Konfiguracje
+  repoLink: Link do repozytorium
   stack:
     framework: Framework
     styleEngine: Silnik styli

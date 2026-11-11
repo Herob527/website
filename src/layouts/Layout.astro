@@ -1,45 +1,46 @@
 ---
-import { ClientRouter, slide } from 'astro:transitions'
-import Logo from '@assets/logo.svg'
-import Link from '@components/Link.astro'
-import LanguageSwitcher from '@components/LanguageSwitcher.astro'
-import '../styles/global.css'
-import OgTags, { type OpenGraph } from '@components/OgTags.astro'
-const { t } = Astro.locals
+import { ClientRouter, slide } from "astro:transitions";
+import Logo from "@assets/logo.svg";
+import LanguageSwitcher from "@components/LanguageSwitcher.astro";
+import Link from "@components/Link.astro";
+import "../styles/global.css";
+import OgTags, { type OpenGraph } from "@components/OgTags.astro";
+
+const { t } = Astro.locals;
 
 interface LinkItem {
-  href: string
-  label: string
+	href: string;
+	label: string;
 }
 
 const links = [
-  {
-    href: '/zyciorys',
-    label: t('nav.cv'),
-  },
-  {
-    href: '/blog',
-    label: t('nav.blog'),
-  },
-  {
-    href: '/o-witrynie',
-    label: t('nav.about'),
-  },
-  {
-    href: '/kontakt',
-    label: t('nav.contact'),
-  },
-] as const satisfies LinkItem[]
+	{
+		href: "/zyciorys",
+		label: t("nav.cv"),
+	},
+	{
+		href: "/blog",
+		label: t("nav.blog"),
+	},
+	{
+		href: "/o-witrynie",
+		label: t("nav.about"),
+	},
+	{
+		href: "/kontakt",
+		label: t("nav.contact"),
+	},
+] as const satisfies LinkItem[];
 
-type hrefs = (typeof links)[number]['href']
+type hrefs = (typeof links)[number]["href"];
 
 interface Props {
-  parentHref?: hrefs
-  title?: string
-  og?: OpenGraph
+	parentHref?: hrefs;
+	title?: string;
+	og?: OpenGraph;
 }
 
-const { og, parentHref, title } = Astro.props
+const { og, parentHref, title } = Astro.props;
 ---
 
 <html lang={Astro.currentLocale}>

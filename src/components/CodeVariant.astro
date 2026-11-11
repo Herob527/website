@@ -1,17 +1,17 @@
 ---
-import type { CodeLanguage } from 'astro'
-import { Code } from 'astro:components'
+import { Code } from "astro:components";
+import type { CodeLanguage } from "astro";
 
 interface Variant {
-  code: string
-  lang: CodeLanguage
-  name: string
+	code: string;
+	lang: CodeLanguage;
+	name: string;
 }
 
 interface Props {
-  items: Variant[]
+	items: Variant[];
 }
-const { items } = Astro.props
+const { items } = Astro.props;
 ---
 
 <code-variant

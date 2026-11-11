@@ -1,26 +1,26 @@
 ---
-import { DEFAULT_LANGUAGE } from '../constants'
+import { DEFAULT_LANGUAGE } from "../constants";
 
-const currentLocale = Astro.currentLocale ?? DEFAULT_LANGUAGE
-const { t } = Astro.locals
+const currentLocale = Astro.currentLocale ?? DEFAULT_LANGUAGE;
+const { t } = Astro.locals;
 
-const base = import.meta.env.BASE_URL
-const pathname = Astro.url.pathname
+const base = import.meta.env.BASE_URL;
+const pathname = Astro.url.pathname;
 
-let relativePath = base !== '/' ? pathname.replace(base, '') : pathname
+let relativePath = base !== "/" ? pathname.replace(base, "") : pathname;
 if (relativePath.startsWith(`/${currentLocale}`)) {
-  relativePath = relativePath.slice(`/${currentLocale}`.length) || '/'
+	relativePath = relativePath.slice(`/${currentLocale}`.length) || "/";
 }
 
 // TODO: Dehardcode language since it looks akward and imagine adding another language
 const plHref =
-  DEFAULT_LANGUAGE === 'pl'
-    ? `${base}${relativePath}`
-    : `${base}/pl${relativePath}`
+	DEFAULT_LANGUAGE === "pl"
+		? `${base}${relativePath}`
+		: `${base}/pl${relativePath}`;
 
-const enHref = `${base}/en${relativePath}`
+const enHref = `${base}/en${relativePath}`;
 
-const currentIsPl = currentLocale === DEFAULT_LANGUAGE
+const currentIsPl = currentLocale === DEFAULT_LANGUAGE;
 ---
 
 <span class="inline-flex items-center gap-1">

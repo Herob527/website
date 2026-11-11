@@ -1,75 +1,75 @@
 ---
-import Layout from '@layouts/Layout.astro'
-import { getCollection, render, type CollectionEntry } from 'astro:content'
-import type { AstroComponentFactory } from 'astro/runtime/server/render/astro/factory.js'
-import { geti18nStaticPaths } from '@root/src/i18n'
-import type { GetStaticPaths } from 'astro'
-import { DEFAULT_LANGUAGE } from '@root/src/constants'
-import { dateUtils } from '@root/src/date-utils'
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import { DEFAULT_LANGUAGE } from "@root/src/constants";
+import { dateUtils } from "@root/src/date-utils";
+import { geti18nStaticPaths } from "@root/src/i18n";
+import type { GetStaticPaths } from "astro";
+import type { AstroComponentFactory } from "astro/runtime/server/render/astro/factory.js";
 
-type LifeStageEntry = CollectionEntry<'lifeStages'>
+type LifeStageEntry = CollectionEntry<"lifeStages">;
 
 interface IncludedStage {
-  entry: LifeStageEntry
-  Content: AstroComponentFactory
+	entry: LifeStageEntry;
+	Content: AstroComponentFactory;
 }
 
 interface StageWithContent {
-  entry: LifeStageEntry
-  Content: AstroComponentFactory
-  included: IncludedStage[]
+	entry: LifeStageEntry;
+	Content: AstroComponentFactory;
+	included: IncludedStage[];
 }
 
-const locale = Astro.currentLocale ?? DEFAULT_LANGUAGE
+const locale = Astro.currentLocale ?? DEFAULT_LANGUAGE;
 
-const allStages = await getCollection('lifeStages')
+const allStages = await getCollection("lifeStages");
 
-const localeStages = allStages.filter((s) => s.id.startsWith(`${locale}/`))
+const localeStages = allStages.filter((s) => s.id.startsWith(`${locale}/`));
 
 const parents = localeStages
-  .filter((s) => !s.data.parent)
-  .sort((a, b) => a.data.order - b.data.order)
+	.filter((s) => !s.data.parent)
+	.sort((a, b) => a.data.order - b.data.order);
 
 const children = localeStages
-  .filter((s) => s.data.parent)
-  .sort((a, b) => a.data.order - b.data.order)
+	.filter((s) => s.data.parent)
+	.sort((a, b) => a.data.order - b.data.order);
 
-const stripLocale = (id: string) => id.replace(/^[a-z]{2}\//, '')
+const stripLocale = (id: string) => id.replace(/^[a-z]{2}\//, "");
 
 const stagesWithContent = await Promise.all(
-  parents.map(async (parent) => {
-    const { Content } = await render(parent)
-    const included = await Promise.all(
-      children
-        .filter((c) => c.data.parent === stripLocale(parent.id))
-        .map(async (c) => {
-          const { Content: IncContent } = await render(c)
-          return { entry: c, Content: IncContent }
-        }),
-    )
-    return { entry: parent, Content, included }
-  }),
-)
+	parents.map(async (parent) => {
+		const { Content } = await render(parent);
+		const included = await Promise.all(
+			children
+				.filter((c) => c.data.parent === stripLocale(parent.id))
+				.map(async (c) => {
+					const { Content: IncContent } = await render(c);
+					return { entry: c, Content: IncContent };
+				}),
+		);
+		return { entry: parent, Content, included };
+	}),
+);
 
-const { t } = Astro.locals
-const months = t('cvPage.months', { returnObjects: true }) as string[]
+const { t } = Astro.locals;
+const months = t("cvPage.months", { returnObjects: true }) as string[];
 
 const formatDate = (date: Temporal.PlainDate) => {
-  return `${months[date.month - 1]} ${date.year.toString()}`
-}
+	return `${months[date.month - 1]} ${date.year.toString()}`;
+};
 
 const sorted = stagesWithContent
-  .map((s: StageWithContent) => ({
-    ...s,
-    startDate: dateUtils.parse(s.entry.data.startDate),
-    endDate: dateUtils.parse(s.entry.data.endDate),
-    color: s.entry.data.color,
-  }))
-  .sort((a, b) => dateUtils.compare(a.startDate, b.startDate))
+	.map((s: StageWithContent) => ({
+		...s,
+		startDate: dateUtils.parse(s.entry.data.startDate),
+		endDate: dateUtils.parse(s.entry.data.endDate),
+		color: s.entry.data.color,
+	}))
+	.sort((a, b) => dateUtils.compare(a.startDate, b.startDate));
 
 export const getStaticPaths = (() => {
-  return geti18nStaticPaths()
-}) satisfies GetStaticPaths
+	return geti18nStaticPaths();
+}) satisfies GetStaticPaths;
 ---
 
 <Layout parentHref="/zyciorys" title={t('cvPage.title')}>
